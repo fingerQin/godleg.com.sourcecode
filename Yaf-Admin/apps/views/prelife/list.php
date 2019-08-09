@@ -124,7 +124,7 @@ function resetCacheDialog(request_url) {
 	function() {
 		$.ajax({
 			type: "POST",
-			url: '{{'prelife/resetCache'|url}}',
+			url: '{{'Prelife/resetCache'|url}}',
 			dataType: 'json',
 			success: function(data){
 				if (data.code == 200) {
