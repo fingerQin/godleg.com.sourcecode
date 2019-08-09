@@ -51,7 +51,7 @@ class PreLife extends \Services\AbstractBase
     public static function list($title = '', $priority = -1, $type = -1, $page = 1, $count = 20)
     {
         $offset    = self::getPaginationOffset($page, $count);
-        $fromTable = ' FROM finger_prelife ';
+        $fromTable = ' FROM gm_prelife ';
         $columns   = ' id, priority, type, title, intro, c_time, u_time ';
         $where     = ' WHERE status = :status ';
         $params    = [
@@ -84,7 +84,7 @@ class PreLife extends \Services\AbstractBase
             'total'  => $total,
             'page'   => $page,
             'count'  => $count,
-            'isnext' => self::IsHasNextPage($total, $page, $count)
+            'isnext' => self::isHasNextPage($total, $page, $count)
         ];
         return $result;
     }

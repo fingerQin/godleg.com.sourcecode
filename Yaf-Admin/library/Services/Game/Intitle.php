@@ -10,7 +10,8 @@ namespace Services\Game;
 use Utils\YCore;
 use finger\Database\Db;
 use ApiTools\Request;
-use Models\NameDict;
+use Models\GmNameDict;
+use finger\Validator;
 
 class Intitle extends \Services\AbstractBase
 {
@@ -20,8 +21,8 @@ class Intitle extends \Services\AbstractBase
      * @var array
      */
     public static $typeDict = [
-        NameDict::TYPE_SINGLE => '单字',
-        NameDict::TYPE_DOUBLE => '双字'
+        GmNameDict::TYPE_SINGLE => '单字',
+        GmNameDict::TYPE_DOUBLE => '双字'
     ];
 
     /**
@@ -30,8 +31,8 @@ class Intitle extends \Services\AbstractBase
      * @var array
      */
     public static $sexDict = [
-        NameDict::SEX_MALE   => '男孩',
-        NameDict::SEX_FEMALE => '女孩'
+        GmNameDict::SEX_MALE   => '男孩',
+        GmNameDict::SEX_FEMALE => '女孩'
     ];
 
     /**
@@ -48,11 +49,11 @@ class Intitle extends \Services\AbstractBase
     public static function list($name = '', $type = -1, $sex = '', $page = 1, $count = 20)
     {
         $offset    = self::getPaginationOffset($page, $count);
-        $fromTable = ' FROM finger_name_dict ';
+        $fromTable = ' FROM gm_name_dict ';
         $columns   = ' id, name, type, sex, expl, c_time, u_time ';
         $where     = ' WHERE status = :status ';
         $params    = [
-            ':status' => NameDict::STATUS_YES
+            ':status' => GmNameDict::STATUS_YES
         ];
         if (strlen($name) > 0) {
             $where .= ' AND name = :name ';
@@ -81,7 +82,7 @@ class Intitle extends \Services\AbstractBase
             'total'  => $total,
             'page'   => $page,
             'count'  => $count,
-            'isnext' => self::IsHasNextPage($total, $page, $count)
+            'isnext' => self::isHasNextPage($total, $page, $count)
         ];
         return $result;
     }
@@ -95,11 +96,11 @@ class Intitle extends \Services\AbstractBase
      */
     public static function detail($id)
     {
-        $NameDictModel = new NameDict();
+        $NameDictModel = new GmNameDict();
         $columns = ['id', 'name', 'type', 'sex', 'expl'];
         $where = [
             'id'     => $id,
-            'status' => NameDict::STATUS_YES
+            'status' => GmNameDict::STATUS_YES
         ];
         $detail = $NameDictModel->fetchOne($columns, $where);
         if (empty($detail)) {
@@ -133,6 +134,7 @@ class Intitle extends \Services\AbstractBase
             'sex'  => $sex,
             'expl' => $expl
         ];
+        Validator::valido($data, $rules);
         if (!array_key_exists($sex, self::$sexDict)) {
             YCore::exception(STATUS_SERVER_ERROR, '性别参数有误!');
         }
@@ -140,7 +142,7 @@ class Intitle extends \Services\AbstractBase
         $data['c_by']   = $adminId;
         $data['c_time'] = $datetme;
         $data['u_time'] = $datetme;
-        $NameDictModel  = new NameDict();
+        $NameDictModel  = new GmNameDict();
         $ok = $NameDictModel->insert($data);
         if (!$ok) {
             YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试!');
@@ -179,10 +181,10 @@ class Intitle extends \Services\AbstractBase
         $datetme        = date('Y-m-d H:i:s', time());
         $data['u_by']   = $adminId;
         $data['u_time'] = $datetme;
-        $NameDictModel  = new NameDict();
+        $NameDictModel  = new GmNameDict();
         $where = [
             'id'     => $id,
-            'status' => NameDict::STATUS_YES
+            'status' => GmNameDict::STATUS_YES
         ];
         $detail = $NameDictModel->fetchOne([], $where);
         if (empty($detail)) {
@@ -206,15 +208,15 @@ class Intitle extends \Services\AbstractBase
     {
         $where = [
             'id'     => $id,
-            'status' => NameDict::STATUS_YES
+            'status' => GmNameDict::STATUS_YES
         ];
-        $NameDictModel = new NameDict();
+        $NameDictModel = new GmNameDict();
         $detail = $NameDictModel->fetchOne([], $where);
         if (empty($detail)) {
             YCore::exception(STATUS_SERVER_ERROR, '您删除的记录不存在或已经删除');
         }
         $data = [
-            'status' => NameDict::STATUS_DELETED,
+            'status' => GmNameDict::STATUS_DELETED,
             'u_by'   => $adminId,
             'u_time' => date('Y-m-d H:i:s', time())
         ];
@@ -234,8 +236,7 @@ class Intitle extends \Services\AbstractBase
     public static function resetCache()
     {
         $data = [
-            'method' => 'game.intitle.reset.cache',
-            'v'      => '1.0.0'
+            'method' => 'game.intitle.reset.cache'
         ];
         $request = new Request();
         $result = $request->send($data);

@@ -14,7 +14,7 @@ class GmRiddle extends AbstractBase
      *
      * @var string
      */
-    protected $tableName  = 'finger_riddle';
+    protected $tableName  = 'gm_riddle';
 
     protected $primaryKey = 'id';
 

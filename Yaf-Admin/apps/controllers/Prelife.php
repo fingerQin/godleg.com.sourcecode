@@ -5,7 +5,6 @@
  * @date 2018-11-14
  */
 
-use Utils\YCore;
 use finger\Paginator;
 use Services\Game\PreLife;
 

@@ -94,7 +94,7 @@ class Guess extends \Services\AbstractBase
         }
         $orderBy = ' ORDER BY id DESC ';
         $sql     = "SELECT COUNT(1) AS count {$fromTable} {$where}";
-        $total   = Db::one($sql, $params);
+        $total   = Db::count($sql, $params);
         $sql     = "SELECT {$columns} {$fromTable} {$where} {$orderBy} LIMIT {$offset},{$count}";
         $list    = Db::all($sql, $params);
         foreach ($list as $key => $item) {
@@ -106,7 +106,7 @@ class Guess extends \Services\AbstractBase
             'total'  => $total,
             'page'   => $page,
             'count'  => $count,
-            'isnext' => self::IsHasNextPage($total, $page, $count)
+            'isnext' => self::isHasNextPage($total, $page, $count)
         ];
         return $result;
     }
@@ -149,7 +149,7 @@ class Guess extends \Services\AbstractBase
         }
         $orderBy = ' ORDER BY guessid DESC ';
         $sql     = "SELECT COUNT(1) AS count {$fromTable} {$where}";
-        $total   = Db::one($sql, $params);
+        $total   = Db::count($sql, $params);
         $sql     = "SELECT {$columns} {$fromTable} {$where} {$orderBy} LIMIT {$offset},{$count}";
         $list    = Db::all($sql, $params);
         foreach ($list as $key => $item) {
@@ -162,7 +162,7 @@ class Guess extends \Services\AbstractBase
             'total'  => $total,
             'page'   => $page,
             'count'  => $count,
-            'isnext' => self::IsHasNextPage($total, $page, $count)
+            'isnext' => self::isHasNextPage($total, $page, $count)
         ];
         return $result;
     }

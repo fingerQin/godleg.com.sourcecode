@@ -9,7 +9,7 @@ namespace Services\Game;
 
 use Utils\YCore;
 use Utils\YCache;
-use Models\ThisLife as ThisLifeModel;
+use Models\GmThisLife;
 
 class ThisLife extends \Services\AbstractBase
 {
@@ -90,8 +90,8 @@ class ThisLife extends \Services\AbstractBase
             $dicts = json_decode($dictCache, true);
         } else {
             $columns       = ['priority', 'score', 'title', 'intro'];
-            $ThisLifeModel = new ThisLifeModel();
-            $result        = $ThisLifeModel->fetchAll($columns);
+            $GmThisLife = new GmThisLife();
+            $result        = $GmThisLife->fetchAll($columns);
             $dicts         = [];
             foreach ($result as $item) {
                 $dicts[$item['priority']][] = $item; // 按照优先级进行拆分。

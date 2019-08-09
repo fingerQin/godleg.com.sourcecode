@@ -11,7 +11,8 @@ use Utils\YCore;
 use Utils\YCache;
 use finger\Database\Db;
 use ApiTools\Request;
-use Models\Riddle as RiddleModel;
+use Models\GmRiddle;
+use finger\Validator;
 
 class Riddle extends \Services\AbstractBase
 {
@@ -21,8 +22,8 @@ class Riddle extends \Services\AbstractBase
      * @var array
      */
     public static $sourceDict = [
-        RiddleModel::SOURCE_SYSTEM => '系统创建',
-        RiddleModel::SOURCE_USER   => '用户创建'
+        GmRiddle::SOURCE_SYSTEM => '系统创建',
+        GmRiddle::SOURCE_USER   => '用户创建'
     ];
 
     /**
@@ -31,9 +32,9 @@ class Riddle extends \Services\AbstractBase
      * @var array
      */
     public static $priorityDict = [
-        RiddleModel::PRIORITY_HIGH   => '高',
-        RiddleModel::PRIORITY_MIDDLE => '中',
-        RiddleModel::PRIORITY_LOW    => '低'
+        GmRiddle::PRIORITY_HIGH   => '高',
+        GmRiddle::PRIORITY_MIDDLE => '中',
+        GmRiddle::PRIORITY_LOW    => '低'
     ];
 
     /**
@@ -51,11 +52,11 @@ class Riddle extends \Services\AbstractBase
     public static function list($openid = '', $source = -1, $score = 0, $priority = -1, $page = 1, $count = 20)
     {
         $offset    = self::getPaginationOffset($page, $count);
-        $fromTable = ' FROM finger_riddle ';
+        $fromTable = ' FROM gm_riddle ';
         $columns   = ' id, openid, priority, score, question, question_img, answer, answer_img, source, c_time, u_time ';
         $where     = ' WHERE status = :status ';
         $params    = [
-            ':status' => RiddleModel::STATUS_YES
+            ':status' => GmRiddle::STATUS_YES
         ];
         if (strlen($openid) > 0) {
             $where .= ' AND openid = :openid ';
@@ -79,7 +80,6 @@ class Riddle extends \Services\AbstractBase
         $total     = $countData ? $countData['count'] : 0;
         $sql       = "SELECT {$columns} {$fromTable} {$where} {$orderBy} LIMIT {$offset},{$count}";
         $list      = Db::all($sql, $params);
-        $users     = [];
         foreach ($list as $key => $item) {
             $item['source']   = self::$sourceDict[$item['source']];
             $item['priority'] = self::$priorityDict[$item['priority']];
@@ -90,7 +90,7 @@ class Riddle extends \Services\AbstractBase
             'total'  => $total,
             'page'   => $page,
             'count'  => $count,
-            'isnext' => self::IsHasNextPage($total, $page, $count)
+            'isnext' => self::isHasNextPage($total, $page, $count)
         ];
         return $result;
     }
@@ -104,13 +104,13 @@ class Riddle extends \Services\AbstractBase
      */
     public static function detail($id)
     {
-        $RiddleModel = new RiddleModel();
+        $GmRiddle = new GmRiddle();
         $columns     = ['id', 'openid', 'priority', 'score', 'question', 'question_img', 'answer', 'answer_img', 'source'];
         $where = [
             'id'     => $id,
-            'status' => RiddleModel::STATUS_YES
+            'status' => GmRiddle::STATUS_YES
         ];
-        $detail = $RiddleModel->fetchOne($columns, $where);
+        $detail = $GmRiddle->fetchOne($columns, $where);
         if (empty($detail)) {
             YCore::exception(STATUS_SERVER_ERROR, '记录不存在或已经删除');
         }
@@ -150,12 +150,12 @@ class Riddle extends \Services\AbstractBase
         ];
         $datetme        = date('Y-m-d H:i:s', time());
         $data['openid'] = self::createOpenID();
-        $data['source'] = RiddleModel::SOURCE_SYSTEM;
+        $data['source'] = GmRiddle::SOURCE_SYSTEM;
         $data['c_by']   = $adminId;
         $data['c_time'] = $datetme;
         $data['u_time'] = $datetme;
-        $RiddleModel    = new RiddleModel();
-        $ok = $RiddleModel->insert($data);
+        $GmRiddle = new GmRiddle();
+        $ok = $GmRiddle->insert($data);
         if (!$ok) {
             YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试!');
         }
@@ -210,19 +210,20 @@ class Riddle extends \Services\AbstractBase
             'answer'       => $answer,
             'answer_img'   => $answerImg
         ];
+        Validator::valido($data, $rules);
         $datetme        = date('Y-m-d H:i:s', time());
         $data['u_by']   = $adminId;
         $data['u_time'] = $datetme;
-        $RiddleModel    = new RiddleModel();
-        $where = [
+        $GmRiddle = new GmRiddle();
+        $where    = [
             'id'     => $id,
-            'status' => RiddleModel::STATUS_YES
+            'status' => GmRiddle::STATUS_YES
         ];
-        $detail = $RiddleModel->fetchOne([], $where);
+        $detail = $GmRiddle->fetchOne([], $where);
         if (empty($detail)) {
             YCore::exception(STATUS_SERVER_ERROR, '您编辑的记录不存在或已经删除');
         }
-        $ok = $RiddleModel->update($data, $where);
+        $ok = $GmRiddle->update($data, $where);
         if (!$ok) {
             YCore::exception(STATUS_ERROR, '编辑失败,请稍候刷新重试!');
         }
@@ -241,19 +242,19 @@ class Riddle extends \Services\AbstractBase
     {
         $where = [
             'id'     => $id,
-            'status' => RiddleModel::STATUS_YES
+            'status' => GmRiddle::STATUS_YES
         ];
-        $RiddleModel = new RiddleModel();
-        $detail = $RiddleModel->fetchOne([], $where);
+        $GmRiddle = new GmRiddle();
+        $detail = $GmRiddle->fetchOne([], $where);
         if (empty($detail)) {
             YCore::exception(STATUS_SERVER_ERROR, '您删除的记录不存在或已经删除');
         }
         $data = [
-            'status' => RiddleModel::STATUS_DELETED,
+            'status' => GmRiddle::STATUS_DELETED,
             'u_by'   => $adminId,
             'u_time' => date('Y-m-d H:i:s', time())
         ];
-        $status = $RiddleModel->update($data, $where);
+        $status = $GmRiddle->update($data, $where);
         if (!$status) {
             YCore::exception(STATUS_ERROR, '删除失败,请稍候刷新重试!');
         }
@@ -270,11 +271,10 @@ class Riddle extends \Services\AbstractBase
     public static function resetCache()
     {
         $data = [
-            'method' => 'game.riddle.reset.cache',
-            'v'      => '1.0.0'
+            'method' => 'game.riddle.reset.cache'
         ];
         $request = new Request();
-        $result = $request->send($data);
+        $result  = $request->send($data);
         if ($result['code'] != STATUS_SUCCESS) {
             YCore::exception(STATUS_SERVER_ERROR, '缓存重置失败');
         }
@@ -291,7 +291,6 @@ class Riddle extends \Services\AbstractBase
     {
         $data = [
             'method' => 'game.riddle.detail.clear.cache',
-            'v'      => '1.0.0',
             'openid' => $openid
         ];
         $request = new Request();

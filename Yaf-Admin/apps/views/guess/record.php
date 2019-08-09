@@ -50,12 +50,12 @@
 				<tbody>
                     {{foreach $list as $item}}
     	            <tr>
-						<td align="center"><?php echo $item['nickname']; ?></td>
-						<td align="center"><?php echo $item['mobile']; ?></td>
-						<td align="center"><?php echo $item['bet_gold']; ?></td>
-						<td align="center"><?php echo $item['prize_money']; ?></td>
-						<td align="center"><?php echo $item['prize_status']; ?></td>
-						<td align="center"><?php echo $item['created_time']; ?></td>
+						<td align="center">{{$item.nickname}}</td>
+						<td align="center">{{$item.mobile}}</td>
+						<td align="center">{{$item.bet_gold}}</td>
+						<td align="center">{{$item.prize_money}}</td>
+						<td align="center">{{$item.prize_status}}</td>
+						<td align="center">{{$item.c_time}}</td>
 			        </tr>
 				    {{/foreach}}
                 </tbody>

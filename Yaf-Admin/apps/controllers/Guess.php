@@ -5,10 +5,9 @@
  * @date 2018-08-28
  */
 
-use finger\Paginator;
-use Utils\YCore;
-use Services\Game\Guess;
 use Utils\YUrl;
+use finger\Paginator;
+use Services\Game\Guess;
 
 class GuessController extends \Common\controllers\Admin
 {

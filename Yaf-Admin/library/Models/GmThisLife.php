@@ -14,7 +14,7 @@ class GmThisLife extends AbstractBase
      *
      * @var string
      */
-    protected $tableName  = 'finger_this_life';
+    protected $tableName  = 'gm_this_life';
 
     protected $primaryKey = 'id';
 

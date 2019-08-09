@@ -14,7 +14,7 @@ class GmPrelife extends AbstractBase
      *
      * @var string
      */
-    protected $tableName  = 'finger_prelife';
+    protected $tableName  = 'gm_prelife';
 
     protected $primaryKey = 'id';
 

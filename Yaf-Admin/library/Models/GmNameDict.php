@@ -14,7 +14,7 @@ class GmNameDict extends AbstractBase
      *
      * @var string
      */
-    protected $tableName  = 'finger_name_dict';
+    protected $tableName  = 'gm_name_dict';
 
     protected $primaryKey = 'id';
 
