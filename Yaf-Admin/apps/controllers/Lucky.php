@@ -5,9 +5,8 @@
  * @date 2018-02-28
  */
 
-use finger\Paginator;
-use Utils\YCore;
 use Utils\YUrl;
+use finger\Paginator;
 use Services\Game\Lucky;
 
 class LuckyController extends \Common\controllers\Admin
