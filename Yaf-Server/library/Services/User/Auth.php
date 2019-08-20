@@ -17,6 +17,7 @@ use Services\Sms\Sms;
 use Services\System\Push;
 use Services\Event\Producer;
 use Services\AccessForbid\Forbid;
+use Services\Gold\Gold;
 
 class Auth extends \Services\AbstractBase
 {
@@ -79,6 +80,7 @@ class Auth extends \Services\AbstractBase
             'headimg'  => $userinfo['headimg'],
             'nickname' => $userinfo['nickname'],
             'intro'    => $userinfo['intro'],
+            'gold'     => Gold::userGoldCount($userinfo['userid']),
             'reg_time' => $userinfo['c_time']
         ];
     }

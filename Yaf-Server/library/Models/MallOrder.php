@@ -27,7 +27,7 @@ class MallOrder extends AbstractBase
      * @var array
      */
     public static $orderStatusDict = [
-        self::ORDER_STATUS_PAY_OK   => '已付款',
+        self::ORDER_STATUS_PAY_OK   => '待发货',
         self::ORDER_STATUS_DELIVER  => '已发货',
         self::ORDER_STATUS_SUCCESS  => '交易成功',
         self::ORDER_STATUS_CLOSED   => '系统关闭'
