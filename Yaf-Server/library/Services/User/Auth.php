@@ -282,6 +282,7 @@ class Auth extends \Services\AbstractBase
             'nickname' => $nickname,
             'reg_time' => $datetime,
             'intro'    => '',
+            'gold'     => 0,
             'open_id'  => $openid
         ];
     }
