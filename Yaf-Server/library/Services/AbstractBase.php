@@ -39,7 +39,7 @@ abstract class AbstractBase
      */
     protected static function isAppCall($platform)
     {
-        if (in_array($platform, [self::PLATFORM_IOS, self::PLATFORM_ANDROID])) {
+        if (in_array($platform, [self::PLATFORM_IOS, self::PLATFORM_ANDROID, self::PLATFORM_MINI_PROGRAM])) {
             return true;
         } else {
             return false;
