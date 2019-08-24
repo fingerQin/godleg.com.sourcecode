@@ -71,7 +71,7 @@ class Intitle extends \Services\AbstractBase
     public static function resetCache()
     {
         $redis = YCache::getRedisClient();
-        $redis->delete(self::NAME_DICT_KEY);
+        $redis->del(self::NAME_DICT_KEY);
         self::getNameDictCache();
     }
 

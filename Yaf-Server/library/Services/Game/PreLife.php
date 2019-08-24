@@ -54,7 +54,7 @@ class PreLife extends \Services\AbstractBase
     public static function resetCache()
     {
         $redis = YCache::getRedisClient();
-        $redis->delete(self::PRE_LIFE_KEY);
+        $redis->del(self::PRE_LIFE_KEY);
         self::getConfigCache();
     }
 

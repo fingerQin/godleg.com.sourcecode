@@ -155,7 +155,7 @@ class Riddle extends \Services\AbstractBase
     {
         $redis = YCache::getRedisClient();
         $key   = self::RIDDLE_PRE_KEY . $questipnOpenID;
-        $redis->delete($key);
+        $redis->del($key);
     }
 
     /**
@@ -168,7 +168,7 @@ class Riddle extends \Services\AbstractBase
     public static function resetCache()
     {
         $redis = YCache::getRedisClient();
-        $redis->delete(self::RIDDLE_KEY);
+        $redis->del(self::RIDDLE_KEY);
         self::getPriorityCache();
     }
 
