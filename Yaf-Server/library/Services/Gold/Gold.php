@@ -7,9 +7,9 @@
 
 namespace Services\Gold;
 
+use Utils\YCore;
 use finger\Validator;
 use finger\Database\Db;
-use Utils\YCore;
 use Models\GoldConsume;
 use Models\Gold as GoldModel;
 
