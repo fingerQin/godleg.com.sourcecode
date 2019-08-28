@@ -325,7 +325,7 @@ class Task extends \Services\AbstractBase
             if ($status) {
                 $TaskRecord = new TaskRecord();
                 $total      = $TaskRecord->count(['taskid' => $taskId, 'userid' => $userid]);
-                $redis->set($cacheKey, $total, ['NX', 'EX' => 86400]);
+                $redis->set($cacheKey, $total, ['EX' => 86400]);
                 return intval($total);
             } else {
                 $total = $redis->get($cacheKey);
