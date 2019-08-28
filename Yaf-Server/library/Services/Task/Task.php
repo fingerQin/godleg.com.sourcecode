@@ -378,7 +378,7 @@ class Task extends \Services\AbstractBase
         self::setTaskTotal($taskId);
         $cacheKey = "system_task_checkin_status:{$taskId}-{$userid}";
         $redis    = YCache::getRedisClient();
-        $redis->set($cacheKey, 1);
+        $redis->set($cacheKey, 1, ['EX' => 86400]);
     }
 
     /**
