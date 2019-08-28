@@ -64,35 +64,45 @@ class Task extends \Services\AbstractBase
      * @param  array  $data     任务数据。
      * @param  array  $adminId  操作管理员 ID。
      * 
+     * ```
      * -- eg:start --
      * $data = [
-     *  'sponsorId'  => 'int:主办方 ID',
-     *  'taskName'   => 'string:任务名称',
-     *  'address'    => 'string:打卡地址',
-     *  'gold'       => 'int:打卡金币数量',
-     *  'moveStep'   => 'int:运动步数',
-     *  'timesLimit' => 'int:次数限制',
-     *  'longitude'  => 'float:经度',
-     *  'latitude'   => 'float:纬度',
-     *  'albums'     => 'array:活动宣传相册图片',
-     *  'display'    => 'int:是否显示',
+     *  'sponsorId'      => 'int:主办方 ID',
+     *  'taskName'       => 'string:任务名称',
+     *  'address'        => 'string:打卡地址',
+     *  'gold'           => 'int:打卡金币数量',
+     *  'moveStep'       => 'int:运动步数',
+     *  'timesLimit'     => 'int:次数限制',
+     *  'longitude'      => 'float:经度',
+     *  'latitude'       => 'float:纬度',
+     *  'albums'         => 'array:活动宣传相册图片',
+     *  'display'        => 'int:是否显示',
+     *  'start_time'     => 'string:开始时间',
+     *  'end_time'       => 'string:结束时间',
+     *  'everyday_times' => '每日参与上限',
+     *  'total_times'    => '总参与上限'
      * ];
      * -- eg:end --
+     * ```
      *
      * @return void
      */
     public static function add($data, $adminId)
     {
         $rules = [
-            'sponsorId'  => '主办方ID|require|int',
-            'taskName'   => '打卡任务名称|require|len:1:30',
-            'address'    => '打卡地址|require|len:1:200',
-            'gold'       => '金币数量|require|int|number_between:1:1000000',
-            'moveStep'   => '运动步数|require|int|number_between:1:100000',
-            'timesLimit' => '次数限制|require|int|number_between:0:1000',
-            'longitude'  => '经度|require|float',
-            'latitude'   => '纬度|require|float',
-            'display'    => '是否显示|require|int|number_between:0:1'
+            'sponsorId'      => '主办方ID|require|int',
+            'taskName'       => '打卡任务名称|require|len:1:30',
+            'address'        => '打卡地址|require|len:1:200',
+            'gold'           => '金币数量|require|int|number_between:1:1000000',
+            'moveStep'       => '运动步数|require|int|number_between:1:100000',
+            'timesLimit'     => '次数限制|require|int|number_between:0:1000',
+            'longitude'      => '经度|require|float',
+            'latitude'       => '纬度|require|float',
+            'display'        => '是否显示|require|int|number_between:0:1',
+            'start_time'     => '开始时间|require|datetime',
+            'end_time'       => '结束时间|require|datetime',
+            'everyday_times' => '每日参与上限|require|int|number_between:0:100000',
+            'total_times'    => '总参与上限|require|int|number_between:0:100000',
         ];
         Validator::valido($data, $rules);
         $sponsor = (new TaskSponsor())->fetchOne(['sponsorid'], 
@@ -126,6 +136,7 @@ class Task extends \Services\AbstractBase
      * @param  array  $data     任务数据。
      * @param  array  $adminId  操作管理员 ID。
      * 
+     * ```
      * -- eg:start --
      * $data = [
      *  'taskId'     => 'int:打卡任务 ID',
@@ -138,24 +149,34 @@ class Task extends \Services\AbstractBase
      *  'longitude'  => 'float:经度',
      *  'latitude'   => 'float:纬度',
      *  'albums'     => 'array:活动宣传相册图片',
-     *  'display'    => 'int:是否显示'
+     *  'display'    => 'int:是否显示',
+     *  'start_time'     => 'string:开始时间',
+     *  'end_time'       => 'string:结束时间',
+     *  'everyday_times' => '每日参与上限',
+     *  'total_times'    => '总参与上限'
      * ];
      * -- eg:end --
+     * ```
+     * 
      * @return void
      */
     public static function edit($data, $adminId)
     {
         $rules = [
-            'taskId'     => '打卡任务ID|require|int',
-            'sponsorId'  => '主办方ID|require|int',
-            'taskName'   => '打卡任务名称|require|len:1:30',
-            'address'    => '打卡地址|require|len:1:200',
-            'gold'       => '金币数量|require|int|number_between:1:1000000',
-            'moveStep'   => '运动步数|require|int|number_between:1:100000',
-            'timesLimit' => '次数限制|require|int|number_between:0:1000',
-            'longitude'  => '经度|require|float',
-            'latitude'   => '纬度|require|float',
-            'display'    => '是否显示|require|int|number_between:0:1'
+            'taskId'         => '打卡任务ID|require|int',
+            'sponsorId'      => '主办方ID|require|int',
+            'taskName'       => '打卡任务名称|require|len:1:30',
+            'address'        => '打卡地址|require|len:1:200',
+            'gold'           => '金币数量|require|int|number_between:1:1000000',
+            'moveStep'       => '运动步数|require|int|number_between:1:100000',
+            'timesLimit'     => '次数限制|require|int|number_between:0:1000',
+            'longitude'      => '经度|require|float',
+            'latitude'       => '纬度|require|float',
+            'display'        => '是否显示|require|int|number_between:0:1',
+            'start_time'     => '开始时间|require|datetime',
+            'end_time'       => '结束时间|require|datetime',
+            'everyday_times' => '每日参与上限|require|int|number_between:0:100000',
+            'total_times'    => '总参与上限|require|int|number_between:0:100000',
         ];
         Validator::valido($data, $rules);
         self::detail($data['taskId']);

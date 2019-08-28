@@ -50,8 +50,9 @@ class Record extends \Services\AbstractBase
         $sql   = "SELECT COUNT(1) AS count FROM finger_task_record AS a INNER JOIN finger_task AS b "
                . "ON(a.taskid=b.taskid) WHERE {$where} ";
         $total = Db::count($sql, $params);
-        $sql   = "SELECT a.id, a.gold, a.step_count, a.image_url, a.sponsorid, a.c_time, b.taskid, b.task_name "
+        $sql   = "SELECT a.id, a.gold, a.step_count, a.image_url, a.sponsorid, a.c_time, b.taskid, b.task_name, c.realname"
                . "FROM finger_task_record AS a INNER JOIN finger_task AS b ON(a.taskid=b.taskid) "
+               . "INNER JOIN finger_user AS c ON(a.userid=c.userid) "
                . "{$where} ORDER BY a.id DESC LIMIT {$offset},{$count}";
         $list = Db::all($sql, $params);
         $result      = [
