@@ -1,20 +1,20 @@
 <?php
 /**
- * 短信配置表 Model。
+ * 打卡任务参与记录表 Model。
  * @author fingerQin
- * @date 2018-06-27
+ * @date 2019-08-26
  */
 
 namespace Models;
 
-class SmsConf extends AbstractBase
+class TaskRecord extends AbstractBase
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $tableName  = 'finger_sms_conf';
+    protected $tableName  = 'finger_task_record';
 
     protected $primaryKey = 'id';
 }

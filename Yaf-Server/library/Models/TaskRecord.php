@@ -17,4 +17,11 @@ class TaskRecord extends AbstractBase
     protected $tableName  = 'finger_task_record';
 
     protected $primaryKey = 'id';
+
+    /**
+     * 更新时间字段。
+     * 
+     * @var string
+     */
+    protected $updateTime = false;
 }
