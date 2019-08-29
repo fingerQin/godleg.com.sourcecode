@@ -5,7 +5,9 @@
  * @date 2019-08-26
  */
 
-namespace Services\System;
+namespace Services\Task;
+
+use finger\Database\Db;
 
 class Record extends \Services\AbstractBase
 {
@@ -48,9 +50,10 @@ class Record extends \Services\AbstractBase
             $params[':endTime'] = $endTime;
         }
         $sql   = "SELECT COUNT(1) AS count FROM finger_task_record AS a INNER JOIN finger_task AS b "
-               . "ON(a.taskid=b.taskid) WHERE {$where} ";
+               . "ON(a.taskid=b.taskid) {$where} ";
         $total = Db::count($sql, $params);
-        $sql   = "SELECT a.id, a.gold, a.step_count, a.image_url, a.sponsorid, a.c_time, b.taskid, b.task_name, c.realname"
+        $sql   = "SELECT a.id, a.gold, a.step_count, a.image_url, a.sponsorid, a.c_time, b.taskid,"
+               . "b.task_name, c.realname, b.longitude, b.latitude "
                . "FROM finger_task_record AS a INNER JOIN finger_task AS b ON(a.taskid=b.taskid) "
                . "INNER JOIN finger_user AS c ON(a.userid=c.userid) "
                . "{$where} ORDER BY a.id DESC LIMIT {$offset},{$count}";

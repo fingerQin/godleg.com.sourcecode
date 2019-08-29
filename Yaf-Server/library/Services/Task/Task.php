@@ -297,7 +297,7 @@ class Task extends \Services\AbstractBase
     private static function checkUserCheckInTimes($userid, $taskId, $timesLimit)
     {
         if ($timesLimit > 0) {
-            $taskTotal = self::getUserTodayTaskTotal($userid, $taskId);
+            $taskTotal = self::getUserTaskTotal($userid, $taskId);
             if ($taskTotal >= $timesLimit) {
                 YCore::exception(STATUS_SERVER_ERROR, '您打卡已超过上限');
             }
@@ -312,7 +312,7 @@ class Task extends \Services\AbstractBase
      *
      * @return int
      */
-    private static function getUserTodayTaskTotal($userid, $taskId)
+    private static function getUserTaskTotal($userid, $taskId)
     {
         $cacheKey = "system_task_total:{$taskId}-{$userid}";
         $redis    = YCache::getRedisClient();
@@ -323,6 +323,7 @@ class Task extends \Services\AbstractBase
             $lockKey = "system_task_today_lock:{$taskId}-{$userid}";
             $status  = RedisMutexLock::lock($lockKey, 3, 30);
             if ($status) {
+
                 $TaskRecord = new TaskRecord();
                 $total      = $TaskRecord->count(['taskid' => $taskId, 'userid' => $userid]);
                 $redis->set($cacheKey, $total, ['EX' => 86400]);
@@ -344,17 +345,20 @@ class Task extends \Services\AbstractBase
      */
     private static function isTodayDo($userid, $taskId)
     {
-        $cacheKey = "system_task_checkin_status:{$taskId}-{$userid}";
-        $redis    = YCache::getRedisClient();
-        $status   = $redis->get($cacheKey);
+        $timestamp = time(); 
+        $yymmdd    = date('Ymd', $timestamp);
+        $cacheKey  = "sys_task_checkin_status_{$yymmdd}:taskid_{$taskId}_userid_{$userid}";
+        $redis     = YCache::getRedisClient();
+        $status    = $redis->get($cacheKey);
         if ($status !== FALSE) {
             return $status==1 ? true : false;
         } else {
-            $datetime = date('Y-m-d 00:00:00');
+            $starTime = date('Y-m-d 00:00:00', $timestamp);
+            $endTime  = date('Y-m-d 23:59:59', $timestamp);
             $where    = [
                 'userid' => $userid, 
                 'taskid' => $taskId, 
-                'c_time' => ['>', $datetime]
+                'c_time' => ['BETWEEN', [$starTime, $endTime]]
             ];
             $TaskRecordModel = new TaskRecord();
             $taskRecord      = $TaskRecordModel->fetchOne(['id'], $where);
@@ -374,10 +378,12 @@ class Task extends \Services\AbstractBase
      */
     private static function setTodayAlreadyDo($userid, $taskId)
     {
+        $timestamp = time();
+        $yymmdd    = date('Ymd', $timestamp);
         self::setTodayTaskCount($taskId);
         self::setTaskTotal($taskId);
-        $cacheKey = "system_task_checkin_status:{$taskId}-{$userid}";
-        $redis    = YCache::getRedisClient();
+        $cacheKey  = "sys_task_checkin_status_{$yymmdd}:taskid_{$taskId}_userid_{$userid}";
+        $redis     = YCache::getRedisClient();
         $redis->set($cacheKey, 1, ['EX' => 86400]);
     }
 
@@ -393,7 +399,8 @@ class Task extends \Services\AbstractBase
      */
     private static function setTodayTaskCount($taskId)
     {
-        $cacheKey = "system_task_today:{$taskId}";
+        $yymmdd   = date('Ymd', time());
+        $cacheKey = "system_task_today_{$yymmdd}:{$taskId}";
         $redis    = YCache::getRedisClient();
         $total    = $redis->get($cacheKey);
         if ($total !== FALSE) {
@@ -410,18 +417,25 @@ class Task extends \Services\AbstractBase
      */
     private static function getTodayTaskCount($taskId)
     {
-        $cacheKey = "system_task_today:{$taskId}";
-        $redis    = YCache::getRedisClient();
-        $total    = $redis->get($cacheKey);
+        $timestamp = time();
+        $yymmdd    = date('Ymd', $timestamp);
+        $cacheKey  = "system_task_today_{$yymmdd}:{$taskId}";
+        $redis     = YCache::getRedisClient();
+        $total     = $redis->get($cacheKey);
         if ($total !== FALSE) {
             return intval($total);
         } else {
-            $lockKey = "system_task_today_lock:{$taskId}";
+            $lockKey = "system_task_today_lock_{$yymmdd}:{$taskId}";
             $status  = RedisMutexLock::lock($lockKey, 3, 30);
             if ($status) {
-                $datetime   = date('Y-m-d 00:00:00', time());
+                $startTime  = date('Y-m-d 00:00:00', $timestamp);
+                $endTime    = date('Y-m-d 23:59:59', $timestamp);
+                $where      = [
+                    'taskid' => $taskId,
+                    'c_time' => ['BETWEEN', [$startTime, $endTime]]
+                ];
                 $TaskRecord = new TaskRecord();
-                $total      = $TaskRecord->count(['taskid' => $taskId, 'c_time' => ['>', $datetime]]);
+                $total      = $TaskRecord->count($where);
                 $redis->set($cacheKey, $total, ['NX', 'EX' => 86400]);
                 return $total;
             } else {

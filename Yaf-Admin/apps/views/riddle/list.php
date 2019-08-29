@@ -21,7 +21,7 @@
 
 		<div class="search-box row">
 			<div class="col-md-12">
-				<form action="{{'Prelife/list'|url}}" method="get">
+				<form action="{{'Riddle/list'|url}}" method="get">
 					<div class="form-group">
                         <span class="pull-left form-span">OpenID</span>
 						<input type="text" name="openid" class="form-control" style="width:180px;" value="{{$openid}}" placeholder="请输入要查询的OpenID">
