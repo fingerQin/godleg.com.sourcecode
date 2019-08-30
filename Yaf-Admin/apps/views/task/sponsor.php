@@ -52,23 +52,23 @@
 						<td class="text-center">{{$item.sponsorid}}</td>
 						<td class="text-center">{{$item.name}}</td>
 						<td class="text-center">{{$item.district}}</td>
-						<td class="text-center">-</td>
+						<td class="text-center"><img src="{{$item.imageUrl}}" width="180" alt=""></td>
 						<td class="text-left">{{$item.link_man}}<br/>{{$item.link_phone}}<br/>{{$item.address}}</td>
 						<td class="text-center">{{$item.longitude}}/{{$item.latitude}}</td>
 						<td class="text-center">{{$item.u_time}}</td>
 						<td class="text-center">{{$item.c_time}}</td>
 						<td class="text-center">
 							{{if 'Task'|access:'addTask'}}
-							<p><a href="###" onclick="addTask({{$item.sponsorid}}, '{{$item.name|escape}}')" >发布打卡任务</a></p>
+							<p><a href="###" onclick="addTask({{$item.sponsorid}}, '{{$item.name}}')" >发布打卡任务</a></p>
 							{{/if}}
 							{{if 'Task'|access:'taskList'}}
 							<p><a href="{{'Task'|url:taskList:['sponsorid' => $item.sponsorid]}}">查看打卡任务</a></p>
 							{{/if}}
 							{{if 'Task'|access:'editSponsor'}}
-							<a href="###" onclick="edit({{$item.sponsorid}}, '{{$item.name|escape}}')" title="修改">修改</a> | 
+							<a href="###" onclick="edit({{$item.sponsorid}}, '{{$item.name}}')" title="修改">修改</a> | 
 							{{/if}}
 							{{if 'Task'|access:'deleteSponsor'}}
-							<a href="###" onclick="deleteDialog('deleteSponsor', '{{'Task'|url:deleteSponsor:['sponsorid' => $item.sponsorid]}}', '{{$item.name|escape}}')" title="删除">删除</a>
+							<a href="###" onclick="deleteDialog('deleteSponsor', '{{'Task'|url:deleteSponsor:['sponsorid' => $item.sponsorid]}}', '{{$item.name}}')" title="删除">删除</a>
 							{{/if}}
 						</td>
 					</tr>
@@ -78,7 +78,7 @@
 					<tr>
 						<td colspan="16">
 							<div class="pull-right page-block">
-								<nav><ul class="pagination">{{$pageHtml}}</ul></nav>
+								<nav><ul class="pagination">{{$pageHtml nofilter}}</ul></nav>
 							</div>
 						</td>
 					</tr>

@@ -6,7 +6,7 @@
 			<tr>
 				<th class="left-txt">身份：</th>
 				<td>
-					<input type="text" name="title" id="title" class="input-text" value="{{$detail.title|escape}}" />
+					<input type="text" name="title" id="title" class="input-text" value="{{$detail.title}}" />
 				</td>
 			</tr>
             <tr>
@@ -33,7 +33,7 @@
 			<tr>
 				<th class="left-txt">名字解释</th>
 				<td>
-					<textarea type="text" name="intro" class="textarea">{{$detail.intro|escape}}</textarea>
+					<textarea type="text" name="intro" class="textarea">{{$detail.intro}}</textarea>
 				</td>
 			</tr>
 			<tr>

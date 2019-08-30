@@ -33,7 +33,7 @@
 					{{foreach $list as $item}}
     	            <tr>
 						<td align="center">
-							<input type="text" class="form-control" name="goods[{{$item.id}}][goods_name]" value="{{$item.goods_name|escape}}" />
+							<input type="text" class="form-control" name="goods[{{$item.id}}][goods_name]" value="{{$item.goods_name}}" />
 						</td>
 						<td align="center">
 							<input type="hidden" class="form-control" name="goods[{{$item.id}}][image_url]" id="avatar_{{$item.id}}" value="{{$item.image_url}}" />

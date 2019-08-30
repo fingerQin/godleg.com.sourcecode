@@ -6,7 +6,7 @@
 		<table class="content" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<th class="left-txt">竞猜标题：</th>
-				<td><input type="text" name="title" id="title" size="30" class="input-text" value="{{$detail.title|escape}}"></td>
+				<td><input type="text" name="title" id="title" size="30" class="input-text" value="{{$detail.title}}"></td>
 			</tr>
 			<tr>
 				<th class="left-txt">竞猜图片：</th>

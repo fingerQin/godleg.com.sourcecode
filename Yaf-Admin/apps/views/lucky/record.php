@@ -17,7 +17,7 @@
 			<div class="col-md-12">
 				<form action="{{'Lucky/record'|url}}" method="post">
 					<div class="form-group">
-						<input type="text" name="mobile" class="form-control" style="width:180px;" value="{{$mobile|escape}}" placeholder="请输入手机账号查询">
+						<input type="text" name="mobile" class="form-control" style="width:180px;" value="{{$mobile}}" placeholder="请输入手机账号查询">
 					</div>
 					<div class="form-group">
 						<button type="submit" class="form-control btn btn-info"><span class="glyphicon glyphicon-search"></span> 查询</button>
@@ -43,7 +43,7 @@
                 	{{foreach $list as $item}}
     	           	<tr>
 						<td align="center">{{$item.id}}</td>
-						<td align="center">{{$item.goods_name|escape}}</td>
+						<td align="center">{{$item.goods_name}}</td>
 						<td align="center">{{$item.mobile}}</td>
 						<td align="center">{{$item.reward_val}}</td>
 						<td align="center">{{$item.range_val}}</td>
@@ -55,7 +55,7 @@
 					<tr>
 						<td colspan="16">
 							<div class="pull-right page-block">
-								<nav><ul class="pagination">{{$page_html}}</ul></nav>
+								<nav><ul class="pagination">{{$pageHtml nofilter}}</ul></nav>
 							</div>
 						</td>
 					</tr>

@@ -57,10 +57,11 @@ class NameController extends \Common\controllers\Admin
             $expl = $this->getString('expl');
             Intitle::edit($this->adminId, $id, $name, $type, $sex, $expl);
             $this->json(true, '修改成功');
+        } else {
+            $id     = $this->getInt('id');
+            $detail = Intitle::detail($id);
+            $this->assign('detail', $detail);
         }
-        $id     = $this->getInt('id');
-        $detail = Intitle::detail($id);
-        $this->assign('detail', $detail);
     }
 
     /**

@@ -57,10 +57,11 @@ class PrelifeController extends \Common\controllers\Admin
             $intro    = $this->getString('intro');
             PreLife::edit($this->adminId, $id, $priority, $title, $type, $intro);
             $this->json(true, '修改成功');
+        } else {
+            $id     = $this->getInt('id');
+            $detail = PreLife::detail($id);
+            $this->assign('detail', $detail);
         }
-        $id     = $this->getInt('id');
-        $detail = PreLife::detail($id);
-        $this->assign('detail', $detail);
     }
 
     /**

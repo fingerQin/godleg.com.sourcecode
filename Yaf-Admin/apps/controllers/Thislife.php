@@ -55,10 +55,11 @@ class ThislifeController extends \Common\controllers\Admin
             $intro    = $this->getString('intro');
             ThisLife::edit($this->adminId, $id, $priority, $socre, $title, $intro);
             $this->json(true, '修改成功');
+        } else {
+            $id     = $this->getInt('id');
+            $detail = ThisLife::detail($id);
+            $this->assign('detail', $detail);
         }
-        $id     = $this->getInt('id');
-        $detail = ThisLife::detail($id);
-        $this->assign('detail', $detail);
     }
 
     /**

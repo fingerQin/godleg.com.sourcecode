@@ -46,8 +46,9 @@ class RiddleController extends \Common\controllers\Admin
             $answerImg   = $this->getString('answer_img');
             Riddle::add($this->adminId, $priority, $socre, $question, $questionImg, $answer, $answerImg);
             $this->json(true, '添加成功');
+        } else {
+            $this->assign('files_domain_name', YUrl::getFilesDomainName());
         }
-        $this->assign('files_domain_name', YUrl::getFilesDomainName());
     }
 
     /**
@@ -65,11 +66,12 @@ class RiddleController extends \Common\controllers\Admin
             $answerImg   = $this->getString('answer_img');
             Riddle::edit($this->adminId, $id, $priority, $socre, $question, $questionImg, $answer, $answerImg);
             $this->json(true, '修改成功');
+        } else {
+            $id     = $this->getInt('id');
+            $detail = Riddle::detail($id);
+            $this->assign('detail', $detail);
+            $this->assign('files_domain_name', YUrl::getFilesDomainName());
         }
-        $id     = $this->getInt('id');
-        $detail = Riddle::detail($id);
-        $this->assign('detail', $detail);
-        $this->assign('files_domain_name', YUrl::getFilesDomainName());
     }
 
     /**

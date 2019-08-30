@@ -26,7 +26,7 @@
 					</div>
 					<div class="form-group">
 						<span class="pull-left form-span">活动标题</span>
-						<input type="text" name="title" id="title" class="form-control" style="width: 180px;" value="{{$title|escape}}" placeholder="请输入活动标题">
+						<input type="text" name="title" id="title" class="form-control" style="width: 180px;" value="{{$title}}" placeholder="请输入活动标题">
                     </div>
                     <div class="form-group" style="width:415px;">
 						<span class="pull-left form-span">时间</span>
@@ -85,7 +85,7 @@
                     {{foreach $list as $item}}
     	            <tr>
 						<td align="center">{{$item.guessid}}</td>
-						<td align="center">{{$item.title|escape}}</td>
+						<td align="center">{{$item.title}}</td>
 						<td align="center"><img alt="活动图片" src="{{$item.image_url}}" width="200" /></td>
 						<td align="center">{{$item.deadline}}</td>
 						<td align="center">{{if $item.is_open}}是{{else}}否{{/if}}</td>
@@ -98,11 +98,11 @@
 						<td align="center">{{$item.c_time}}</td>
 						<td align="center">
 							{{if 'Guess'|access:'record'}}
-							<a href="###" onclick="records({{$item.guessid}}, '{{$item.title|escape}}')">竞猜记录</a>
+							<a href="###" onclick="records({{$item.guessid}}, '{{$item.title}}')">竞猜记录</a>
 							{{/if}}
 
 							{{if 'Guess'|access:'edit'}}
-							<a href="###" onclick="edit({{$item.guessid}}, '{{$item.title|escape}}')">编辑</a>
+							<a href="###" onclick="edit({{$item.guessid}}, '{{$item.title}}')">编辑</a>
 							{{/if}}
 
 							{{if 'Guess'|access:'delete'}}
@@ -117,7 +117,7 @@
 						<td colspan="16">
 							<div class="pull-right page-block">
 								<nav>
-									<ul class="pagination">{{$page_html}}</ul>
+									<ul class="pagination">{{$pageHtml nofilter}}</ul>
 								</nav>
 							</div>
 						</td>

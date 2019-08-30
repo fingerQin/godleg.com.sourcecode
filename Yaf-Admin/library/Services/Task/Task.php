@@ -45,13 +45,18 @@ class Task extends \Services\AbstractBase
                . "AS b ON (a.sponsorid=b.sponsorid) {$where} ";
         $total = Db::count($sql, $params);
         $sql   = "SELECT a.taskid, a.task_name, a.address, a.gold, a.move_step, a.times_limit, "
-               . "a.longitude, a.latitude, a.display, b.name, a.c_time, a.u_time, "
+               . "a.longitude, a.latitude, a.display, b.name, a.c_time, a.u_time, a.albums, "
                . "concat(c.province_name,c.city_name,c.district_name) AS district "
                . "FROM finger_task AS a LEFT JOIN  "
                . "finger_task_sponsor AS b ON(a.sponsorid=b.sponsorid) "
                . "LEFT JOIN finger_district AS c ON(a.district_code=c.district_code AND c.region_type=3) "
                . "{$where} ORDER BY a.taskid DESC LIMIT {$offset},{$count}";
         $list = Db::all($sql, $params);
+        foreach ($list as $key => $item) {
+            $item['imageUrl'] = self::getAlbumsFirstPic(json_decode($item['albums'], true));
+            unset($item['albums']);
+            $list[$key] = $item;
+        }
         $result      = [
             'list'   => $list,
             'total'  => $total,
@@ -60,6 +65,22 @@ class Task extends \Services\AbstractBase
             'isnext' => self::isHasNextPage($total, $page, $count)
         ];
         return $result;
+    }
+
+    /**
+     * 获取相册第一张图片。
+     *
+     * @param  array  $albums 相册。
+     *
+     * @return string
+     */
+    private static function getAlbumsFirstPic($albums)
+    {
+        if (empty($albums)) {
+            return '';
+        } else {
+            return $albums[0];
+        }
     }
 
     /**

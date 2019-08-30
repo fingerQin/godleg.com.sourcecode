@@ -6,7 +6,7 @@
 			<tr>
 				<th class="left-txt">题目：</th>
 				<td>
-					<textarea type="text" name="question" class="textarea">{{$detail.question|escape}}</textarea>
+					<textarea type="text" name="question" class="textarea">{{$detail.question}}</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -35,13 +35,13 @@
 			<tr>
 				<th class="left-txt">答案：</th>
 				<td>
-					<textarea type="text" name="answer" class="textarea">{{$detail.answer|escape}}</textarea>
+					<textarea type="text" name="answer" class="textarea">{{$detail.answer}}</textarea>
 				</td>
 			</tr>
 			<tr>
 				<th class="left-txt">题目图片：</th>
 				<td>
-					<input type="hidden" name="answer_img" id="answer_img" value="{{$detail.answer_img|escape}}" />
+					<input type="hidden" name="answer_img" id="answer_img" value="{{$detail.answer_img}}" />
 					<div id="answerPreviewImage"></div>
 				</td>
 			</tr>

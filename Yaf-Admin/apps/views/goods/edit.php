@@ -35,7 +35,7 @@
         <table class="content" border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <th class="left-txt">商品名称：</th>
-                <td><input type="text" name="goods_name" id="goods_name" size="60" class="input-text" value="{{$data.goods_name|escape}}"></td>
+                <td><input type="text" name="goods_name" id="goods_name" size="60" class="input-text" value="{{$data.goods_name}}"></td>
             </tr>
             <tr>
                 <th class="left-txt">分类：</th>

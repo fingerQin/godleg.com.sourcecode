@@ -30,7 +30,7 @@ class GoodsController extends \Common\controllers\Admin
         $paginator  = new Paginator($list['total'], 10);
         $pageHtml   = $paginator->backendPageShow();
         $this->assign('cat_list', $catList);
-        $this->assign('page_html', $pageHtml);
+        $this->assign('pageHtml', $pageHtml);
         $this->assign('updown', $updown);
         $this->assign('goods_name', $goodsName);
         $this->assign('start_price', $startPrice);
@@ -59,11 +59,12 @@ class GoodsController extends \Common\controllers\Admin
             ];
             Goods::add($data);
             $this->json(true, '添加成功');
+        } else {
+            $catList = Category::list(0, Category::CAT_GOODS);
+            $filesDomainName  = YUrl::getFilesDomainName();
+            $this->assign('files_domain_name', $filesDomainName);
+            $this->assign('cat_list', $catList);
         }
-        $catList = Category::list(0, Category::CAT_GOODS);
-        $filesDomainName  = YUrl::getFilesDomainName();
-        $this->assign('files_domain_name', $filesDomainName);
-        $this->assign('cat_list', $catList);
     }
 
     /**
@@ -86,14 +87,15 @@ class GoodsController extends \Common\controllers\Admin
             ];
             Goods::edit($data);
             $this->json(true, '保存成功');
+        } else {
+            $goodsId         = $this->getInt('goods_id');
+            $goodsDetail     = Goods::detail($goodsId);
+            $catList         = Category::list(0, Category::CAT_GOODS);
+            $filesDomainName = YUrl::getFilesDomainName();
+            $this->assign('files_domain_name', $filesDomainName);
+            $this->assign('cat_list', $catList);
+            $this->assign('data', $goodsDetail);
         }
-        $goodsId         = $this->getInt('goods_id');
-        $goodsDetail     = Goods::detail($goodsId);
-        $catList         = Category::list(0, Category::CAT_GOODS);
-        $filesDomainName = YUrl::getFilesDomainName();
-        $this->assign('files_domain_name', $filesDomainName);
-        $this->assign('cat_list', $catList);
-        $this->assign('data', $goodsDetail);
     }
 
     /**

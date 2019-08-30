@@ -41,12 +41,11 @@ class LuckyController extends \Common\controllers\Admin
     {
         $mobile    = $this->getString('mobile', '');
         $goodsName = $this->getString('goods_name', '');
-        $goodsType = $this->getString('goods_type', '');
         $page      = $this->getInt('page', 1);
         $list      = Lucky::records($mobile, $goodsName, $page, 20);
         $paginator = new Paginator($list['total'], 20);
         $pageHtml  = $paginator->backendPageShow();
-        $this->assign('page_html', $pageHtml);
+        $this->assign('pageHtml', $pageHtml);
         $this->assign('list', $list['list']);
         $this->assign('mobile', $mobile);
         $this->assign('goods_name', $goodsName);

@@ -51,7 +51,7 @@
 						<td class="text-center">{{$item.task_name}}</td>
 						<td class="text-center">{{$item.name}}</td>
                         <td class="text-center">{{$item.district}}</td>
-                        <td class="text-center">-</td>
+                        <td class="text-center"><img src="{{$item.imageUrl}}" width="180" alt=""></td>
 						<td class="text-left">{{$item.address}}</td>
 						<td class="text-center">{{$item.longitude}}/{{$item.latitude}}</td>
 						<td class="text-center">{{$item.u_time}}</td>
@@ -74,7 +74,7 @@
 					<tr>
 						<td colspan="16">
 							<div class="pull-right page-block">
-								<nav><ul class="pagination">{{$pageHtml}}</ul></nav>
+								<nav><ul class="pagination">{{$pageHtml nofilter}}</ul></nav>
 							</div>
 						</td>
 					</tr>

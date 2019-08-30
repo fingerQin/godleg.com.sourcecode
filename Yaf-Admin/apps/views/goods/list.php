@@ -96,7 +96,7 @@
 						<td class="text-center">{{$item.c_time}}</td>
 						<td class="text-center">
 							{{if 'Goods'|access:'edit'}}
-							<a href="###" onclick="edit({{$item.goodsid}}, '{{$item.goods_name|escape}}')">修改</a> |
+							<a href="###" onclick="edit({{$item.goodsid}}, '{{$item.goods_name}}')">修改</a> |
 							{{/if}}
 							{{if 'Goods'|access:'delete'}}
 							<a href="###" onclick="deleteDialog('deleteGoods', '{{'Goods'|url:'delete':['goods_id' => $item.goodsid]}}', '{{$item.goods_name}}')">删除</a>
@@ -109,7 +109,7 @@
 					<tr>
 						<td colspan="16">
 							<div class="pull-right page-block">
-								<nav><ul class="pagination">{{$page_html}}</ul></nav>
+								<nav><ul class="pagination">{{$pageHtml nofilter}}</ul></nav>
 							</div>
 						</td>
 					</tr>
