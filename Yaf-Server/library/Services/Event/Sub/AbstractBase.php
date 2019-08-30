@@ -8,6 +8,7 @@
 
 namespace Services\Event\Sub;
 
+use finger\Database\Db;
 use Utils\YLog;
 use Utils\YCache;
 use Utils\YCore;
@@ -168,12 +169,8 @@ abstract class AbstractBase extends \finger\Thread\Thread
                         }
                     }
                 } else {
-                    $pong = $redis->ping();
-                    if ($pong != '+PONG') {
-                        YLog::log('Redis ping failure!', 'redis', 'ping');
-                        YCore::exception(STATUS_ERROR, 'Redis ping failure!');
-                    }
-                    $EventModel->ping();
+                    Db::ping();
+                    YCache::ping();
                     usleep(100000);
                 }
                 $this->isExit($startTimeTsp);
