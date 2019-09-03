@@ -250,9 +250,10 @@ class Connection
                         if ($isReconnect && !self::$transactionStatus) {
                             (new self)->reconnect($dbOption);
                         } else {
-                            YCore::exception(STATUS_ERROR, 'The database server is disconnected1!');
+                            YCore::exception(STATUS_ERROR, 'The database server is disconnected!');
                         }
                     } else {
+                        YLog::log($info, 'mysql', 'ping');
                         YCore::exception(STATUS_ERROR, 'The database server is disconnected2!');
                     }
                 } catch (\PDOException $e) {
@@ -261,7 +262,7 @@ class Connection
                         YLog::log("reconnect:{$dbOption}", 'errors', 'mysql-ping');
                         (new self)->reconnect($dbOption);
                     } else {
-                        YCore::exception(STATUS_ERROR, 'The database server is disconnected3!');
+                        YCore::exception(STATUS_ERROR, 'The database server is disconnected!');
                     }
                 }
             }
