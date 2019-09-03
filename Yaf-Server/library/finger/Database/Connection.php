@@ -250,10 +250,10 @@ class Connection
                         if ($isReconnect && !self::$transactionStatus) {
                             (new self)->reconnect($dbOption);
                         } else {
-                            YCore::exception(STATUS_ERROR, 'The database server is disconnected!');
+                            YCore::exception(STATUS_ERROR, 'The database server is disconnected1!');
                         }
                     } else {
-                        YCore::exception(STATUS_ERROR, 'The database server is disconnected!');
+                        YCore::exception(STATUS_ERROR, 'The database server is disconnected2!');
                     }
                 } catch (\PDOException $e) {
                     $mysqlGoneAwayErrMsg = 'SQLSTATE[HY000]: General error: 2006 MySQL server has gone away';
@@ -261,7 +261,7 @@ class Connection
                         YLog::log("reconnect:{$dbOption}", 'errors', 'mysql-ping');
                         (new self)->reconnect($dbOption);
                     } else {
-                        YCore::exception(STATUS_ERROR, 'The database server is disconnected!');
+                        YCore::exception(STATUS_ERROR, 'The database server is disconnected3!');
                     }
                 }
             }
