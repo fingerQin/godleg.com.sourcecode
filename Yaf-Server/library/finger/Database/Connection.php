@@ -253,7 +253,7 @@ class Connection
                             YCore::exception(STATUS_ERROR, 'The database server is disconnected!');
                         }
                     } else {
-                        YLog::log($info, 'mysql', 'ping');
+                        // YLog::log($info, 'mysql', 'ping');
                         YCore::exception(STATUS_ERROR, 'The database server is disconnected2!');
                     }
                 } catch (\PDOException $e) {
