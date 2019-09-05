@@ -323,7 +323,6 @@ class Task extends \Services\AbstractBase
             $lockKey = "system_task_today_lock:{$taskId}-{$userid}";
             $status  = RedisMutexLock::lock($lockKey, 3, 30);
             if ($status) {
-
                 $TaskRecord = new TaskRecord();
                 $total      = $TaskRecord->count(['taskid' => $taskId, 'userid' => $userid]);
                 $redis->set($cacheKey, $total, ['EX' => 86400]);
