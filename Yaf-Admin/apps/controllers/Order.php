@@ -6,6 +6,7 @@
  */
 
 use finger\Paginator;
+use Services\Mall\Logistics;
 use Services\Mall\Order;
 
 class OrderController extends \Common\controllers\Admin
@@ -45,11 +46,16 @@ class OrderController extends \Common\controllers\Admin
     public function deliverGoodsAction()
     {
         if ($this->_request->isXmlHttpRequest()) {
-            $orderId         = $this->getInt('orderid');
+            $orderId         = $this->getInt('orderId');
             $logisticsCode   = $this->getString('logistics_code');
             $logisticsNumber = $this->getString('logistics_number');
             Order::deliverGoods($this->adminId, $orderId, $logisticsCode, $logisticsNumber);
             $this->json(true, '发货成功');
+        } else {
+            $orderId = $this->getInt('orderid');
+            $express = Logistics::getExpressKeyValue();
+            $this->assign('express', $express);
+            $this->assign('orderId', $orderId);
         }
     }
 

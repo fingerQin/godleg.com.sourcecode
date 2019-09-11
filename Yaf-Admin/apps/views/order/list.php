@@ -88,8 +88,8 @@
 						</td>
 						<td align="center">{{$item.c_time}}</td>
                         <td align="center">
-                            <a href="###" onclick="audit({{$item.orderid}}, '{{$item.order_sn}}')">发货</a>
-                            <a href="###" onclick="details({{$item.orderid}}, '{{$item.order_sn}}')">关闭</a><br />
+                            <a href="###" onclick="deliver({{$item.orderid}}, '{{$item.order_sn}}')">发货</a>
+                            <a href="###" onclick="close({{$item.orderid}}, '{{$item.order_sn}}')">关闭</a><br />
                             <a href="###" onclick="details({{$item.orderid}}, '{{$item.order_sn}}')">修改收货地址</a>
                         </td>
 					</tr>
@@ -115,7 +115,7 @@
 function deliver(id, name) {
 	var title = '您正在对订单『' + name + '』进行发货';
 	var page_url = "{{'Order/deliverGoods'|url}}?orderid="+id;
-	postDialog('auditCoupon', page_url, title, 450, 300);
+	postDialog('auditCoupon', page_url, title, 400, 200);
 }
 function close(id, name) {
 	var title = '您确定关闭『' + name + '』吗？';
