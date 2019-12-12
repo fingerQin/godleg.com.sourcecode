@@ -7,10 +7,10 @@
 
 namespace Services\Game;
 
+use finger\Core;
 use finger\Validator;
 use finger\Database\Db;
-use Utils\YCore;
-use Utils\YDate;
+use finger\Date;
 use Models\GmLotteryResult;
 use Models\GmLotteryBetRecord;
 use Models\GmLotteryBetRecordNumber;
@@ -73,9 +73,9 @@ class Lottery extends \Services\AbstractBase
         ];
         $detail = $lotteryResultModel->fetchOne($columns, ['id' => $id, 'status' => 1]);
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '开奖结果不存在');
+            Core::exception(STATUS_SERVER_ERROR, '开奖结果不存在');
         }
-        $detail['lottery_time'] = YDate::formatDateTime($detail['lottery_time']);
+        $detail['lottery_time'] = Date::formatDateTime($detail['lottery_time']);
         return $detail;
     }
 
@@ -120,7 +120,7 @@ class Lottery extends \Services\AbstractBase
         $GmLotteryResultModel = new GmLotteryResult();
         $ok = $GmLotteryResultModel->insert($data);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
         }
     }
 
@@ -167,13 +167,13 @@ class Lottery extends \Services\AbstractBase
         ];
         $detail = $LotteryResultModel->fetchOne([], $where);
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '开奖记录不存在');
+            Core::exception(STATUS_SERVER_ERROR, '开奖记录不存在');
         }
         $data['u_by']   = $adminId;
         $data['u_time'] = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']);
         $ok = $LotteryResultModel->update($data, $where);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
         }
     }
 
@@ -189,7 +189,7 @@ class Lottery extends \Services\AbstractBase
         $where  = ['id' => $id, 'status' => GmLotteryResult::STATUS_YES];
         $detail = $LotteryResultModel->fetchOne([], $where);
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '彩票开奖结果不存在');
+            Core::exception(STATUS_SERVER_ERROR, '彩票开奖结果不存在');
         }
         $data = [
             'status' => GmLotteryResult::STATUS_DELETED,
@@ -198,7 +198,7 @@ class Lottery extends \Services\AbstractBase
         ];
         $ok = $LotteryResultModel->update($data, $where);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
         }
     }
 

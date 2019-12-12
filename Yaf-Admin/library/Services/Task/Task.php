@@ -7,7 +7,7 @@
 
 namespace Services\Task;
 
-use Utils\YCore;
+use finger\Core;
 use finger\Validator;
 use finger\Database\Db;
 use Models\District;
@@ -139,7 +139,7 @@ class Task extends \Services\AbstractBase
             ]
         );
         if (empty($sponsor)) {
-            YCore::exception(STATUS_SERVER_ERROR, '主办方不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '主办方不存在或已经删除');
         }
         $districtModel = new District();
         $districtInfo  = $districtModel->fetchOne([], 
@@ -149,13 +149,13 @@ class Task extends \Services\AbstractBase
             ]
         );
         if (empty($districtInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '地区编码不正确');
+            Core::exception(STATUS_SERVER_ERROR, '地区编码不正确');
         }
         if ($data['longitude'] > 180 || $data['longitude'] < 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '经度值不正确');
+            Core::exception(STATUS_SERVER_ERROR, '经度值不正确');
         }
         if ($data['latitude'] > 90 || $data['latitude'] < 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '纬度值不正确');
+            Core::exception(STATUS_SERVER_ERROR, '纬度值不正确');
         }
         $data['albums'] = self::filterAlbums($data['albums']);
         $data['albums'] = json_encode($data['albums']);
@@ -165,7 +165,7 @@ class Task extends \Services\AbstractBase
         $TaskModel      = new TaskModel();
         $ok = $TaskModel->insert($data);
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '添加失败');
+            Core::exception(STATUS_SERVER_ERROR, '添加失败');
         }
     }
 
@@ -227,13 +227,13 @@ class Task extends \Services\AbstractBase
             ]
         );
         if (empty($districtInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '地区编码不正确');
+            Core::exception(STATUS_SERVER_ERROR, '地区编码不正确');
         }
         if ($data['longitude'] > 180 || $data['longitude'] < 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '经度值不正确');
+            Core::exception(STATUS_SERVER_ERROR, '经度值不正确');
         }
         if ($data['latitude'] > 90 || $data['latitude'] < 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '纬度值不正确');
+            Core::exception(STATUS_SERVER_ERROR, '纬度值不正确');
         }
         $data['albums'] = self::filterAlbums($data['albums']);
         $data['albums'] = json_encode($data['albums']);
@@ -242,7 +242,7 @@ class Task extends \Services\AbstractBase
         $TaskModel      = new TaskModel();
         $ok = $TaskModel->update($data, ['taskid' => $data['taskid'], 'status' => TaskModel::STATUS_YES]);
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '添加失败');
+            Core::exception(STATUS_SERVER_ERROR, '添加失败');
         }
     }
 
@@ -268,7 +268,7 @@ class Task extends \Services\AbstractBase
         $TaskModel = new TaskModel();
         $ok = $TaskModel->update($updata, $where);
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '删除失败,请稍候刷新重试');
+            Core::exception(STATUS_SERVER_ERROR, '删除失败,请稍候刷新重试');
         }
     }
 
@@ -322,7 +322,7 @@ class Task extends \Services\AbstractBase
         $TaskModel = new TaskModel();
         $taskInfo  = $TaskModel->fetchOne($columns, ['taskid' => $taskId, 'status' => TaskModel::STATUS_YES]);
         if (empty($taskInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '打卡任务不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '打卡任务不存在或已经删除');
         }
         $taskInfo['albums'] = json_decode($taskInfo['albums'], true);
         $taskInfo['albums'] = self::resetAlbums($taskInfo['albums']);

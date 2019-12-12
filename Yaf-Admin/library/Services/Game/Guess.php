@@ -7,8 +7,8 @@
 
 namespace Services\Game;
 
-use Utils\YCore;
-use Utils\YDate;
+use finger\Core;
+use finger\Date;
 use finger\Validator;
 use finger\Database\Db;
 use Models\GmGuess;
@@ -55,9 +55,9 @@ class Guess extends \Services\AbstractBase
         $guessModel = new GmGuess();
         $guessInfo  = $guessModel->fetchOne($columns, $where);
         if (empty($guessInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动不存在');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动不存在');
         }
-        $guessInfo['deadline']    = YDate::formatDateTime($guessInfo['deadline']);
+        $guessInfo['deadline']    = Date::formatDateTime($guessInfo['deadline']);
         $guessInfo['option_data'] = json_decode($guessInfo['option_data'], true);
         return $guessInfo;
     }
@@ -153,8 +153,8 @@ class Guess extends \Services\AbstractBase
         $sql     = "SELECT {$columns} {$fromTable} {$where} {$orderBy} LIMIT {$offset},{$count}";
         $list    = Db::all($sql, $params);
         foreach ($list as $key => $item) {
-            $item['deadline']      = YDate::formatDateTime($item['deadline']);
-            $item['modified_time'] = YDate::formatDateTime($item['u_time']);
+            $item['deadline']      = Date::formatDateTime($item['deadline']);
+            $item['modified_time'] = Date::formatDateTime($item['u_time']);
             $list[$key]            = $item;
         }
         $result = [
@@ -193,30 +193,30 @@ class Guess extends \Services\AbstractBase
     public static function add($adminId, $title, $imageUrl, $optionsData, $deadline, $openResult = '')
     {
         if (strlen($title) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜标题必须填写');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜标题必须填写');
         }
         if (!Validator::is_len($title, 1, 255, true)) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动标题必须1至255个字符 ');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动标题必须1至255个字符 ');
         }
         if (strlen($imageUrl) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动图片必须上传');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动图片必须上传');
         }
         if (!Validator::is_len($imageUrl, 1, 100, true)) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动图片链接过长 ');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动图片链接过长 ');
         }
         if (strlen($deadline) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '活动参与截止日期必须填写');
+            Core::exception(STATUS_SERVER_ERROR, '活动参与截止日期必须填写');
         }
         if (!Validator::is_date($deadline)) {
-            YCore::exception(STATUS_SERVER_ERROR, '活动参与截止日期格式不正确');
+            Core::exception(STATUS_SERVER_ERROR, '活动参与截止日期格式不正确');
         }
         if (empty($optionsData)) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动选项必须设置');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动选项必须设置');
         }
         if (strlen($openResult) > 0) {
             $openResult = strtoupper($openResult);
             if (!array_key_exists($openResult, self::$options)) {
-                YCore::exception(STATUS_SERVER_ERROR, '竞猜结果数据异常');
+                Core::exception(STATUS_SERVER_ERROR, '竞猜结果数据异常');
             }
         } else {
             $openResult = '';
@@ -226,16 +226,16 @@ class Guess extends \Services\AbstractBase
                 continue;
             }
             if (!isset($item['op_title']) || strlen($item['op_title']) === 0) {
-                YCore::exception(STATUS_SERVER_ERROR, '选项标题必须填写');
+                Core::exception(STATUS_SERVER_ERROR, '选项标题必须填写');
             }
             if (!Validator::is_len($item['op_title'], 1, 20, true)) {
-                YCore::exception(STATUS_SERVER_ERROR, '选项标题不能超过20个字符');
+                Core::exception(STATUS_SERVER_ERROR, '选项标题不能超过20个字符');
             }
             if (!isset($item['op_odds'])) {
-                YCore::exception(STATUS_SERVER_ERROR, '选项赔率必须设置');
+                Core::exception(STATUS_SERVER_ERROR, '选项赔率必须设置');
             }
             if (!Validator::is_float($item['op_odds'])) {
-                YCore::exception(STATUS_SERVER_ERROR, '选项赔率必须是小数');
+                Core::exception(STATUS_SERVER_ERROR, '选项赔率必须是小数');
             }
         }
         $datetime = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']);
@@ -253,7 +253,7 @@ class Guess extends \Services\AbstractBase
         $GuessModel = new GmGuess();
         $ok = $GuessModel->insert($data);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
         }
     }
 
@@ -285,30 +285,30 @@ class Guess extends \Services\AbstractBase
     public static function edit($adminId, $guessId, $title, $imageUrl, $isOpen, $optionsData, $deadline, $openResult = '')
     {
         if (strlen($title) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜标题必须填写');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜标题必须填写');
         }
         if (!Validator::is_len($title, 1, 255, true)) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动标题必须1至255个字符 ');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动标题必须1至255个字符 ');
         }
         if (strlen($imageUrl) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动图片必须上传');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动图片必须上传');
         }
         if (!Validator::is_len($imageUrl, 1, 100, true)) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动图片链接过长 ');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动图片链接过长 ');
         }
         if (strlen($deadline) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '活动参与截止日期必须填写');
+            Core::exception(STATUS_SERVER_ERROR, '活动参与截止日期必须填写');
         }
         if (!Validator::is_date($deadline)) {
-            YCore::exception(STATUS_SERVER_ERROR, '活动参与截止日期格式不正确');
+            Core::exception(STATUS_SERVER_ERROR, '活动参与截止日期格式不正确');
         }
         if (empty($optionsData)) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动选项必须设置');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动选项必须设置');
         }
         if (strlen($openResult) > 0) {
             $openResult = strtoupper($openResult);
             if (!array_key_exists($openResult, self::$options)) {
-                YCore::exception(STATUS_SERVER_ERROR, '竞猜结果数据异常');
+                Core::exception(STATUS_SERVER_ERROR, '竞猜结果数据异常');
             }
         } else {
             $openResult = '';
@@ -319,16 +319,16 @@ class Guess extends \Services\AbstractBase
                 continue;
             }
             if (!isset($item['op_title']) || strlen($item['op_title']) === 0) {
-                YCore::exception(STATUS_SERVER_ERROR, '选项标题必须填写');
+                Core::exception(STATUS_SERVER_ERROR, '选项标题必须填写');
             }
             if (!Validator::is_len($item['op_title'], 1, 20, true)) {
-                YCore::exception(STATUS_SERVER_ERROR, '选项标题不能超过20个字符');
+                Core::exception(STATUS_SERVER_ERROR, '选项标题不能超过20个字符');
             }
             if (!isset($item['op_odds'])) {
-                YCore::exception(STATUS_SERVER_ERROR, '选项赔率必须设置');
+                Core::exception(STATUS_SERVER_ERROR, '选项赔率必须设置');
             }
             if (!Validator::is_float($item['op_odds'])) {
-                YCore::exception(STATUS_SERVER_ERROR, '选项赔率必须是小数');
+                Core::exception(STATUS_SERVER_ERROR, '选项赔率必须是小数');
             }
         }
         $where = [
@@ -338,7 +338,7 @@ class Guess extends \Services\AbstractBase
         $GuessModel = new GmGuess();
         $guessInfo  = $GuessModel->fetchOne([], $where);
         if (empty($guessInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动不存在');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动不存在');
         }
         $data = [
             'title'       => $title,
@@ -353,7 +353,7 @@ class Guess extends \Services\AbstractBase
         ];
         $ok = $GuessModel->update($data, $where);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
         }
     }
 
@@ -372,7 +372,7 @@ class Guess extends \Services\AbstractBase
         $GuessModel = new GmGuess();
         $guessInfo  = $GuessModel->fetchOne([], $where);
         if (empty($guessInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动不存在');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动不存在');
         }
         $data = [
             'status' => GmGuess::STATUS_DELETED,
@@ -381,7 +381,7 @@ class Guess extends \Services\AbstractBase
         ];
         $ok = $GuessModel->update($data, $where);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
         }
     }
 }

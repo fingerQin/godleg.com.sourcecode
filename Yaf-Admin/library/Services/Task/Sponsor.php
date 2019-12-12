@@ -7,7 +7,7 @@
 
 namespace Services\Task;
 
-use Utils\YCore;
+use finger\Core;
 use finger\Validator;
 use finger\Database\Db;
 use Models\District;
@@ -112,13 +112,13 @@ class Sponsor extends \Services\AbstractBase
         $districtModel = new District();
         $districtInfo  = $districtModel->fetchOne([], ['district_code' => $districtCode, 'status' => District::STATUS_YES]);
         if (empty($districtInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '地区编码不正确');
+            Core::exception(STATUS_SERVER_ERROR, '地区编码不正确');
         }
         if ($longitude > 180 || $longitude < 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '经度值不正确');
+            Core::exception(STATUS_SERVER_ERROR, '经度值不正确');
         }
         if ($latitude > 90 || $latitude < 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '纬度值不正确');
+            Core::exception(STATUS_SERVER_ERROR, '纬度值不正确');
         }
         self::checkLinkPhone($linkPhone);
         $albums = self::filterAlbums($albums);
@@ -131,7 +131,7 @@ class Sponsor extends \Services\AbstractBase
         $sponsorModel = new TaskSponsor();
         $ok = $sponsorModel->insert($data);
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '添加失败');
+            Core::exception(STATUS_SERVER_ERROR, '添加失败');
         }
     }
 
@@ -176,13 +176,13 @@ class Sponsor extends \Services\AbstractBase
         $districtModel = new District();
         $districtInfo  = $districtModel->fetchOne([], ['district_code' => $districtCode, 'status' => District::STATUS_YES]);
         if (empty($districtInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '地区编码不正确');
+            Core::exception(STATUS_SERVER_ERROR, '地区编码不正确');
         }
         if ($longitude > 180 || $longitude < 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '经度值不正确');
+            Core::exception(STATUS_SERVER_ERROR, '经度值不正确');
         }
         if ($latitude > 90 || $latitude < 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '纬度值不正确');
+            Core::exception(STATUS_SERVER_ERROR, '纬度值不正确');
         }
         self::checkLinkPhone($linkPhone);
         $albums = self::filterAlbums($albums);
@@ -194,7 +194,7 @@ class Sponsor extends \Services\AbstractBase
         $sponsorModel = new TaskSponsor();
         $ok = $sponsorModel->update($data, ['sponsorid' => $sponsorId, 'status' => TaskSponsor::STATUS_YES]);
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '更新失败');
+            Core::exception(STATUS_SERVER_ERROR, '更新失败');
         }
     }
 
@@ -210,7 +210,7 @@ class Sponsor extends \Services\AbstractBase
         $isMobile   = Validator::is_mobilephone($linkPhone);
         $isTelPhone = Validator::is_telephone($linkPhone);
         if (!$isMobile && !$isTelPhone) {
-            YCore::exception(STATUS_SERVER_ERROR, '联系方式不正确');
+            Core::exception(STATUS_SERVER_ERROR, '联系方式不正确');
         }
     }
 
@@ -261,7 +261,7 @@ class Sponsor extends \Services\AbstractBase
         $columns = 'sponsorid, name, district_code, address, albums, longitude, latitude, link_man, link_phone';
         $detail  = (new TaskSponsor())->fetchOne($columns, ['sponsorid' => $sponsorId, 'status' => TaskSponsor::STATUS_YES]);
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '记录不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '记录不存在或已经删除');
         }
         $detail['albums'] = json_decode($detail['albums'], true);
         $detail['albums'] = self::resetAlbums($detail['albums']);
@@ -290,7 +290,7 @@ class Sponsor extends \Services\AbstractBase
         $TaskSponsorModel = new TaskSponsor();
         $ok = $TaskSponsorModel->update($updata, $where);
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '更新失败');
+            Core::exception(STATUS_SERVER_ERROR, '更新失败');
         }
     }
 }

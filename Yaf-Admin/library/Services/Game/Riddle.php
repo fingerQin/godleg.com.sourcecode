@@ -7,12 +7,12 @@
 
 namespace Services\Game;
 
-use Utils\YCore;
-use Utils\YCache;
-use finger\Database\Db;
-use ApiTools\Request;
-use Models\GmRiddle;
+use finger\Cache;
+use finger\Core;
 use finger\Validator;
+use finger\Database\Db;
+use Models\GmRiddle;
+use ApiTools\Request;
 
 class Riddle extends \Services\AbstractBase
 {
@@ -112,7 +112,7 @@ class Riddle extends \Services\AbstractBase
         ];
         $detail = $GmRiddle->fetchOne($columns, $where);
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '记录不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '记录不存在或已经删除');
         }
         return $detail;
     }
@@ -157,7 +157,7 @@ class Riddle extends \Services\AbstractBase
         $GmRiddle = new GmRiddle();
         $ok = $GmRiddle->insert($data);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试!');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试!');
         }
     }
 
@@ -170,7 +170,7 @@ class Riddle extends \Services\AbstractBase
     {
         $datetime = date('YmdHi');
         $key      = "riddle-openid-{$datetime}";
-        $redis    = YCache::getRedisClient();
+        $redis    = Cache::getRedisClient();
         $incr     = $redis->incr($key);
         if ($incr == 1) {
             $redis->expire($key, 90);
@@ -221,11 +221,11 @@ class Riddle extends \Services\AbstractBase
         ];
         $detail = $GmRiddle->fetchOne([], $where);
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '您编辑的记录不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '您编辑的记录不存在或已经删除');
         }
         $ok = $GmRiddle->update($data, $where);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '编辑失败,请稍候刷新重试!');
+            Core::exception(STATUS_ERROR, '编辑失败,请稍候刷新重试!');
         }
         self::clearCache($detail['openid']);
     }
@@ -247,7 +247,7 @@ class Riddle extends \Services\AbstractBase
         $GmRiddle = new GmRiddle();
         $detail = $GmRiddle->fetchOne([], $where);
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '您删除的记录不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '您删除的记录不存在或已经删除');
         }
         $data = [
             'status' => GmRiddle::STATUS_DELETED,
@@ -256,7 +256,7 @@ class Riddle extends \Services\AbstractBase
         ];
         $status = $GmRiddle->update($data, $where);
         if (!$status) {
-            YCore::exception(STATUS_ERROR, '删除失败,请稍候刷新重试!');
+            Core::exception(STATUS_ERROR, '删除失败,请稍候刷新重试!');
         }
         self::clearCache($detail['openid']);
     }
@@ -276,7 +276,7 @@ class Riddle extends \Services\AbstractBase
         $request = new Request();
         $result  = $request->send($data);
         if ($result['code'] != STATUS_SUCCESS) {
-            YCore::exception(STATUS_SERVER_ERROR, '缓存重置失败');
+            Core::exception(STATUS_SERVER_ERROR, '缓存重置失败');
         }
     }
 
@@ -296,7 +296,7 @@ class Riddle extends \Services\AbstractBase
         $request = new Request();
         $result = $request->send($data);
         if ($result['code'] != STATUS_SUCCESS) {
-            YCore::exception(STATUS_SERVER_ERROR, '缓存清除失败');
+            Core::exception(STATUS_SERVER_ERROR, '缓存清除失败');
         }
     }
 }

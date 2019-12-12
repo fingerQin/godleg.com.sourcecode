@@ -7,10 +7,10 @@
 
 namespace Services\Mall;
 
+use finger\Core;
 use finger\Validator;
 use finger\Database\Db;
-use Utils\YCore;
-use Utils\YDate;
+use finger\Date;
 use Models\District;
 use Models\MallOrder;
 use Models\MallOrderItem;
@@ -67,14 +67,14 @@ class Order extends AbstractBase
         }
         if (strlen($startTime) > 0) {
             if (!Validator::is_date($startTime)) {
-                YCore::exception(STATUS_SERVER_ERROR, '成交时间格式不正确');
+                Core::exception(STATUS_SERVER_ERROR, '成交时间格式不正确');
             }
             $where .= ' AND a.c_time >= :start_time ';
             $params[':start_time'] = $startTime;
         }
         if (strlen($endTime) > 0) {
             if (!Validator::is_date($endTime)) {
-                YCore::exception(STATUS_SERVER_ERROR, '成交时间格式不正确');
+                Core::exception(STATUS_SERVER_ERROR, '成交时间格式不正确');
             }
             $where .= ' AND a.c_time <= :end_time ';
             $params[':end_time'] = $endTime;
@@ -87,11 +87,11 @@ class Order extends AbstractBase
         $list      = Db::all($sql, $params);
         foreach ($list as $key => $item) {
             $item['goods_list']         = self::getOrderItems($item['orderid']);
-            $item['u_time']             = YDate::formatDateTime($item['u_time']);
-            $item['pay_time']           = YDate::formatDateTime($item['pay_time']);
-            $item['shipping_time']      = YDate::formatDateTime($item['shipping_time']);
-            $item['done_time']          = YDate::formatDateTime($item['done_time']);
-            $item['closed_time']        = YDate::formatDateTime($item['closed_time']);
+            $item['u_time']             = Date::formatDateTime($item['u_time']);
+            $item['pay_time']           = Date::formatDateTime($item['pay_time']);
+            $item['shipping_time']      = Date::formatDateTime($item['shipping_time']);
+            $item['done_time']          = Date::formatDateTime($item['done_time']);
+            $item['closed_time']        = Date::formatDateTime($item['closed_time']);
             $item['order_status_label'] = MallOrder::$orderStatusDict[$item['order_status']];
             $list[$key] = $item;
         }
@@ -154,7 +154,7 @@ class Order extends AbstractBase
         $OrderModel  = new MallOrder();
         $orderDetail = $OrderModel->fetchOne([], $where);
         if (empty($orderDetail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '订单不存在');
+            Core::exception(STATUS_SERVER_ERROR, '订单不存在');
         }
         $orderDetail['goods_list'] = self::getOrderItems($orderId);
         $logisticsInfo = self::getOrderExpressInfo($orderId);
@@ -179,7 +179,7 @@ class Order extends AbstractBase
         $OrderModel  = new MallOrder();
         $orderDetail = $OrderModel->fetchOne([], $where);
         if (empty($orderDetail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '订单不存在');
+            Core::exception(STATUS_SERVER_ERROR, '订单不存在');
         }
         $orderDetail['goods_list'] = self::getOrderItems($orderId);
         $logisticsInfo = self::getOrderExpressInfo($orderId);
@@ -201,16 +201,16 @@ class Order extends AbstractBase
     public static function deliverGoods($userid, $orderId, $logisticsCode, $logisticsNumber)
     {
         if (strlen($logisticsCode) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '快递编码不能为空');
+            Core::exception(STATUS_SERVER_ERROR, '快递编码不能为空');
         }
         if (!Validator::is_len($logisticsCode, 1, 20, 1)) {
-            YCore::exception(STATUS_SERVER_ERROR, '快递编码不正确');
+            Core::exception(STATUS_SERVER_ERROR, '快递编码不正确');
         }
         if (strlen($logisticsNumber) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '快递单号不能为空');
+            Core::exception(STATUS_SERVER_ERROR, '快递单号不能为空');
         }
         if (!Validator::is_len($logisticsNumber, 1, 50, 1)) {
-            YCore::exception(STATUS_SERVER_ERROR, '快递单号长度必须在1~50个字间');
+            Core::exception(STATUS_SERVER_ERROR, '快递单号长度必须在1~50个字间');
         }
         $OrderModel = new MallOrder();
         $where = [
@@ -218,20 +218,20 @@ class Order extends AbstractBase
         ];
         $orderInfo = $OrderModel->fetchOne([], $where);
         if (empty($orderInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '订单不存在');
+            Core::exception(STATUS_SERVER_ERROR, '订单不存在');
         }
         if ($orderInfo['order_status'] != MallOrder::ORDER_STATUS_PAY_OK && $orderInfo['order_status'] != MallOrder::ORDER_STATUS_DELIVER) {
-            YCore::exception(STATUS_SERVER_ERROR, '已支付或已发货24小时内的才允许操作');
+            Core::exception(STATUS_SERVER_ERROR, '已支付或已发货24小时内的才允许操作');
         }
         if ($orderInfo['order_status'] == MallOrder::ORDER_STATUS_DELIVER) {
             $diffTimestamp = time() - strtotime($orderInfo['shipping_time']);
             if ($diffTimestamp > 86400) {
-                YCore::exception(STATUS_SERVER_ERROR, '发货超过24小时不能修改');
+                Core::exception(STATUS_SERVER_ERROR, '发货超过24小时不能修改');
             }
         }
-        $logisticsListDict = YCore::dict('logistics_list');
+        $logisticsListDict = Core::dict('logistics_list');
         if (!array_key_exists($logisticsCode, $logisticsListDict)) {
-            YCore::exception(STATUS_SERVER_ERROR, '快递编号不正确');
+            Core::exception(STATUS_SERVER_ERROR, '快递编号不正确');
         }
         $LogisticsModel = new MallLogistics();
         $where = [
@@ -261,7 +261,7 @@ class Order extends AbstractBase
             $ok = $LogisticsModel->update($updata, $where);
         }
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '操作失败');
+            Core::exception(STATUS_SERVER_ERROR, '操作失败');
         }
         // 更新订单发货状态。
         if ($orderInfo['order_status'] == MallOrder::ORDER_STATUS_PAY_OK) {
@@ -273,7 +273,7 @@ class Order extends AbstractBase
             ];
             $ok = $OrderModel->update($data, ['orderid' => $orderId]);
             if (!$ok) {
-                YCore::exception(STATUS_SERVER_ERROR, '发货失败');
+                Core::exception(STATUS_SERVER_ERROR, '发货失败');
             }
         }
     }
@@ -293,30 +293,30 @@ class Order extends AbstractBase
     public static function adjustAddress($userid, $orderId, $districtId, $receiverName, $receiverAddress, $receiverMobile)
     {
         if (strlen($receiverName) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '收货人姓名必须填写');
+            Core::exception(STATUS_SERVER_ERROR, '收货人姓名必须填写');
         }
         if (!Validator::is_len($receiverName, 1, 10, true)) {
-            YCore::exception(STATUS_SERVER_ERROR, '收货人姓名长度必须1~10个字符之间');
+            Core::exception(STATUS_SERVER_ERROR, '收货人姓名长度必须1~10个字符之间');
         }
         if (strlen($districtId) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '请选择区县');
+            Core::exception(STATUS_SERVER_ERROR, '请选择区县');
         }
         if (strlen($receiverMobile) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '收货人手机号必须填写');
+            Core::exception(STATUS_SERVER_ERROR, '收货人手机号必须填写');
         }
         if (strlen($receiverAddress) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '收货人详细地址必须填写');
+            Core::exception(STATUS_SERVER_ERROR, '收货人详细地址必须填写');
         }
         if (!Validator::is_mobilephone($receiverMobile)) {
-            YCore::exception(STATUS_SERVER_ERROR, '收货人手机号不正确');
+            Core::exception(STATUS_SERVER_ERROR, '收货人手机号不正确');
         }
         if (!Validator::is_len($receiverAddress, 1, 50, true)) {
-            YCore::exception(STATUS_SERVER_ERROR, '收货详细地址长度必须1~50个字符之间');
+            Core::exception(STATUS_SERVER_ERROR, '收货详细地址长度必须1~50个字符之间');
         }
         $DistrictModel = new District();
         $districtInfo  = $DistrictModel->fetchOne([], ['district_id' => $districtId, 'status' => 1]);
         if (empty($districtInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '区县ID有误');
+            Core::exception(STATUS_SERVER_ERROR, '区县ID有误');
         }
         $provinceName = $districtInfo['province_name'];
         $cityName     = $districtInfo['city_name'];
@@ -328,10 +328,10 @@ class Order extends AbstractBase
         ];
         $orderInfo = $OrderModel->fetchOne([], $where);
         if (empty($orderInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '订单不存在');
+            Core::exception(STATUS_SERVER_ERROR, '订单不存在');
         }
         if ($orderInfo['order_status'] != MallOrder::ORDER_STATUS_PAY_OK) {
-            YCore::exception(STATUS_SERVER_ERROR, '已付款的订单才允许修改收货信息');
+            Core::exception(STATUS_SERVER_ERROR, '已付款的订单才允许修改收货信息');
         }
         $updata = [
             'receiver_province' => $provinceName,
@@ -345,7 +345,7 @@ class Order extends AbstractBase
         ];
         $ok = $OrderModel->update($updata, $where);
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '操作失败');
+            Core::exception(STATUS_SERVER_ERROR, '操作失败');
         }
     }
 
@@ -362,13 +362,13 @@ class Order extends AbstractBase
         $OrderModel = new MallOrder();
         $orderInfo  = $OrderModel->fetchOne([], ['orderid' => $orderId, 'status' => MallOrder::STATUS_YES]);
         if (empty($orderInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '订单不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '订单不存在或已经删除');
         }
         if ($orderInfo['order_status'] == MallOrder::ORDER_STATUS_DELIVER) {
             return true;
         }
         if ($orderInfo['order_status'] != MallOrder::ORDER_STATUS_WAIT_PAY) {
-            YCore::exception(STATUS_SERVER_ERROR, '只允许操作未付款的订单');
+            Core::exception(STATUS_SERVER_ERROR, '只允许操作未付款的订单');
         }
         $updateData = [
             'order_status'  => MallOrder::ORDER_STATUS_DELIVER,
@@ -392,7 +392,7 @@ class Order extends AbstractBase
             return true;
         } else {
             $OrderModel->rollBack();
-            YCore::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
         }
     }
 
@@ -408,10 +408,10 @@ class Order extends AbstractBase
         $OrderModel = new MallOrder();
         $orderInfo  = $OrderModel->fetchOne([], ['orderid' => $orderId, 'status' => MallOrder::STATUS_YES]);
         if (empty($orderInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '订单不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '订单不存在或已经删除');
         }
         if ($orderInfo['order_status'] != MallOrder::ORDER_STATUS_WAIT_PAY) {
-            YCore::exception(STATUS_SERVER_ERROR, '只允许关闭未付款的订单');
+            Core::exception(STATUS_SERVER_ERROR, '只允许关闭未付款的订单');
         }
         $updateData = [
             'order_status'  => MallOrder::ORDER_STATUS_CLOSED,
@@ -429,7 +429,7 @@ class Order extends AbstractBase
             $ok = self::releaseOrderStock($orderId);
             if (!$ok) {
                 $OrderModel->rollBack();
-                YCore::exception(STATUS_SERVER_ERROR, '订单取消失败');
+                Core::exception(STATUS_SERVER_ERROR, '订单取消失败');
             }
             $logContent = '商家用户执行该操作';
             self::writeLog($userid, $orderId, 'closed', $logContent);
@@ -437,7 +437,7 @@ class Order extends AbstractBase
             return true;
         } else {
             $OrderModel->rollBack();
-            YCore::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
         }
     }
 
@@ -484,7 +484,7 @@ class Order extends AbstractBase
         foreach ($orderItemList as $item) {
             $ok = GoodsService::restoreProductStock($item['productid'], $item['quantity']);
             if (!$ok) {
-                YCore::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
+                Core::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
             }
         }
     }
@@ -500,9 +500,9 @@ class Order extends AbstractBase
      */
     protected static function writeLog($userid, $orderId, $actionType, $logContent = '')
     {
-        $orderOperationCode = YCore::dict('order_operation_code');
+        $orderOperationCode = Core::dict('order_operation_code');
         if (!array_key_exists($actionType, $orderOperationCode)) {
-            YCore::exception(STATUS_SERVER_ERROR, '操作类型不正确');
+            Core::exception(STATUS_SERVER_ERROR, '操作类型不正确');
         }
         $data = [
             'orderid'      => $orderId,
@@ -529,7 +529,7 @@ class Order extends AbstractBase
     public static function getOrderSn($userid, $prefix = '')
     {
         if (strlen($prefix) > 5) {
-            YCore::exception(STATUS_SERVER_ERROR, '订单号前缀不允许超过5个字符');
+            Core::exception(STATUS_SERVER_ERROR, '订单号前缀不允许超过5个字符');
         }
         // [1]
         $microtime = microtime();

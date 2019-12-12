@@ -7,9 +7,9 @@
 
 namespace Services\Mall;
 
+use finger\Core;
 use finger\Validator;
 use finger\Database\Db;
-use Utils\YCore;
 use Models\Category;
 use Models\MallGoods;
 use Models\MallGoodsImage;
@@ -60,14 +60,14 @@ class Goods extends AbstractBase
         }
         if (strlen($startPrice) > 0) {
             if (!Validator::is_integer($startPrice)) {
-                YCore::exception(STATUS_SERVER_ERROR, '查询价格必须是整数');
+                Core::exception(STATUS_SERVER_ERROR, '查询价格必须是整数');
             }
             $where .= ' AND min_price >= :start_price ';
             $params[':start_price'] = $startPrice;
         }
         if (strlen($endPrice) > 0) {
             if (!Validator::is_integer($endPrice)) {
-                YCore::exception(STATUS_SERVER_ERROR, '查询价格必须是整数');
+                Core::exception(STATUS_SERVER_ERROR, '查询价格必须是整数');
             }
             $where .= ' AND max_price <= :end_price ';
             $params[':end_price'] = $endPrice;
@@ -107,7 +107,7 @@ class Goods extends AbstractBase
         ];
         $goodsDetail = $GoodsModel->fetchOne($columns, ['goodsid' => $goodsId, 'status' => MallGoods::STATUS_YES]);
         if (empty($goodsDetail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品不存在');
+            Core::exception(STATUS_SERVER_ERROR, '商品不存在');
         }
         // 商品相册。
         $where = [
@@ -211,26 +211,26 @@ class Goods extends AbstractBase
     public static function add($data)
     {
         if (empty($data)) {
-            YCore::exception(STATUS_SERVER_ERROR, '请认真添加商品');
+            Core::exception(STATUS_SERVER_ERROR, '请认真添加商品');
         }
         if (!isset($data['goods_name']) || !Validator::is_len($data['goods_name'], 1, 100, true)) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品名称必须1~100个字符');
+            Core::exception(STATUS_SERVER_ERROR, '商品名称必须1~100个字符');
         }
         if (!isset($data['description']) || !Validator::is_len($data['description'], 1, 10000, true)) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品详情长度必须1~10000个字符');
+            Core::exception(STATUS_SERVER_ERROR, '商品详情长度必须1~10000个字符');
         }
         if (!isset($data['spec_val']) || !is_array($data['spec_val'])) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品规格有误');
+            Core::exception(STATUS_SERVER_ERROR, '商品规格有误');
         }
         if (!isset($data['products']) || !is_array($data['products']) || empty($data['products']) || count($data['products']) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '货品数据有误');
+            Core::exception(STATUS_SERVER_ERROR, '货品数据有误');
         }
         if (!isset($data['goods_album']) || !is_array($data['goods_album'])) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品图片必须上传');
+            Core::exception(STATUS_SERVER_ERROR, '商品图片必须上传');
         }
         $albumCount = count($data['goods_album']);
         if ($albumCount != 5) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品相册数量必须5张');
+            Core::exception(STATUS_SERVER_ERROR, '商品相册数量必须5张');
         }
         // 初始化市场价与销售价的最大最小值。
         $minMarketPrice = 0;
@@ -240,13 +240,13 @@ class Goods extends AbstractBase
         // 判断是否单规格商品以及验证值是否正确。
         if (array_key_exists('single_product', $data['products'])) {
             if (!Validator::is_integer($data['products']['single_product']['product_stock']) || !Validator::is_number_between($data['products']['single_product']['product_stock'], 0, 10000)) {
-                YCore::exception(STATUS_SERVER_ERROR, '库存必须0~10000之间');
+                Core::exception(STATUS_SERVER_ERROR, '库存必须0~10000之间');
             }
             if (!isset($data['products']['single_product']['market_price']) || !Validator::is_number_between($data['products']['single_product']['market_price'], 0.01, 1000000)) {
-                YCore::exception(STATUS_SERVER_ERROR, '市场价必须0.01~1000000之间');
+                Core::exception(STATUS_SERVER_ERROR, '市场价必须0.01~1000000之间');
             }
             if (!isset($data['products']['single_product']['sales_price']) || !Validator::is_number_between($data['products']['single_product']['sales_price'], 0.01, 1000000)) {
-                YCore::exception(STATUS_SERVER_ERROR, '销售价必须0.01~1000000之间');
+                Core::exception(STATUS_SERVER_ERROR, '销售价必须0.01~1000000之间');
             }
             $data['spec_val'] = [];
             $minMarketPrice   = $data['products']['single_product']['market_price'];
@@ -273,7 +273,7 @@ class Goods extends AbstractBase
         $CatModel = new Category();
         $catInfo  = $CatModel->fetchOne([], ['cat_id' => $data['cat_id'], 'status' => Category::STATUS_YES]);
         if (empty($catInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '分类不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '分类不存在或已经删除');
         }
         // 商品相册第一张作为商品主图。
         $goodsImg   = (isset($data['goods_album'][0])) ? $data['goods_album'][0] : '';
@@ -300,14 +300,14 @@ class Goods extends AbstractBase
         $goodsId = $GoodsModel->insert($insertData);
         if ($goodsId <= 0) {
             Db::rollBack();
-            YCore::exception(STATUS_SERVER_ERROR, '商品添加失败');
+            Core::exception(STATUS_SERVER_ERROR, '商品添加失败');
         }
         try {
             self::setGoodsProduct($data['user_id'], $goodsId, $data['products']);
             self::setGoodsImage($data['user_id'], $goodsId, $data['goods_album']);
         } catch (\Exception $e) {
             Db::rollBack();
-            YCore::exception($e->getCode(), $e->getMessage());
+            Core::exception($e->getCode(), $e->getMessage());
         }
         Db::commit();
     }
@@ -358,26 +358,26 @@ class Goods extends AbstractBase
     public static function edit($data)
     {
         if (empty($data)) {
-            YCore::exception(STATUS_SERVER_ERROR, '请认真添加商品');
+            Core::exception(STATUS_SERVER_ERROR, '请认真添加商品');
         }
         if (!isset($data['goods_name']) || !Validator::is_len($data['goods_name'], 1, 100, true)) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品名称必须1~100个字符');
+            Core::exception(STATUS_SERVER_ERROR, '商品名称必须1~100个字符');
         }
         if (!isset($data['description']) || !Validator::is_len($data['description'], 1, 10000, true)) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品详情长度必须1~10000个字符');
+            Core::exception(STATUS_SERVER_ERROR, '商品详情长度必须1~10000个字符');
         }
         if (!isset($data['spec_val']) || !is_array($data['spec_val'])) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品规格有误');
+            Core::exception(STATUS_SERVER_ERROR, '商品规格有误');
         }
         if (!isset($data['products']) || !is_array($data['products']) || empty($data['products']) || count($data['products']) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '货品数据有误');
+            Core::exception(STATUS_SERVER_ERROR, '货品数据有误');
         }
         if (!isset($data['goods_album']) || !is_array($data['goods_album'])) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品图片必须上传');
+            Core::exception(STATUS_SERVER_ERROR, '商品图片必须上传');
         }
         $albumCount = count($data['goods_album']);
         if ($albumCount != 5) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品相册数量必须5张');
+            Core::exception(STATUS_SERVER_ERROR, '商品相册数量必须5张');
         }
         // 初始化市场价与销售价的最大最小值。
         $minMarketPrice = 0;
@@ -387,13 +387,13 @@ class Goods extends AbstractBase
         // 判断是否单规格商品以及验证值是否正确。
         if (array_key_exists('single_product', $data['products'])) {
             if (!Validator::is_integer($data['products']['single_product']['product_stock']) || !Validator::is_number_between($data['products']['single_product']['product_stock'], 0, 10000)) {
-                YCore::exception(STATUS_SERVER_ERROR, '库存必须0~10000之间');
+                Core::exception(STATUS_SERVER_ERROR, '库存必须0~10000之间');
             }
             if (!isset($data['products']['single_product']['market_price']) || !Validator::is_number_between($data['products']['single_product']['market_price'], 0.01, 1000000)) {
-                YCore::exception(STATUS_SERVER_ERROR, '市场价必须0.01~1000000之间');
+                Core::exception(STATUS_SERVER_ERROR, '市场价必须0.01~1000000之间');
             }
             if (!isset($data['products']['single_product']['sales_price']) || !Validator::is_number_between($data['products']['single_product']['sales_price'], 0.01, 1000000)) {
-                YCore::exception(STATUS_SERVER_ERROR, '销售价必须0.01~1000000之间');
+                Core::exception(STATUS_SERVER_ERROR, '销售价必须0.01~1000000之间');
             }
             $data['spec_val'] = [];
             $minMarketPrice   = $data['products']['single_product']['market_price'];
@@ -420,12 +420,12 @@ class Goods extends AbstractBase
         $CatModel = new Category();
         $catInfo  = $CatModel->fetchOne([], ['cat_id' => $data['cat_id'], 'status' => MallGoods::STATUS_YES]);
         if (empty($catInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '分类不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '分类不存在或已经删除');
         }
         $GoodsModel = new MallGoods();
         $goodsInfo  = $GoodsModel->fetchOne([], ['goodsid' => $data['goods_id'], 'status' => MallGoods::STATUS_YES]);
         if (empty($goodsInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '商品不存在或已经删除');
         }
         // 商品相册第一张作为商品主图。
         $goodsImg = (isset($data['goods_album'][0])) ? $data['goods_album'][0] : '';
@@ -454,14 +454,14 @@ class Goods extends AbstractBase
         $ok = $GoodsModel->update($updata, $where);
         if (!$ok) {
             Db::rollBack();
-            YCore::exception(STATUS_SERVER_ERROR, '商品保存失败');
+            Core::exception(STATUS_SERVER_ERROR, '商品保存失败');
         }
         try {
             self::setGoodsProduct($data['user_id'], $data['goods_id'], $data['products']);
             self::setGoodsImage($data['user_id'], $data['goods_id'], $data['goods_album']);
         } catch (\Exception $e) {
             Db::rollBack();
-            YCore::exception($e->getCode(), $e->getMessage());
+            Core::exception($e->getCode(), $e->getMessage());
         }
         Db::commit();
     }
@@ -482,7 +482,7 @@ class Goods extends AbstractBase
         ];
         $goodsInfo = $GoodsModel->fetchOne([], $where);
         if (empty($goodsInfo)) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '商品不存在或已经删除');
         }
         $data = [
             'status' => MallGoods::STATUS_DELETED,
@@ -491,7 +491,7 @@ class Goods extends AbstractBase
         ];
         $ok = $GoodsModel->update($data, $where);
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '保存失败');
+            Core::exception(STATUS_SERVER_ERROR, '保存失败');
         }
     }
 
@@ -512,7 +512,7 @@ class Goods extends AbstractBase
         ];
         $goodsDetail = $GoodsModel->fetchOne([], $where);
         if (empty($goodsDetail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品不存在');
+            Core::exception(STATUS_SERVER_ERROR, '商品不存在');
         }
         $data = [
             'u_by'            => $userid,
@@ -522,7 +522,7 @@ class Goods extends AbstractBase
         ];
         $ok = $GoodsModel->update($data, $where);
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试!');
+            Core::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试!');
         }
     }
 
@@ -578,13 +578,13 @@ class Goods extends AbstractBase
         foreach ($products as $specVal => $pro) {
             // [2.1] 参数判断。
             if (!Validator::is_integer($pro['product_stock']) || !Validator::is_number_between($pro['product_stock'], 0, 10000)) {
-                YCore::exception(STATUS_SERVER_ERROR, '库存必须0~10000之间');
+                Core::exception(STATUS_SERVER_ERROR, '库存必须0~10000之间');
             }
             if (!Validator::is_number_between($pro['sales_price'], 0.01, 1000000)) {
-                YCore::exception(STATUS_SERVER_ERROR, '销售价必须0.01~1000000之间');
+                Core::exception(STATUS_SERVER_ERROR, '销售价必须0.01~1000000之间');
             }
             if (!Validator::is_number_between($pro['market_price'], 0.01, 1000000)) {
-                YCore::exception(STATUS_SERVER_ERROR, '市场价必须0.01~1000000之间');
+                Core::exception(STATUS_SERVER_ERROR, '市场价必须0.01~1000000之间');
             }
             // [2.2] 货品存在与否判断。
             $ProductModel = new MallProduct();
@@ -604,7 +604,7 @@ class Goods extends AbstractBase
                 ];
                 $ok = $ProductModel->update($data, $where);
                 if (!$ok) {
-                    YCore::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
+                    Core::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
                 }
                 $existsOldProductIds[] = $productId;
             } else { // 添加。
@@ -622,7 +622,7 @@ class Goods extends AbstractBase
                 ];
                 $ok = $ProductModel->insert($data);
                 if (!$ok) {
-                    YCore::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
+                    Core::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
                 }
             }
         }
@@ -641,7 +641,7 @@ class Goods extends AbstractBase
             ];
             $ok = $ProductModel->update($updateData, $where);
             if (!$ok) {
-                YCore::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
+                Core::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
             }
         }
     }
@@ -676,21 +676,21 @@ class Goods extends AbstractBase
             $keyVal    = explode('|||', $specVal);
             $specCount = count($keyVal); // 得到货品规格中的规格对数量。如果这个数据与实际的商品规格数量不对应。说明有误。
             if ($goodsSpecCount != $specCount) {
-                YCore::exception(STATUS_SERVER_ERROR, '商品规格设置有误');
+                Core::exception(STATUS_SERVER_ERROR, '商品规格设置有误');
             }
             if (empty($keyVal)) {
-                YCore::exception(STATUS_SERVER_ERROR, '商品规格设置有误');
+                Core::exception(STATUS_SERVER_ERROR, '商品规格设置有误');
             }
             foreach ($keyVal as $key => $val) {
                 $s_v = explode(':::', $val);
                 if (count($s_v) != 2) {
-                    YCore::exception(STATUS_SERVER_ERROR, '商品规格设置有误');
+                    Core::exception(STATUS_SERVER_ERROR, '商品规格设置有误');
                 }
                 if (!array_key_exists($s_v[0], $spec)) { // $s_v[0] 是规格名称。 $s_v[1] 是规格值。
-                    YCore::exception(STATUS_SERVER_ERROR, '商品规格设置有误');
+                    Core::exception(STATUS_SERVER_ERROR, '商品规格设置有误');
                 }
                 if (!in_array($s_v[1], $spec[$s_v[0]])) {
-                    YCore::exception(STATUS_SERVER_ERROR, '商品规格设置有误');
+                    Core::exception(STATUS_SERVER_ERROR, '商品规格设置有误');
                 }
             }
         }
@@ -736,7 +736,7 @@ class Goods extends AbstractBase
                 ];
                 $status = $ImageModel->update($updata, ['imageid' => $oldImage[$imageUrl]]);
                 if (!$status) {
-                    YCore::exception(STATUS_SERVER_ERROR, '相册图片保存失败');
+                    Core::exception(STATUS_SERVER_ERROR, '相册图片保存失败');
                 }
             } else { // 不存在。
                 $insertData = [
@@ -749,7 +749,7 @@ class Goods extends AbstractBase
                 ];
                 $id = $ImageModel->insert($insertData);
                 if (!$id) {
-                    YCore::exception(STATUS_SERVER_ERROR, '相册图片保存失败');
+                    Core::exception(STATUS_SERVER_ERROR, '相册图片保存失败');
                 }
             }
         }
@@ -774,7 +774,7 @@ class Goods extends AbstractBase
             $params[':u_time'] = $datetime;
             $ok = Db::execute($sql, $params);
             if (!$ok) {
-                YCore::exception(STATUS_SERVER_ERROR, '相册图片保存失败');
+                Core::exception(STATUS_SERVER_ERROR, '相册图片保存失败');
             }
         }
     }
@@ -797,7 +797,7 @@ class Goods extends AbstractBase
         ];
         $ok = Db::execute($sql, $params);
         if (!$ok) {
-            YCore::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
         }
     }
 

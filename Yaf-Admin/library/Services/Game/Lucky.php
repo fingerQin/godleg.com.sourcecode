@@ -7,7 +7,7 @@
 
 namespace Services\Game;
 
-use Utils\YCore;
+use finger\Core;
 use finger\Validator;
 use finger\Database\Db;
 use Models\GmLuckyGoods;
@@ -44,38 +44,38 @@ class Lucky extends \Services\AbstractBase
     public static function setGoods($adminId, $goods)
     {
         if (count($goods) !== 8) {
-            YCore::exception(STATUS_SERVER_ERROR, '奖品必须8个');
+            Core::exception(STATUS_SERVER_ERROR, '奖品必须8个');
         }
         Db::execute('TRUNCATE TABLE gm_lucky_goods');
         Db::beginTransaction();
         foreach ($goods as $item) {
             if (!Validator::is_len($item['goods_name'], 1, 50, true)) {
                 Db::rollBack();
-                YCore::exception(STATUS_SERVER_ERROR, '奖品名称长度不能大于50个字符');
+                Core::exception(STATUS_SERVER_ERROR, '奖品名称长度不能大于50个字符');
             }
             if (!Validator::is_number_between($item['day_max'], 0, 1000000)) {
                 Db::rollBack();
-                YCore::exception(STATUS_SERVER_ERROR, '奖品每天的中奖最大次数不能超过1000000次');
+                Core::exception(STATUS_SERVER_ERROR, '奖品每天的中奖最大次数不能超过1000000次');
             }
             if (!Validator::is_number_between($item['min_range'], 1, 1000000)) {
                 Db::rollBack();
-                YCore::exception(STATUS_SERVER_ERROR, '随机最小概率值不能超过100000');
+                Core::exception(STATUS_SERVER_ERROR, '随机最小概率值不能超过100000');
             }
             if (!Validator::is_number_between($item['max_range'], 1, 1000000)) {
                 Db::rollBack();
-                YCore::exception(STATUS_SERVER_ERROR, '随机最大概率值不能超过100000');
+                Core::exception(STATUS_SERVER_ERROR, '随机最大概率值不能超过100000');
             }
             if (strlen($item['image_url']) === 0) {
                 Db::rollBack();
-                YCore::exception(STATUS_SERVER_ERROR, '奖品图片必须设置');
+                Core::exception(STATUS_SERVER_ERROR, '奖品图片必须设置');
             }
             if (!Validator::is_len($item['image_url'], 1, 100, true)) {
                 Db::rollBack();
-                YCore::exception(STATUS_SERVER_ERROR, '图片长度不能超过100个字符');
+                Core::exception(STATUS_SERVER_ERROR, '图片长度不能超过100个字符');
             }
             if (!Validator::is_integer($item['reward_val']) || !Validator::is_number_between($item['reward_val'], 0, 100000)) {
                 Db::rollBack();
-                YCore::exception(STATUS_SERVER_ERROR, '奖励的数值不正确');
+                Core::exception(STATUS_SERVER_ERROR, '奖励的数值不正确');
             }
             $datetime        = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']);;
             $item['c_by']    = $adminId;
@@ -84,7 +84,7 @@ class Lucky extends \Services\AbstractBase
             $ok = $LuckyGoodsModel->insert($item);
             if (!$ok) {
                 Db::rollBack();
-                YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+                Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
             }
         }
         Db::commit();
@@ -117,7 +117,7 @@ class Lucky extends \Services\AbstractBase
         ];
         $result = $LuckyPrizeModel->fetchOne($columns, ['id' => $id, 'status' => GmLuckyPrize::STATUS_YES]);
         if (empty($result)) {
-            YCore::exception(STATUS_SERVER_ERROR, '抽奖记录不存在');
+            Core::exception(STATUS_SERVER_ERROR, '抽奖记录不存在');
         }
         return $result;
     }

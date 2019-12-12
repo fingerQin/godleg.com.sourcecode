@@ -7,9 +7,10 @@
 
 namespace Services\Game;
 
-use Utils\YCore;
 use finger\Database\Db;
 use ApiTools\Request;
+use finger\Core;
+use finger\Validator;
 use Models\GmThisLife;
 
 class ThisLife extends \Services\AbstractBase
@@ -88,7 +89,7 @@ class ThisLife extends \Services\AbstractBase
         ];
         $detail = $PreLifeModel->fetchOne($columns, $where);
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '记录不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '记录不存在或已经删除');
         }
         return $detail;
     }
@@ -118,14 +119,15 @@ class ThisLife extends \Services\AbstractBase
             'title'    => $title,
             'intro'    => $intro
         ];
-        $datetme        = date('Y-m-d H:i:s', time());
+        Validator::valido($data, $rules);
+        $datetme = date('Y-m-d H:i:s', time());
         $data['c_by']   = $adminId;
         $data['c_time'] = $datetme;
         $data['u_time'] = $datetme;
         $GmThisLife  = new GmThisLife();
         $ok = $GmThisLife->insert($data);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试!');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试!');
         }
     }
 
@@ -165,11 +167,11 @@ class ThisLife extends \Services\AbstractBase
         ];
         $detail = $GmThisLife->fetchOne([], $where);
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '您编辑的记录不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '您编辑的记录不存在或已经删除');
         }
         $ok = $GmThisLife->update($data, $where);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '编辑失败,请稍候刷新重试!');
+            Core::exception(STATUS_ERROR, '编辑失败,请稍候刷新重试!');
         }
     }
 
@@ -190,7 +192,7 @@ class ThisLife extends \Services\AbstractBase
         $GmThisLife = new GmThisLife();
         $detail = $GmThisLife->fetchOne([], $where);
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '您删除的记录不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '您删除的记录不存在或已经删除');
         }
         $data = [
             'status' => GmThisLife::STATUS_DELETED,
@@ -199,7 +201,7 @@ class ThisLife extends \Services\AbstractBase
         ];
         $status = $GmThisLife->update($data, $where);
         if (!$status) {
-            YCore::exception(STATUS_ERROR, '删除失败,请稍候刷新重试!');
+            Core::exception(STATUS_ERROR, '删除失败,请稍候刷新重试!');
         }
     }
 
@@ -219,7 +221,7 @@ class ThisLife extends \Services\AbstractBase
         $request = new Request();
         $result = $request->send($data);
         if ($result['code'] != STATUS_SUCCESS) {
-            YCore::exception(STATUS_SERVER_ERROR, '缓存重置失败');
+            Core::exception(STATUS_SERVER_ERROR, '缓存重置失败');
         }
     }
 }
