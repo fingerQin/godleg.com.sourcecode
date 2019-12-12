@@ -5,7 +5,7 @@ body {
 .top{height:40%; min-height:280px; background:#333}
 .bottom{height:60%; min-height:350px; background:#ecedf1}
 
-.top .txt-1{color:#b4dfe8; width:380px; font-size:15px; margin-top: 80px;}
+.top .txt-1{color:#b4dfe8; width:250px; font-size:15px; margin-top: 80px;}
 .top .txt-2{color:#b4dfe8; width:320px; font-size:13px}
 .bottom .kuang{width:480px;height:320px;padding:10px;margin-top: -100px;background-repeat: repeat;}
 

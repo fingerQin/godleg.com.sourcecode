@@ -5,7 +5,7 @@
  * @date 2018-02-28
  */
 
-use Utils\YUrl;
+use finger\Url;
 use finger\Paginator;
 use Services\Game\Lucky;
 
@@ -17,7 +17,7 @@ class LuckyController extends \Common\controllers\Admin
     public function listAction()
     {
         $list = Lucky::getGoodsList();
-        $filesDomainName = YUrl::getFilesDomainName();
+        $filesDomainName = Url::getFilesDomainName();
         $this->assign('files_domain_name', $filesDomainName);
         $this->assign('list', $list);
     }

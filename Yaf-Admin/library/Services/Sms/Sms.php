@@ -8,7 +8,7 @@
 
 namespace Services\Sms;
 
-use Utils\YCore;
+use finger\Core;
 use ApiTools\Request;
 use Models\AdminUser;
 
@@ -26,10 +26,10 @@ class Sms extends \Services\AbstractBase
         $AdminUserModel = new AdminUser();
         $adminDetail    = $AdminUserModel->fetchOne([], [
             'mobile'      => $mobile, 
-            'user_status' => AdminUser::STATUS_YES]
-        );
+            'user_status' => AdminUser::STATUS_YES
+        ]);
         if (empty($adminDetail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '账号不存在');
+            Core::exception(STATUS_SERVER_ERROR, '账号不存在');
         }
         self::send($mobile, 'ADMIN_LOGIN_CODE');
     }
@@ -52,7 +52,7 @@ class Sms extends \Services\AbstractBase
         ];
         $result = (new Request())->send($params);
         if ($result['code'] != STATUS_SUCCESS) {
-            YCore::exception($result['code'], $result['msg']);
+            Core::exception($result['code'], $result['msg']);
         }
     }
 
@@ -76,7 +76,7 @@ class Sms extends \Services\AbstractBase
         ];
         $result = (new Request())->send($params);
         if ($result['code'] != STATUS_SUCCESS) {
-            YCore::exception($result['code'], $result['msg']);
+            Core::exception($result['code'], $result['msg']);
         }
     }
 
@@ -102,7 +102,7 @@ class Sms extends \Services\AbstractBase
         ];
         $result = (new Request())->send($params);
         if ($result['code'] != STATUS_SUCCESS) {
-            YCore::exception($result['code'], $result['msg']);
+            Core::exception($result['code'], $result['msg']);
         }
     }
 }

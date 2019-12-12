@@ -5,7 +5,7 @@
  * @date 2019-08-07
  */
 
-use Utils\YUrl;
+use finger\Url;
 use finger\Paginator;
 use Services\Mall\Goods;
 use Services\System\Upload;
@@ -61,7 +61,7 @@ class GoodsController extends \Common\controllers\Admin
             $this->json(true, '添加成功');
         } else {
             $catList = Category::list(0, Category::CAT_GOODS);
-            $filesDomainName  = YUrl::getFilesDomainName();
+            $filesDomainName  = Url::getFilesDomainName();
             $this->assign('files_domain_name', $filesDomainName);
             $this->assign('cat_list', $catList);
         }
@@ -91,7 +91,7 @@ class GoodsController extends \Common\controllers\Admin
             $goodsId         = $this->getInt('goods_id');
             $goodsDetail     = Goods::detail($goodsId);
             $catList         = Category::list(0, Category::CAT_GOODS);
-            $filesDomainName = YUrl::getFilesDomainName();
+            $filesDomainName = Url::getFilesDomainName();
             $this->assign('files_domain_name', $filesDomainName);
             $this->assign('cat_list', $catList);
             $this->assign('data', $goodsDetail);

@@ -12,9 +12,8 @@
 
 namespace ApiTools;
 
-use Utils\YCore;
-use Utils\YCache;
-use Utils\YLog;
+use finger\App;
+use finger\Cache;
 use Services\AbstractBase;
 
 class Request
@@ -47,9 +46,9 @@ class Request
      */
     public function __construct()
     {
-        $this->apiKey     = YCore::appconfig('api.admin.key');
-        $this->apiSecret  = YCore::appconfig('api.admin.secret');
-        $this->apiVersion = YCore::appconfig('api.admin.version');
+        $this->apiKey     = App::getConfig('api.admin.key');
+        $this->apiSecret  = App::getConfig('api.admin.secret');
+        $this->apiVersion = App::getConfig('api.admin.version');
     }
 
     /**
@@ -62,7 +61,7 @@ class Request
     public function send($params)
     {
         $params = $this->mergeParams($params);
-        $apiUrl = YCore::appconfig('domain.api');
+        $apiUrl = App::getConfig('domain.api');
         $json   = json_encode($params, JSON_UNESCAPED_UNICODE);
         $sign   = $this->encrypt($json);
         $apiParams = [
@@ -86,7 +85,7 @@ class Request
             'curl_errno' => $curlErrno,
             'curl_error' => $curlError,
         ];
-        YLog::log($logData, 'apis', 'log');
+        App::log($logData, 'apis', 'log');
         return $response;
     }
 
@@ -116,7 +115,7 @@ class Request
      */
     protected function createRequestSn()
     {
-        $redis    = YCache::getRedisClient();
+        $redis    = Cache::getRedisClient();
         $time     = time();
         $YmdHi    = date('YmdHi', $time);
         $cacheKey = 'Yaf-Admin-request-api-cache-key-' . $YmdHi;
@@ -164,12 +163,12 @@ class Request
         }
         $curlErrno = curl_errno($ch);
         $curlError = curl_error($ch);
-        if ($curlErrno != 0) {
-            YLog::log([
-                'url'        => $url, 
-                'curl_error' => $curlErrno, 
-                'curl_errno' => $curlError], 'curl', 'error');
-        }
+        App::log([
+            'url'        => $url, 
+            'curl_error' => $curlErrno, 
+            'curl_errno' => $curlError,
+            'data'       => $data,
+        ], 'curl', 'error');
         curl_close($ch);
         return [$result, $curlErrno, $curlError];
     }

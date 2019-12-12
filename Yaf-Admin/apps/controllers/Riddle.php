@@ -5,9 +5,9 @@
  * @date 2018-11-14
  */
 
-use Utils\YUrl;
-use Services\Game\Riddle;
+use finger\Url;
 use finger\Paginator;
+use Services\Game\Riddle;
 
 class RiddleController extends \Common\controllers\Admin
 {
@@ -47,7 +47,7 @@ class RiddleController extends \Common\controllers\Admin
             Riddle::add($this->adminId, $priority, $socre, $question, $questionImg, $answer, $answerImg);
             $this->json(true, '添加成功');
         } else {
-            $this->assign('files_domain_name', YUrl::getFilesDomainName());
+            $this->assign('files_domain_name', Url::getFilesDomainName());
         }
     }
 
@@ -70,7 +70,7 @@ class RiddleController extends \Common\controllers\Admin
             $id     = $this->getInt('id');
             $detail = Riddle::detail($id);
             $this->assign('detail', $detail);
-            $this->assign('files_domain_name', YUrl::getFilesDomainName());
+            $this->assign('files_domain_name', Url::getFilesDomainName());
         }
     }
 

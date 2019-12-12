@@ -5,7 +5,7 @@
  * @date 2018-08-28
  */
 
-use Utils\YUrl;
+use finger\Url;
 use finger\Paginator;
 use Services\Game\Guess;
 
@@ -46,7 +46,7 @@ class GuessController extends \Common\controllers\Admin
             Guess::add($this->adminId, $title, $imageUrl, $optionsData, $deadline, $openResult);
             $this->json(true, '添加成功');
         } else {
-            $fileDomain = YUrl::getFilesDomainName();
+            $fileDomain = Url::getFilesDomainName();
             $this->assign('files_domain_name', $fileDomain);
             $this->assign('options', Guess::$options);
         }
@@ -70,7 +70,7 @@ class GuessController extends \Common\controllers\Admin
         } else {
             $guessId    = $this->getInt('guessid');
             $detail     = Guess::detail($guessId);
-            $fileDomain = YUrl::getFilesDomainName();
+            $fileDomain = Url::getFilesDomainName();
             $this->assign('files_domain_name', $fileDomain);
             $this->assign('detail', $detail);
             $this->assign('options', Guess::$options);

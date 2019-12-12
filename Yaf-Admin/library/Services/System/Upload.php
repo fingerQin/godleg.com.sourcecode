@@ -7,9 +7,10 @@
 
 namespace Services\System;
 
+use finger\App;
+use finger\Core;
+use finger\Url;
 use finger\Validator;
-use Utils\YCore;
-use Utils\YUrl;
 use Models\Files;
 
 class Upload extends \Services\AbstractBase
@@ -31,13 +32,13 @@ class Upload extends \Services\AbstractBase
     public static function uploadOtherFile($userType = 2, $userid = 0, $dirname = '', $fileSize = 0, $inputFileName = 'image')
     {
         if ($fileSize <= 0) {
-            YCore::exception(STATUS_SERVER_ERROR, 'The file_size parameter must be greater than zero');
+            Core::exception(STATUS_SERVER_ERROR, 'The file_size parameter must be greater than zero');
         }
         if (!Validator::is_alpha_dash($dirname)) {
-            YCore::exception(STATUS_SERVER_ERROR, 'The dirname parameter must be wrong');
+            Core::exception(STATUS_SERVER_ERROR, 'The dirname parameter must be wrong');
         }
         if (!isset($_FILES[$inputFileName])) {
-            YCore::exception(STATUS_SERVER_ERROR, '图片上传有误');
+            Core::exception(STATUS_SERVER_ERROR, '图片上传有误');
         }
         $allowExts = [
             'zip', 'rar', 'doc', 'docx', 'xls', 'xlsx', 'pptx', 'ppt', 'gz',
@@ -46,7 +47,7 @@ class Upload extends \Services\AbstractBase
             'txt', 'pdf', 'dmg'
         ];
         $maxSize           = $fileSize * 1024 * 1024;
-        $rootDir           = YCore::appconfig('upload.save_dir');
+        $rootDir           = App::getConfig('upload.save_dir');
         $rootDir           = $rootDir ? realpath($rootDir) . DIRECTORY_SEPARATOR : ''; // 去除结尾处的目录分隔钱并重新拼接上当前运行系统的目录分隔线。
         $rootPath          = $rootDir . 'images/';
         $upload            = new \finger\Upload(); // 实例化上传类
@@ -58,10 +59,10 @@ class Upload extends \Services\AbstractBase
         $fileinfo          = [];
         $FilesModel        = new Files();
         $fileName          = "/images/{$info['savepath']}{$info['savename']}";
-        $imageUrl          = YUrl::filePath($fileName);
+        $imageUrl          = Url::filePath($fileName);
         $fileId            = $FilesModel->addFiles($imageUrl, 1, $info['size'], $info['md5'], $userType, $userid);
         if ($fileId == 0) {
-            YCore::exception(STATUS_ERROR, '文件上传失败');
+            Core::exception(STATUS_ERROR, '文件上传失败');
         }
         $fileinfo = [
             'file_id'            => $fileId,
@@ -87,16 +88,16 @@ class Upload extends \Services\AbstractBase
     public static function uploadImage($userType = 2, $userId = 0, $dirname = '', $fileSize = 0, $inputFileName = 'image')
     {
         if ($fileSize <= 0) {
-            YCore::exception(STATUS_SERVER_ERROR, 'The fileSize parameter must be greater than zero');
+            Core::exception(STATUS_SERVER_ERROR, 'The fileSize parameter must be greater than zero');
         }
         if (!Validator::is_alpha_dash($dirname)) {
-            YCore::exception(STATUS_SERVER_ERROR, 'The dirname parameter must be wrong');
+            Core::exception(STATUS_SERVER_ERROR, 'The dirname parameter must be wrong');
         }
         if (!isset($_FILES[$inputFileName])) {
-            YCore::exception(STATUS_SERVER_ERROR, '图片上传有误');
+            Core::exception(STATUS_SERVER_ERROR, '图片上传有误');
         }
         $maxSize           = $fileSize * 1024 * 1024;
-        $rootDir           = YCore::appconfig('upload.root_dir');
+        $rootDir           = App::getConfig('upload.root_dir');
         $rootDir           = $rootDir ? realpath($rootDir) . DIRECTORY_SEPARATOR : ''; // 去除结尾处的目录分隔钱并重新拼接上当前运行系统的目录分隔线。
         $rootPath          = $rootDir . 'images/';
         $upload            = new \finger\Upload(); // 实例化上传类
@@ -108,10 +109,10 @@ class Upload extends \Services\AbstractBase
         $fileinfo          = [];
         $FilesModel        = new Files();
         $fileName          = "/images/{$info['savepath']}{$info['savename']}";
-        $imageUrl          = YUrl::filePath($fileName);
+        $imageUrl          = Url::filePath($fileName);
         $fileId            = $FilesModel->addFiles($imageUrl, 1, $info['size'], $info['md5'], $userType, $userId);
         if ($fileId == 0) {
-            YCore::exception(STATUS_ERROR, '文件上传失败');
+            Core::exception(STATUS_ERROR, '文件上传失败');
         }
         $fileinfo = [
             'file_id'            => $fileId,

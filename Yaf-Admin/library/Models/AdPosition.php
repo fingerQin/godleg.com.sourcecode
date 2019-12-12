@@ -8,8 +8,6 @@
 namespace Models;
 
 use finger\Database\Db;
-use Utils\YCore;
-use Utils\YDate;
 
 class AdPosition extends AbstractBase
 {

@@ -5,7 +5,7 @@
  * @date 2019-08-28
  */
 
-use Utils\YUrl;
+use finger\Url;
 use finger\Paginator;
 use Services\Task\Record;
 use Services\Task\Sponsor;
@@ -44,7 +44,7 @@ class TaskController extends \Common\controllers\Admin
             Sponsor::add($name, $address, $districtCode, $albums, $longitude, $latitude, $linkMan, $linkPhone, $this->adminId);
             $this->json(true, '添加成功');
         } else {
-            $filesDomainName = YUrl::getFilesDomainName();
+            $filesDomainName = Url::getFilesDomainName();
             $this->assign('files_domain_name', $filesDomainName);
         }
     }
@@ -69,7 +69,7 @@ class TaskController extends \Common\controllers\Admin
         } else {
             $sponsorId = $this->getInt('sponsorid');
             $detail    = Sponsor::detail($sponsorId);
-            $filesDomainName = YUrl::getFilesDomainName();
+            $filesDomainName = Url::getFilesDomainName();
             $this->assign('files_domain_name', $filesDomainName);
             $this->assign('detail', $detail);
         }
@@ -129,7 +129,7 @@ class TaskController extends \Common\controllers\Admin
             $this->json(true, '保存成功');
         } else {
             $sponsorid = $this->getInt('sponsorid');
-            $filesDomainName = YUrl::getFilesDomainName();
+            $filesDomainName = Url::getFilesDomainName();
             $this->assign('sponsorid', $sponsorid);
             $this->assign('files_domain_name', $filesDomainName);
         }
@@ -163,7 +163,7 @@ class TaskController extends \Common\controllers\Admin
         } else {
             $taskId = $this->getInt('taskid');
             $detail = \Services\Task\Task::detail($taskId);
-            $filesDomainName = YUrl::getFilesDomainName();
+            $filesDomainName = Url::getFilesDomainName();
             $this->assign('files_domain_name', $filesDomainName);
             $this->assign('detail', $detail);
         }
