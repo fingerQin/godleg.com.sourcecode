@@ -7,8 +7,6 @@
 
 namespace Services;
 
-use Utils\YCore;
-
 abstract class AbstractBase
 {
     /**
@@ -39,7 +37,7 @@ abstract class AbstractBase
      */
     protected static function isAppCall($platform)
     {
-        if (in_array($platform, [self::PLATFORM_IOS, self::PLATFORM_ANDROID, self::PLATFORM_MINI_PROGRAM])) {
+        if (in_array($platform, [self::PLATFORM_IOS, self::PLATFORM_ANDROID])) {
             return true;
         } else {
             return false;

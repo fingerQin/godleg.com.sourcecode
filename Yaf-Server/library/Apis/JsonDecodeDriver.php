@@ -7,8 +7,9 @@
 
 namespace Apis;
 
-use Utils\YCore;
-use Utils\YInput;
+use finger\App;
+use finger\Core;
+use finger\DataInput;
 
 class JsonDecodeDriver
 {
@@ -21,8 +22,8 @@ class JsonDecodeDriver
      */
     public static function parse($params)
     {
-        $sign   = YInput::getString($params['post'], 'sign', '');
-        $json   = YInput::getString($params['post'], 'data', '');
+        $sign   = DataInput::getString($params['post'], 'sign', '');
+        $json   = DataInput::getString($params['post'], 'data', '');
         $params = json_decode($json, true);
         $params = is_array($params) ? $params : [];
         return array_merge($params, ['sign' => $sign, 'oriJson' => $json]);
@@ -40,9 +41,9 @@ class JsonDecodeDriver
     {
         $str    = $params['oriJson'] . $apiSecret;
         $okSign = strtoupper(md5($str));
-        if (YCore::appconfig('app.env') != ENV_DEV) {
+        if (App::getConfig('app.env') != ENV_DEV) {
             if (strlen($params['sign']) === 0 || $params['sign'] != $okSign) {
-                YCore::exception(STATUS_SERVER_ERROR, 'API signature error');
+                Core::exception(STATUS_SERVER_ERROR, 'API signature error');
             }
         }
     }

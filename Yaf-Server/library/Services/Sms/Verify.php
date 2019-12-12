@@ -7,11 +7,12 @@
 
 namespace Services\Sms;
 
-use Utils\YCore;
-use Utils\YCache;
 use Models\SmsBlacklist;
 use Models\SmsSendLog;
 use Models\SmsTpl;
+use finger\App;
+use finger\Cache;
+use finger\Core;
 use finger\Database\Db;
 
 class Verify extends \Services\Sms\AbstractBase
@@ -25,18 +26,20 @@ class Verify extends \Services\Sms\AbstractBase
      * 检测两次发送的间隔(用户触发的才需要调用)。
      * 
      * @param  string  $mobile  手机号码。
+     * @param  string  $scene   使用场景。
+     * 
      * @return bool true - 不受时间间隔限制、false - 受时间间隔所限。
      */
-    public static function checkSendInterval($mobile)
+    public static function checkSendInterval($mobile, $scene = '')
     {
-        $interval = YCore::appconfig('sms.interval');
-        $cacheKey = "sms_interval:{$mobile}";
-        $sendTsp  = YCache::get($cacheKey);
+        $interval = App::getConfig('sms.interval');
+        $cacheKey = "sms_interval_{$scene}:{$mobile}";
+        $sendTsp  = Cache::get($cacheKey);
         $time     = time();
         if ($sendTsp > 0 && (($time - $sendTsp) < $interval)) {
-            YCore::exception(STATUS_SERVER_ERROR, "两次发送间隔不能小于{$interval}秒!");
+            Core::exception(STATUS_SERVER_ERROR, "两次发送间隔不能小于{$interval}秒!");
         } else {
-            YCache::set($cacheKey, $time, $interval); // 记录最后一次发送的时间。
+            Cache::set($cacheKey, $time, $interval); // 记录最后一次发送的时间。
             return true;
         }
     }
@@ -49,7 +52,7 @@ class Verify extends \Services\Sms\AbstractBase
      */
     public static function checkDayIpTimes($ip)
     {
-        $ipSendmax = YCore::appconfig('sms.ip_sendmax');
+        $ipSendmax = App::getConfig('sms.ip_sendmax');
         if ($ipSendmax > 0) {
             $datetime = date('Y-m-d 00:00:00', time());
             $sql = 'SELECT COUNT(1) AS count FROM finger_sms_sendlog AS a '
@@ -63,7 +66,7 @@ class Verify extends \Services\Sms\AbstractBase
             $result = Db::one($sql, $params);
             $count  = $result ? $result['count'] : 0;
             if ($count >= $ipSendmax) {
-                YCore::exception(STATUS_SERVER_ERROR, "您的IP今日发送超过上限!");
+                Core::exception(STATUS_SERVER_ERROR, "您的IP今日发送超过上限!");
             }
         }
         return true;
@@ -77,7 +80,7 @@ class Verify extends \Services\Sms\AbstractBase
      */
     public static function checkDayMobileTimes($mobile)
     {
-        $mobileSendmax = YCore::appconfig('sms.mobile_sendmax');
+        $mobileSendmax = App::getConfig('sms.mobile_sendmax');
         if ($mobileSendmax > 0) {
             $datetime = date('Y-m-d 00:00:00', time());
             $where    = [
@@ -86,7 +89,7 @@ class Verify extends \Services\Sms\AbstractBase
             ];
             $count = (new SmsSendLog())->count($where);
             if ($count >= $mobileSendmax) {
-                YCore::exception(STATUS_SERVER_ERROR, "您的号码今天已发送超过{$mobileSendmax}次!");
+                Core::exception(STATUS_SERVER_ERROR, "您的号码今天已发送超过{$mobileSendmax}次!");
             }
         }
         return true;
@@ -102,7 +105,7 @@ class Verify extends \Services\Sms\AbstractBase
      */
     public static function isInsideMobile($mobile)
     {
-        $mobileWhiteList = YCore::appconfig('sms.inside_mobiles');
+        $mobileWhiteList = App::getConfig('sms.inside_mobiles');
         if (strlen($mobileWhiteList) === 0) {
             return false;
         }
@@ -135,7 +138,7 @@ class Verify extends \Services\Sms\AbstractBase
      */
     protected static function allBlacklistMobileResult()
     {
-        $redis = YCache::getRedisClient();
+        $redis = Cache::getRedisClient();
         $cache = $redis->get(self::BLACKLIST_MOBILE_CACHE_KEY);
         if ($cache === false || $cache === null) {
             $result  = (new SmsBlacklist())->fetchAll(['mobile']);

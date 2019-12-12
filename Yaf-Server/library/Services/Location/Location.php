@@ -7,8 +7,8 @@
 
 namespace Services\Location;
 
-use Utils\YCore;
-
+use finger\App;
+use finger\Core;
 
 class Location extends \Services\AbstractBase
 {
@@ -32,7 +32,7 @@ class Location extends \Services\AbstractBase
      */
     public function ip($ip)
     {
-        $ipDriver = YCore::appconfig('location.ip.driver');
+        $ipDriver = App::getConfig('location.ip.driver');
         $ipDriver = "IP-" . strtolower($ipDriver);
         switch ($ipDriver) {
             case self::IP_DRIVER_BAIDU:
@@ -44,7 +44,7 @@ class Location extends \Services\AbstractBase
                 $result = $AmapIP->get($ip);
                 break;
             default:
-                YCore::exception(STATUS_SERVER_ERROR, '定位驱动设置错误');
+                Core::exception(STATUS_SERVER_ERROR, '定位驱动设置错误');
                 break;
         }
         return $result;
@@ -59,7 +59,7 @@ class Location extends \Services\AbstractBase
      */
     public function gps($long, $lat)
     {
-        $GPSDriver = YCore::appconfig('location.gps.driver');
+        $GPSDriver = App::getConfig('location.gps.driver');
         $GPSDriver = "GPS-" . strtolower($GPSDriver);
         switch ($GPSDriver) {
             case self::GPS_DRIVER_BAIDU:
@@ -71,7 +71,7 @@ class Location extends \Services\AbstractBase
                 $result = $AmapIP->get($long, $lat);
                 break;
             default:
-                YCore::exception(STATUS_SERVER_ERROR, '定位驱动设置错误');
+                Core::exception(STATUS_SERVER_ERROR, '定位驱动设置错误');
                 break;
         }
         return $result;

@@ -7,10 +7,10 @@
 
 namespace Services\AccessForbid;
 
+use finger\Cache;
+use finger\Core;
+use finger\Lock;
 use Models\ForbidIp;
-use Utils\YCache;
-use Utils\YCore;
-use finger\RedisMutexLock;
 
 class Forbid extends \Services\AbstractBase
 {
@@ -52,7 +52,7 @@ class Forbid extends \Services\AbstractBase
     {
         $date     = date('Ymd', TIMESTAMP);
         $cacheKey = "system_forbin_ip:{$position}_{$date}";
-        $redis    = YCache::getRedisClient();
+        $redis    = Cache::getRedisClient();
         $int      = $redis->incr($cacheKey);
         if ($int == 1) {
             $redis->expire($cacheKey, $lockTime * 60);
@@ -76,14 +76,14 @@ class Forbid extends \Services\AbstractBase
     {
         $date     = date('Ymd', TIMESTAMP);
         $cacheKey = self::IP_LOCK_KEY . ":{$date}";
-        $redis    = YCache::getRedisClient();
+        $redis    = Cache::getRedisClient();
         $lockTime = $redis->get($cacheKey);
         if ($lockTime != FALSE && $lockTime > date('Y-m-d H:i:s', TIMESTAMP)) {
-            YCore::exception(STATUS_ACCESS_FORBID_IP, "您所在网络被禁止访问，解封时间：{$lockTime}");
+            Core::exception(STATUS_ACCESS_FORBID_IP, "您所在网络被禁止访问，解封时间：{$lockTime}");
         }
         $ips = self::getAllIp();
         if (array_key_exists($ip, $ips)) {
-            YCore::exception(STATUS_ACCESS_FORBID_IP, "您所在网络被禁止访问，解封时间：{$ips[$ip]}");
+            Core::exception(STATUS_ACCESS_FORBID_IP, "您所在网络被禁止访问，解封时间：{$ips[$ip]}");
         }
     }
 
@@ -95,7 +95,7 @@ class Forbid extends \Services\AbstractBase
     private static function getAllIp()
     {
         $cacheKey = 'system_forbid_ip_list';
-        $redis    = YCache::getRedisClient();
+        $redis    = Cache::getRedisClient();
         $result   = $redis->get($cacheKey);
         if ($result !== false ) {
             return json_decode($result, true);
@@ -114,7 +114,7 @@ class Forbid extends \Services\AbstractBase
     private static function getRealTimeDbIp()
     {
         $lockKey = 'system_fobid_ip_lock';
-        $status  = RedisMutexLock::lock($lockKey, 3);
+        $status  = Lock::lock($lockKey, 3);
         if ($status) {
             $datetime = date('Y-m-d H:i:s', TIMESTAMP);
             $columns  = ['ip', 'deadline'];
@@ -125,7 +125,7 @@ class Forbid extends \Services\AbstractBase
                 $data[$item['ip']] = $item['deadline'];
             }
             unset($result);
-            RedisMutexLock::release($lockKey);
+            Lock::release($lockKey);
             return $data;
         } else {
             // 这一步看似无限递归。实则是为了锁定时间超时之后，重新再读取一次缓存的值。

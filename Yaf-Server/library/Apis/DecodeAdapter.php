@@ -8,7 +8,8 @@
 
 namespace Apis;
 
-use Utils\YCore;
+use finger\App;
+use finger\Core;
 
 class DecodeAdapter
 {
@@ -27,7 +28,7 @@ class DecodeAdapter
      */
     public static function parse($params)
     {
-        $apiDecodeDriver = YCore::appconfig('api.decode.driver');
+        $apiDecodeDriver = App::getConfig('api.decode.driver');
         switch ($apiDecodeDriver) {
             case self::DECODE_FORM:
                 return FormDecodeDriver::parse($params);
@@ -36,7 +37,7 @@ class DecodeAdapter
                 return JsonDecodeDriver::parse($params);
                 break;
             default:
-                YCore::exception(STATUS_SERVER_ERROR, 'API 参数解密驱动配置有误');
+                Core::exception(STATUS_SERVER_ERROR, 'API 参数解密驱动配置有误');
                 break;
         }
     }
@@ -51,7 +52,7 @@ class DecodeAdapter
      */
     public static function checkSign($params, $apiSecret)
     {
-        $apiDecodeDriver = YCore::appconfig('api.decode.driver');
+        $apiDecodeDriver = App::getConfig('api.decode.driver');
         switch ($apiDecodeDriver) {
             case self::DECODE_FORM:
                 return FormDecodeDriver::checkSign($params, $apiSecret);
@@ -60,7 +61,7 @@ class DecodeAdapter
                 return JsonDecodeDriver::checkSign($params, $apiSecret);
                 break;
             default:
-                YCore::exception(STATUS_SERVER_ERROR, 'API 参数解密驱动配置有误');
+                Core::exception(STATUS_SERVER_ERROR, 'API 参数解密驱动配置有误');
                 break;
         }
     }

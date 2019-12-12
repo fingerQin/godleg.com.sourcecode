@@ -8,8 +8,9 @@
 
 namespace Apis;
 
-use Utils\YCore;
-use Utils\YInput;
+use finger\App;
+use finger\Core;
+use finger\DataInput;
 use finger\Ip;
 use finger\Validator;
 use Services\AccessForbid\Forbid;
@@ -115,14 +116,14 @@ abstract class AbstractApi
     {
         $reqTsp = $this->params['timestamp'];
         if (!Validator::is_integer($reqTsp)) {
-            YCore::exception(STATUS_SERVER_ERROR, 'timestamp 参数格式不正确');
+            Core::exception(STATUS_SERVER_ERROR, 'timestamp 参数格式不正确');
         }
         if (strlen($reqTsp) != 10) {
-            YCore::exception(STATUS_SERVER_ERROR, 'timestamp 参数必须为 10 位长度的秒值');
+            Core::exception(STATUS_SERVER_ERROR, 'timestamp 参数必须为 10 位长度的秒值');
         }
         $diffSecond = $this->timestamp - $reqTsp;
         if ($diffSecond > 600) {
-            YCore::exception(STATUS_SERVER_ERROR, 'timestamp 已经超时请求');
+            Core::exception(STATUS_SERVER_ERROR, 'timestamp 已经超时请求');
         }
     }
 
@@ -148,7 +149,7 @@ abstract class AbstractApi
     protected function checkApiTypeAuth($appType)
     {
         if (\strtolower($appType) != $this->apiType) {
-            YCore::exception(STATUS_SERVER_ERROR, '您没有调用该接口的权限');
+            Core::exception(STATUS_SERVER_ERROR, '您没有调用该接口的权限');
         }
     }
 
@@ -163,7 +164,7 @@ abstract class AbstractApi
     public function render($code, $msg, $data = null)
     {
         if (!is_int($code)) {
-            YCore::exception(STATUS_ERROR, 'BaseApi render method of code parameter must be an integer');
+            Core::exception(STATUS_ERROR, 'BaseApi render method of code parameter must be an integer');
         }
         $this->result = [
             'code' => $code,
@@ -214,7 +215,7 @@ abstract class AbstractApi
      */
     public function getInt($name, $defaultValue = null)
     {
-        return YInput::getInt($this->params, $name, $defaultValue);
+        return DataInput::getInt($this->params, $name, $defaultValue);
     }
 
     /**
@@ -226,7 +227,7 @@ abstract class AbstractApi
      */
     public function getString($name, $defaultValue = null)
     {
-        return YInput::getString($this->params, $name, $defaultValue);
+        return DataInput::getString($this->params, $name, $defaultValue);
     }
 
     /**
@@ -238,7 +239,7 @@ abstract class AbstractApi
      */
     public function getFloat($name, $defaultValue = null)
     {
-        return YInput::getFloat($this->params, $name, $defaultValue);
+        return DataInput::getFloat($this->params, $name, $defaultValue);
     }
 
     /**
@@ -250,7 +251,7 @@ abstract class AbstractApi
      */
     public function getArray($name, $defaultValue = null)
     {
-        return YInput::getArray($this->params, $name, $defaultValue);
+        return DataInput::getArray($this->params, $name, $defaultValue);
     }
 
     /**
@@ -258,24 +259,24 @@ abstract class AbstractApi
      * 
      * @param  int  $userid  用户ID。等于0的情况则只要可写接口处于关闭状态就不允许访问。
      * 
-     * @return \libs\Utils\ServiceException
+     * @return \finger\Exception\ServiceException
      */
     protected function isAllowAccessApi($userid = 0)
     {
-        $writeApiStatus   = YCore::appconfig('api.write_access');
-        $writeApiCloseMsg = YCore::appconfig('api.write_close_msg');
+        $writeApiStatus   = App::getConfig('api.write_access');
+        $writeApiCloseMsg = App::getConfig('api.write_close_msg');
         if (!$writeApiStatus) {
             if ($userid == 0) {
-                YCore::exception(STATUS_SERVER_ERROR, $writeApiCloseMsg);
+                Core::exception(STATUS_SERVER_ERROR, $writeApiCloseMsg);
             } else {
-                $whitelist = \explode(',', YCore::appconfig('api.write_userids'));
+                $whitelist = \explode(',', App::getConfig('api.write_userids'));
                 $whitelist = array_unique($whitelist);
                 if (!empty($whitelist)) {
                     if (!\in_array($userid, $whitelist)) {
-                        YCore::exception(STATUS_SERVER_ERROR, $writeApiCloseMsg);
+                        Core::exception(STATUS_SERVER_ERROR, $writeApiCloseMsg);
                     }
                 } else {
-                    YCore::exception(STATUS_SERVER_ERROR, $writeApiCloseMsg);
+                    Core::exception(STATUS_SERVER_ERROR, $writeApiCloseMsg);
                 }
             }
         }

@@ -7,9 +7,10 @@
 
 namespace Services\System;
 
+use finger\App;
+use finger\Cache;
+use finger\Core;
 use finger\Ip;
-use Utils\YCache;
-use Utils\YCore;
 use Models\ApiAuth as ApiAuthModel;
 
 class ApiAuth extends \Services\AbstractBase
@@ -32,13 +33,13 @@ class ApiAuth extends \Services\AbstractBase
     public static function checkIpAllowAccess(&$detail, $ip)
     {
         if (empty($detail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '应用配置信息读取异常');
+            Core::exception(STATUS_SERVER_ERROR, '应用配置信息读取异常');
         }
         if ($detail['is_open_ip_ban'] != 1) {
             return true;
         }
 
-        $envName = YCore::appconfig('app.env');
+        $envName = App::getConfig('app.env');
         $envName = \strtolower($envName);
         if (!in_array($envName, [ENV_BETA, ENV_PRO])) { // 如果当前环境不是公测/正式。则不做 IP 限制。
             return true;
@@ -96,7 +97,7 @@ class ApiAuth extends \Services\AbstractBase
         foreach ($ipScopeArr as $ips) {
             $ipsArr = explode('-', $ips);
             if (count($ipsArr) != 2) {
-                YCore::exception(STATUS_SERVER_ERROR, 'IP 段配置有误');
+                Core::exception(STATUS_SERVER_ERROR, 'IP 段配置有误');
             }
             if (Ip::isRange($ipsArr[0], $ipsArr[1], $ip)) {
                 return true;
@@ -125,7 +126,7 @@ class ApiAuth extends \Services\AbstractBase
      */
     protected static function all()
     {
-        $redis = YCache::getRedisClient();
+        $redis = Cache::getRedisClient();
         $cache = $redis->get(self::API_AUTH_CACHE_KEY);
         if ($cache === null || $cache === false) {
             $ApiAuthModel = new ApiAuthModel();
@@ -133,7 +134,7 @@ class ApiAuth extends \Services\AbstractBase
             $where   = ['api_status' => ApiAuthModel::STATUS_YES];
             $result  = $ApiAuthModel->fetchAll($columns, $where);
             if (empty($result)) {
-                YCore::exception(STATUS_SERVER_ERROR, '系统配置异常,请联系客服');
+                Core::exception(STATUS_SERVER_ERROR, '系统配置异常,请联系客服');
             }
             $data = [];
             foreach ($result as $item) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * 公共controller。
+ * 公共 controller。
  * --1、Yaf 框架会根据特有的类名后缀(Model、Controller、Plugin)进行自动加载。为避免这种情况请不要以这样的类名结尾。
  * --2、鉴于第一点，在 Yaf 框架内的所有类的加载请不要出现 Model、Controller、Plugin 等词出现在类名中。
  * --3、通过 Composer 加载的第三方包不受此影响。
@@ -10,7 +10,7 @@
 
 namespace Common\controllers;
 
-use Utils\YCore;
+use finger\Core;
 use finger\Validator;
 
 class Common extends \Yaf_Controller_Abstract
@@ -77,15 +77,15 @@ class Common extends \Yaf_Controller_Abstract
         $gpValue = $this->getGP($name);
         if (is_null($gpValue)) {
             if (is_null($defaultValue)) {
-                YCore::exception(STATUS_ERROR, "{$name}值异常");
+                Core::exception(STATUS_ERROR, "{$name}值异常");
             } else if (!Validator::is_integer($defaultValue)) {
-                YCore::exception(STATUS_ERROR, "{$name}默认值不是整型");
+                Core::exception(STATUS_ERROR, "{$name}默认值不是整型");
             } else {
                 return $defaultValue;
             }
         } else {
             if (!Validator::is_integer($gpValue)) {
-                YCore::exception(STATUS_ERROR, "{$name}值不是整型");
+                Core::exception(STATUS_ERROR, "{$name}值不是整型");
             } else {
                 return $gpValue;
             }
@@ -107,15 +107,15 @@ class Common extends \Yaf_Controller_Abstract
         $gpValue = $this->getGP($name);
         if (is_null($gpValue)) {
             if (is_null($defaultValue)) {
-                YCore::exception(STATUS_ERROR, "{$name}值异常");
+                Core::exception(STATUS_ERROR, "{$name}值异常");
             } else if (!is_array($defaultValue)) {
-                YCore::exception(STATUS_ERROR, "defaultValue参数不是数组");
+                Core::exception(STATUS_ERROR, "defaultValue参数不是数组");
             } else {
                 return $defaultValue;
             }
         } else {
             if (!is_array($gpValue)) {
-                YCore::exception(STATUS_ERROR, "{$name}值不是数组");
+                Core::exception(STATUS_ERROR, "{$name}值不是数组");
             } else {
                 return $gpValue;
             }
@@ -137,15 +137,15 @@ class Common extends \Yaf_Controller_Abstract
         $gpValue = $this->getGP($name);
         if (is_null($gpValue)) {
             if (is_null($defaultValue)) {
-                YCore::exception(STATUS_ERROR, "{$name}值异常");
+                Core::exception(STATUS_ERROR, "{$name}值异常");
             } else if (!Validator::is_float($defaultValue)) {
-                YCore::exception(STATUS_ERROR, "defaultValue参数不是浮点型");
+                Core::exception(STATUS_ERROR, "defaultValue参数不是浮点型");
             } else {
                 return $defaultValue;
             }
         } else {
             if (!Validator::is_float($gpValue)) {
-                YCore::exception(STATUS_ERROR, "{$name}值不是浮点型");
+                Core::exception(STATUS_ERROR, "{$name}值不是浮点型");
             } else {
                 return $gpValue;
             }
@@ -166,7 +166,7 @@ class Common extends \Yaf_Controller_Abstract
         $gpValue = $this->getGP($name);
         if (is_null($gpValue)) {
             if (is_null($defaultValue)) {
-                YCore::exception(STATUS_ERROR, "{$name}值异常");
+                Core::exception(STATUS_ERROR, "{$name}值异常");
             } else {
                 return $defaultValue;
             }

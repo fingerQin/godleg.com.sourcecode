@@ -5,9 +5,9 @@
  * @date 2018-08-16
  */
 
-use Utils\YExcel;
+use finger\Excel;
 use Models\Event;
-use Services\Event\Producer;
+use Threads\DemoThread;
 
 class IndexController extends \Common\controllers\Cli
 {
@@ -20,7 +20,7 @@ class IndexController extends \Common\controllers\Cli
             ['张三', '男', '28'],
             ['张三', '男', '28']
         ];
-        YExcel::createExcel($headerTitle, $data, __DIR__, 'tests');
+        Excel::createExcel($headerTitle, $data, __DIR__, 'tests');
     }
 
     /**
@@ -28,19 +28,10 @@ class IndexController extends \Common\controllers\Cli
      */
     public function threadPushAction()
     {
-        $datetime  = date('Y-m-d H:i:s', time());
-        for ($i = 0; $i < 1000; $i++) {
-            Producer::push([
-                'code'        => Event::CODE_LOGIN,
-                'userid'      => 1,
-                'mobile'      => '18575202691',
-                'platform'    => 1,
-                'app_v'       => '0.0.1',
-                'v'           => '1.0.0',
-                'login_time'  => $datetime
-            ]);
-        }
-        echo "ok:{$datetime}\n";
+        $objThread = DemoThread::getInstance(5);
+        $objThread->setChildOverNewCreate(false);
+        $objThread->setRunDurationExit(30);
+        $objThread->start();
     }
 
     public function testAction()
