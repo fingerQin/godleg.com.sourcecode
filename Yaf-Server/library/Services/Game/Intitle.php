@@ -10,8 +10,8 @@
 
 namespace Services\Game;
 
-use Utils\YCache;
-use Utils\YCore;
+use finger\Cache;
+use finger\Core;
 use Models\GmNameDict;
 
 class Intitle extends \Services\AbstractBase
@@ -35,7 +35,7 @@ class Intitle extends \Services\AbstractBase
         $dictsCache = self::getNameDictCache();
         $dicts      = ($sex == GmNameDict::SEX_FEMALE) ? $dictsCache['female_dict'] : $dictsCache['male_dict'];
         if (empty($dicts)) {
-            YCore::exception(STATUS_ERROR, '字典数据缺失!');
+            Core::exception(STATUS_ERROR, '字典数据缺失!');
         }
         $count     = count($dicts);
         $randValue = mt_rand(0, $count-1);
@@ -70,7 +70,7 @@ class Intitle extends \Services\AbstractBase
      */
     public static function resetCache()
     {
-        $redis = YCache::getRedisClient();
+        $redis = Cache::getRedisClient();
         $redis->del(self::NAME_DICT_KEY);
         self::getNameDictCache();
     }
@@ -91,7 +91,7 @@ class Intitle extends \Services\AbstractBase
      */
     protected static function getNameDictCache()
     {
-        $redis     = YCache::getRedisClient();
+        $redis     = Cache::getRedisClient();
         $dictCache = $redis->get(self::NAME_DICT_KEY);
         if ($dictCache) {
             $dicts = json_decode($dictCache, true);

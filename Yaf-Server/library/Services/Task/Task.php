@@ -7,9 +7,10 @@
 
 namespace Services\Task;
 
-use Utils\YCache;
-use Utils\YCore;
+use finger\Cache;
+use finger\Core;
 use finger\Database\Db;
+use finger\Lock;
 use finger\RedisMutexLock;
 use Models\TaskSponsor;
 use Models\Task as TaskModel;
@@ -153,7 +154,7 @@ class Task extends \Services\AbstractBase
         $TaskModel = new TaskModel();
         $task = $TaskModel->fetchOne($columns, $where);
         if (empty($task)) {
-            YCore::exception(STATUS_SERVER_ERROR, '打卡任务不存在或已经删除');
+            Core::exception(STATUS_SERVER_ERROR, '打卡任务不存在或已经删除');
         }
         self::checkTaskMoveStep($stepCount, $task['move_step']);
         self::checkTaskCheckInAddressDistance($task['longitude'], $task['latitude'], $longitude, $latitude);
@@ -178,7 +179,7 @@ class Task extends \Services\AbstractBase
         $ok = $TaskRecordModel->insert($data);
         if (!$ok) {
             Db::rollBack();
-            YCore::exception(STATUS_SERVER_ERROR, '增加失败');
+            Core::exception(STATUS_SERVER_ERROR, '增加失败');
         }
         self::addGold($userid, $task['gold']);
         self::setTodayAlreadyDo($userid, $taskId);
@@ -196,7 +197,7 @@ class Task extends \Services\AbstractBase
     private static function checkTaskMoveStep($userMoveStep, $taskMoveStep)
     {
         if ($userMoveStep < $taskMoveStep) {
-            YCore::exception(STATUS_SERVER_ERROR, "今日运动步数不足{$taskMoveStep}步");
+            Core::exception(STATUS_SERVER_ERROR, "今日运动步数不足{$taskMoveStep}步");
         }
     }
 
@@ -214,7 +215,7 @@ class Task extends \Services\AbstractBase
     {
         $distance = self::distance($taskLong, $taskLat, $longitude, $latitude);
         if ($distance > 50) {
-            YCore::exception(STATUS_SERVER_ERROR, '不在打卡地点范围内');
+            Core::exception(STATUS_SERVER_ERROR, '不在打卡地点范围内');
         }
     }
 
@@ -230,10 +231,10 @@ class Task extends \Services\AbstractBase
     {
         $datetime = date('Y-m-d H:i:s', time());
         if ($datetime < $startTime) {
-            YCore::exception(STATUS_SERVER_ERROR, '打卡任务未开始');
+            Core::exception(STATUS_SERVER_ERROR, '打卡任务未开始');
         }
         if ($datetime > $endTime) {
-            YCore::exception(STATUS_SERVER_ERROR, '打卡任务已经结束');
+            Core::exception(STATUS_SERVER_ERROR, '打卡任务已经结束');
         }
     }
 
@@ -249,7 +250,7 @@ class Task extends \Services\AbstractBase
     {
         $taskTodayCount = self::getTodayTaskCount($taskId);
         if ($everydayTimes > 0 && $taskTodayCount >= $everydayTimes) {
-            YCore::exception(STATUS_SERVER_ERROR, '今日参与次数已满');
+            Core::exception(STATUS_SERVER_ERROR, '今日参与次数已满');
         }
     }
 
@@ -265,7 +266,7 @@ class Task extends \Services\AbstractBase
     {
         $taskTotal = self::getTaskTotal($taskId);
         if ($totalLimit > 0 && $taskTotal > $totalLimit) {
-            YCore::exception(STATUS_SERVER_ERROR, '该打卡已达签到次数上限');
+            Core::exception(STATUS_SERVER_ERROR, '该打卡已达签到次数上限');
         }
     }
 
@@ -281,7 +282,7 @@ class Task extends \Services\AbstractBase
     {
         $userTodayIsDo = self::isTodayDo($userid, $taskId);
         if ($userTodayIsDo) {
-            YCore::exception(STATUS_SERVER_ERROR, '您今日已经参与任务打卡了');
+            Core::exception(STATUS_SERVER_ERROR, '您今日已经参与任务打卡了');
         }
     }
 
@@ -299,7 +300,7 @@ class Task extends \Services\AbstractBase
         if ($timesLimit > 0) {
             $taskTotal = self::getUserTaskTotal($userid, $taskId);
             if ($taskTotal >= $timesLimit) {
-                YCore::exception(STATUS_SERVER_ERROR, '您打卡已超过上限');
+                Core::exception(STATUS_SERVER_ERROR, '您打卡已超过上限');
             }
         }
     }
@@ -315,13 +316,13 @@ class Task extends \Services\AbstractBase
     private static function getUserTaskTotal($userid, $taskId)
     {
         $cacheKey = "system_task_total:{$taskId}-{$userid}";
-        $redis    = YCache::getRedisClient();
+        $redis    = Cache::getRedisClient();
         $total    = $redis->get($cacheKey);
         if ($total !== FALSE) {
             return intval($total);
         } else {
             $lockKey = "system_task_today_lock:{$taskId}-{$userid}";
-            $status  = RedisMutexLock::lock($lockKey, 3, 30);
+            $status  = Lock::lock($lockKey, 3, 30);
             if ($status) {
                 $TaskRecord = new TaskRecord();
                 $total      = $TaskRecord->count(['taskid' => $taskId, 'userid' => $userid]);
@@ -347,7 +348,7 @@ class Task extends \Services\AbstractBase
         $timestamp = time(); 
         $yymmdd    = date('Ymd', $timestamp);
         $cacheKey  = "sys_task_checkin_status_{$yymmdd}:taskid_{$taskId}_userid_{$userid}";
-        $redis     = YCache::getRedisClient();
+        $redis     = Cache::getRedisClient();
         $status    = $redis->get($cacheKey);
         if ($status !== FALSE) {
             return $status==1 ? true : false;
@@ -382,7 +383,7 @@ class Task extends \Services\AbstractBase
         self::setTodayTaskCount($taskId);
         self::setTaskTotal($taskId);
         $cacheKey  = "sys_task_checkin_status_{$yymmdd}:taskid_{$taskId}_userid_{$userid}";
-        $redis     = YCache::getRedisClient();
+        $redis     = Cache::getRedisClient();
         $redis->set($cacheKey, 1, ['EX' => 86400]);
     }
 
@@ -400,7 +401,7 @@ class Task extends \Services\AbstractBase
     {
         $yymmdd   = date('Ymd', time());
         $cacheKey = "system_task_today_{$yymmdd}:{$taskId}";
-        $redis    = YCache::getRedisClient();
+        $redis    = Cache::getRedisClient();
         $total    = $redis->get($cacheKey);
         if ($total !== FALSE) {
             $redis->incr($cacheKey, 1);
@@ -419,13 +420,13 @@ class Task extends \Services\AbstractBase
         $timestamp = time();
         $yymmdd    = date('Ymd', $timestamp);
         $cacheKey  = "system_task_today_{$yymmdd}:{$taskId}";
-        $redis     = YCache::getRedisClient();
+        $redis     = Cache::getRedisClient();
         $total     = $redis->get($cacheKey);
         if ($total !== FALSE) {
             return intval($total);
         } else {
             $lockKey = "system_task_today_lock_{$yymmdd}:{$taskId}";
-            $status  = RedisMutexLock::lock($lockKey, 3, 30);
+            $status  = Lock::lock($lockKey, 3, 30);
             if ($status) {
                 $startTime  = date('Y-m-d 00:00:00', $timestamp);
                 $endTime    = date('Y-m-d 23:59:59', $timestamp);
@@ -457,7 +458,7 @@ class Task extends \Services\AbstractBase
     private static function setTaskTotal($taskId)
     {
         $cacheKey = "system_task_total:{$taskId}";
-        $redis    = YCache::getRedisClient();
+        $redis    = Cache::getRedisClient();
         $total    = $redis->get($cacheKey);
         if ($total !== FALSE) {
             $redis->incr($cacheKey, 1);
@@ -474,13 +475,13 @@ class Task extends \Services\AbstractBase
     private static function getTaskTotal($taskId)
     {
         $cacheKey = "system_task_total:{$taskId}";
-        $redis    = YCache::getRedisClient();
+        $redis    = Cache::getRedisClient();
         $total    = $redis->get($cacheKey);
         if ($total !== FALSE) {
             return intval($total);
         } else {
             $lockKey = "system_task_total_lock:{$taskId}";
-            $status  = RedisMutexLock::lock($lockKey, 3, 30);
+            $status  = Lock::lock($lockKey, 3, 30);
             if ($status) {
                 $TaskRecord = new TaskRecord();
                 $total      = $TaskRecord->count(['taskid' => $taskId]);
@@ -507,7 +508,7 @@ class Task extends \Services\AbstractBase
             Gold::consume($userid, $gold, 1, 'task');
         } catch (\Exception $e) {
             Db::rollBack();
-            YCore::exception($e->getCode(), $e->getMessage());
+            Core::exception($e->getCode(), $e->getMessage());
         }
     }
 
@@ -523,6 +524,6 @@ class Task extends \Services\AbstractBase
      */
     private static function distance($addrLong, $addrLat, $longitude, $latitude)
     {
-        return YCore::distance($addrLong, $addrLat, $longitude, $latitude);
+        return Core::distance($addrLong, $addrLat, $longitude, $latitude);
     }
 }

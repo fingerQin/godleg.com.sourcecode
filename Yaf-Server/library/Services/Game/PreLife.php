@@ -7,8 +7,8 @@
 
 namespace Services\Game;
 
-use Utils\YCache;
-use Utils\YCore;
+use finger\Cache;
+use finger\Core;
 use Models\GmPrelife;
 
 class PreLife extends \Services\AbstractBase
@@ -31,7 +31,7 @@ class PreLife extends \Services\AbstractBase
         $priority    = self::getRandPriority();
         $dicts       = isset($configCache[$priority]) ? $configCache[$priority] : [];
         if (empty($dicts)) {
-            YCore::exception(STATUS_ERROR, '配置数据缺失!');
+            Core::exception(STATUS_ERROR, '配置数据缺失!');
         }
         $count = count($dicts);
         $randV = mt_rand(0, $count-1);
@@ -53,7 +53,7 @@ class PreLife extends \Services\AbstractBase
      */
     public static function resetCache()
     {
-        $redis = YCache::getRedisClient();
+        $redis = Cache::getRedisClient();
         $redis->del(self::PRE_LIFE_KEY);
         self::getConfigCache();
     }
@@ -84,7 +84,7 @@ class PreLife extends \Services\AbstractBase
      */
     protected static function getConfigCache()
     {
-        $redis     = YCache::getRedisClient();
+        $redis     = Cache::getRedisClient();
         $dictCache = $redis->get(self::PRE_LIFE_KEY);
         if ($dictCache) {
             $dicts = json_decode($dictCache, true);

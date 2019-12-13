@@ -7,9 +7,9 @@
 
 namespace Services\Mall;
 
+use finger\Core;
 use finger\Validator;
 use finger\Database\Db;
-use Utils\YCore;
 use Models\Category;
 use Models\MallGoods;
 use Models\MallGoodsImage;
@@ -54,20 +54,20 @@ class Goods extends AbstractBase
                 $params[':cat_code'] = '';
             } else {
                 $where .= ' AND cat_code LIKE :cat_code ';
-                $catCodePrefix = CategoryService::getCatCodePrefix($catInfo['cat_code'], $catInfo['lv']);
+                $catCodePrefix = Category::getCatCodePrefix($catInfo['cat_code'], $catInfo['lv']);
                 $params[':cat_code'] = "{$catCodePrefix}%";
             }
         }
         if ($startPrice != -1) {
             if (!Validator::is_integer($startPrice)) {
-                YCore::exception(STATUS_SERVER_ERROR, '查询价格必须是整数');
+                Core::exception(STATUS_SERVER_ERROR, '查询价格必须是整数');
             }
             $where .= ' AND min_price <= :start_price ';
             $params[':start_price'] = $startPrice;
         }
         if ($endPrice != -1) {
             if (!Validator::is_integer($endPrice)) {
-                YCore::exception(STATUS_SERVER_ERROR, '查询价格必须是整数');
+                Core::exception(STATUS_SERVER_ERROR, '查询价格必须是整数');
             }
             $where .= ' AND max_price >= :end_price ';
             $params[':end_price'] = strtotime($endPrice);
@@ -113,7 +113,7 @@ class Goods extends AbstractBase
         ];
         $goodsDetail = $GoodsModel->fetchOne($columns, ['goodsid' => $goodsId, 'status' => MallGoods::STATUS_YES]);
         if (empty($goodsDetail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '商品不存在');
+            Core::exception(STATUS_SERVER_ERROR, '商品不存在');
         }
         // 商品相册。
         $GoodsImageModel = new MallGoodsImage();
@@ -182,7 +182,7 @@ class Goods extends AbstractBase
         $sql = 'SELECT SUM(stock) AS stock FROM mall_product WHERE goodsid = :goodsid AND status = :status';
         $params = [
             ':goodsid' => $goodsId,
-            ':status'  => MallProduct::STATUS_NORMAL
+            ':status'  => MallProduct::STATUS_YES
         ];
         $data = Db::one($sql, $params);
         return $data ? $data['stock'] : 0;

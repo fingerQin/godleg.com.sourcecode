@@ -8,7 +8,7 @@
 
 namespace Apis\app\v100\Order;
 
-use Utils\YCore;
+use finger\Core;
 use Apis\AbstractApi;
 use Services\User\Auth;
 use Services\Mall\Order;
@@ -45,14 +45,14 @@ class OrderSubmitApi extends AbstractApi
     protected function parsetGoodsListParam($goodsList)
     {
         if (strlen($goodsList) == 0) {
-            YCore::exception(STATUS_SERVER_ERROR, 'goods_list 参数有误');
+            Core::exception(STATUS_SERVER_ERROR, 'goods_list 参数有误');
         }
         $result     = [];
         $goodsGroup = explode('|', $goodsList);
         foreach ($goodsGroup as $group) {
             $groupInfo = explode(',', $group);
             if (count($groupInfo) != 3) {
-                YCore::exception(STATUS_SERVER_ERROR, 'goods_list 参数有误');
+                Core::exception(STATUS_SERVER_ERROR, 'goods_list 参数有误');
             }
             $result[] = [
                 'goodsid'   => $groupInfo[0],

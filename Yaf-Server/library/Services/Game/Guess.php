@@ -7,8 +7,8 @@
 
 namespace Services\Game;
 
+use finger\Core;
 use finger\Database\Db;
-use Utils\YCore;
 use Models\GmGuess;
 use Models\GmGuessRecord;
 use Models\GoldConsume;
@@ -122,19 +122,19 @@ class Guess extends \Services\AbstractBase
         $datetime    = date('Y-m-d H:i:s', time());
         $optionIndex = \strtoupper($optionIndex);
         if (!in_array($betGold, self::$goldLevel)) {
-            YCore::exception(STATUS_SERVER_ERROR, '投注金币数错误');
+            Core::exception(STATUS_SERVER_ERROR, '投注金币数错误');
         }
         $GuessModel  = new GmGuess();
         $guessDetail = $GuessModel->fetchOne([], ['guessid' => $guessId, 'status' => GmGuess::STATUS_YES]);
         if (empty($guessDetail)) {
-            YCore::exception(STATUS_SERVER_ERROR, '竞猜活动不存在');
+            Core::exception(STATUS_SERVER_ERROR, '竞猜活动不存在');
         }
         if ($guessDetail['deadline'] < $datetime) {
-            YCore::exception(STATUS_SERVER_ERROR, '活动已经结束');
+            Core::exception(STATUS_SERVER_ERROR, '活动已经结束');
         }
         $guessOptions = json_decode($guessDetail['option_data'], true);
         if (!isset($guessOptions[$optionIndex]) || strlen($guessOptions[$optionIndex]['op_title']) === 0) {
-            YCore::exception(STATUS_SERVER_ERROR, '您选择的答案错误');
+            Core::exception(STATUS_SERVER_ERROR, '您选择的答案错误');
         }
         Db::beginTransaction();
         try {
@@ -143,7 +143,7 @@ class Guess extends \Services\AbstractBase
             GoldConsume::CONSUME_CODE_GUESS_CUT);
         } catch (\Exception $e) {
             Db::rollBack();
-            YCore::exception($e->getCode(), $e->getMessage());
+            Core::exception($e->getCode(), $e->getMessage());
         }
         // 计算用户所投选项投中之后的奖励金额。
         $odds             = $guessOptions[$optionIndex]['op_odds']; // 赔率。
@@ -162,7 +162,7 @@ class Guess extends \Services\AbstractBase
         $ok = $GuessRecordModel->insert($data);
         if (!$ok) {
             Db::rollBack();
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
         }
         Db::commit();
         return $userGold;
@@ -184,7 +184,7 @@ class Guess extends \Services\AbstractBase
         // [1] 
         $where = [
             'reward_send_status' => ['IN', [GmGuess::SEND_STATUS_NO, GmGuess::SEND_STATUS_ING]],
-            'is_open'            => GmGuess::YES
+            'is_open'            => GmGuess::STATUS_YES
         ];
         $GmGuessModel = new GmGuess();
         $guessResult  = $GmGuessModel->fetchAll(['guessid', 'open_result'], $where, 0, 'guessid ASC');

@@ -1,0 +1,63 @@
+Array
+(
+    [LogTime] => 2019-12-12 11:32:25
+    [ServerIP] => 127.0.0.1
+    [ClientIP] => 127.0.0.1
+    [0] =>  SELECT `api_type`,`api_key`,`api_secret`,`is_open_ip_ban`,`ip_scope`,`ip_pool` FROM `finger_api_auth` WHERE  1 AND 1  AND `api_status` = :api_status   
+)
+
+
+Array
+(
+    [LogTime] => 2019-12-12 11:32:25
+    [ServerIP] => 127.0.0.1
+    [ClientIP] => 127.0.0.1
+    [0] =>  SELECT COUNT(1) AS count FROM `finger_sms_sendlog` WHERE `mobile` = :mobile  AND `c_time` > :c_time LIMIT 1
+)
+
+
+Array
+(
+    [LogTime] => 2019-12-12 11:32:25
+    [ServerIP] => 127.0.0.1
+    [ClientIP] => 127.0.0.1
+    [0] =>  SELECT `mobile` FROM `finger_sms_blacklist` WHERE  1 AND 1   
+)
+
+
+Array
+(
+    [LogTime] => 2019-12-12 11:32:25
+    [ServerIP] => 127.0.0.1
+    [ClientIP] => 127.0.0.1
+    [0] =>  SELECT  *  FROM `finger_sms_tpl` WHERE  1 AND 1  AND `send_key` = :send_key    LIMIT 1
+)
+
+
+Array
+(
+    [LogTime] => 2019-12-12 11:32:25
+    [ServerIP] => 127.0.0.1
+    [ClientIP] => 127.0.0.1
+    [0] => INSERT INTO `finger_sms_sendlog` (`mobile`,`content`,`tpl_id`,`verify_code`,`ip`,`c_time`,`s_time`,`sms_status`,`sms_type`,`platform`) VALUES('18575202691','验证码：123456，请您10分钟内完成验证。【腿神】','3','123456','127.0.0.1','2019-12-12 11:32:25','2019-12-12 11:32:25','1','1','5') 
+)
+
+
+Array
+(
+    [LogTime] => 2019-12-12 11:32:28
+    [ServerIP] => 127.0.0.1
+    [ClientIP] => 127.0.0.1
+    [0] =>  SELECT  *  FROM `finger_sms_tpl` WHERE  1 AND 1  AND `send_key` = :send_key    LIMIT 1
+)
+
+
+Array
+(
+    [LogTime] => 2019-12-12 11:32:28
+    [ServerIP] => 127.0.0.1
+    [ClientIP] => 127.0.0.1
+    [0] =>  SELECT  *  FROM `finger_sms_sendlog` WHERE  1 AND 1  AND `tpl_id` = :tpl_id  AND `mobile` = :mobile   ORDER BY id DESC LIMIT 1
+)
+
+

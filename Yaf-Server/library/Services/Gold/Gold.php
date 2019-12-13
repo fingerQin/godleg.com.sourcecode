@@ -7,7 +7,7 @@
 
 namespace Services\Gold;
 
-use Utils\YCore;
+use finger\Core;
 use finger\Validator;
 use finger\Database\Db;
 use Models\GoldConsume;
@@ -60,7 +60,7 @@ class Gold extends \Services\AbstractBase
         ];
         $ok = $GoldConsumeModel->insert($data);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
         }
         return $userGold;
     }
@@ -86,7 +86,7 @@ class Gold extends \Services\AbstractBase
             ];
             $ok = $GoldModel->insert($data);
             if (!$ok) {
-                YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+                Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
             }
             $userGold = $gold;
         } else {
@@ -101,7 +101,7 @@ class Gold extends \Services\AbstractBase
             ];
             $ok = $GoldModel->update($data, $where);
             if (!$ok) {
-                YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+                Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
             }
             $userGold = $data['gold'];
         }
@@ -121,7 +121,7 @@ class Gold extends \Services\AbstractBase
         $GoldModel    = new GoldModel();
         $userGoldInfo = $GoldModel->fetchOne([], ['userid' => $userId]);
         if (empty($userGoldInfo) || $userGoldInfo['gold'] < $gold) {
-            YCore::exception(STATUS_SERVER_ERROR, '金币数量不足');
+            Core::exception(STATUS_SERVER_ERROR, '金币数量不足');
         }
         $data = [
             'v'      => $userGoldInfo['v'] + 1,
@@ -134,7 +134,7 @@ class Gold extends \Services\AbstractBase
         ];
         $ok = $GoldModel->update($data, $where);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
         }
         return $data['gold'];
     }
@@ -167,14 +167,14 @@ class Gold extends \Services\AbstractBase
         }
         if (strlen($startTime) > 0) {
             if (!Validator::is_date($startTime)) {
-                YCore::exception(STATUS_SERVER_ERROR, '查询时间格式不正确');
+                Core::exception(STATUS_SERVER_ERROR, '查询时间格式不正确');
             }
             $where .= ' AND c_time >= :start_time ';
             $params[':start_time'] = strtotime($startTime);
         }
         if (strlen($endTime) > 0) {
             if (!Validator::is_date($endTime)) {
-                YCore::exception(STATUS_SERVER_ERROR, '查询时间格式不正确');
+                Core::exception(STATUS_SERVER_ERROR, '查询时间格式不正确');
             }
             $where .= ' AND c_time <= :end_time ';
             $params[':end_time'] = strtotime($endTime);

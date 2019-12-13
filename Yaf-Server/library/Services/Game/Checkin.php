@@ -7,8 +7,8 @@
 
 namespace Services\Game;
 
-use Utils\YCore;
-use Utils\YCache;
+use finger\Cache;
+use finger\Core;
 use Models\GoldConsume;
 use Services\Gold\Gold;
 
@@ -31,10 +31,10 @@ class Checkin extends \Services\AbstractBase
         $time     = time();
         $date     = date('Y-m-d', $time);
         $cacheKey = "checkin:{$userid}:{$date}";
-        $redis    = YCache::getRedisClient();
+        $redis    = Cache::getRedisClient();
         $status   = $redis->set($cacheKey, $date, ['NX', 'EX' => 86400]);
         if (!$status) {
-            YCore::exception(STATUS_SERVER_ERROR, '请勿重复签到!');
+            Core::exception(STATUS_SERVER_ERROR, '请勿重复签到!');
         }
         $where = [
             'userid'       => $userid,
@@ -44,7 +44,7 @@ class Checkin extends \Services\AbstractBase
         $GoldConsumeModel = new GoldConsume();
         $checkin = $GoldConsumeModel->fetchOne([], $where);
         if ($checkin) {
-            YCore::exception(STATUS_SERVER_ERROR, '请勿重复签到!');
+            Core::exception(STATUS_SERVER_ERROR, '请勿重复签到!');
         }
         $gold = Gold::consume($userid, self::CHECK_IN_GOLD, GoldConsume::CONSUME_TYPE_ADD, GoldConsume::CONSUME_CODE_CHECK_IN);
         return [
@@ -64,7 +64,7 @@ class Checkin extends \Services\AbstractBase
         $time        = time();
         $date        = date('Y-m-d', $time);
         $cacheKey    = "checkin:{$userid}:{$date}";
-        $checkInDate = YCache::get($cacheKey);
+        $checkInDate = Cache::get($cacheKey);
         if ($checkInDate != false && $checkInDate == $date) {
             return true;
         }

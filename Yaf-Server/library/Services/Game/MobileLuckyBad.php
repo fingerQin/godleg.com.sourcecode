@@ -14,7 +14,7 @@
 
 namespace Services\Game;
 
-use Utils\YCore;
+use finger\Core;
 use finger\Validator;
 
 class MobileLuckyBad extends \Services\AbstractBase
@@ -123,7 +123,7 @@ class MobileLuckyBad extends \Services\AbstractBase
     public static function do($mobile)
     {
         if (Validator::is_mobilephone($mobile) === false) {
-            YCore::exception(STATUS_SERVER_ERROR, '手机号不正确');
+            Core::exception(STATUS_SERVER_ERROR, '手机号不正确');
         }
         $num    = substr($mobile, -4);
         $code   = $num % 80;

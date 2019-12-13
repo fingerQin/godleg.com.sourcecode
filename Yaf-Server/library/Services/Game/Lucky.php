@@ -7,10 +7,9 @@
 
 namespace Services\Game;
 
+use finger\Cache;
+use finger\Strings;
 use finger\Database\Db;
-use Utils\YCore;
-use Utils\YCache;
-use Utils\YString;
 use Models\GmLuckyGoods;
 use Models\GmLuckyPrize;
 use Models\GoldConsume;
@@ -71,28 +70,28 @@ class Lucky extends \Services\AbstractBase
         // [3] 判断中奖的奖品当天的中奖次数。
         $luckyGoodsTimeKey = "lucky_goods_time_{$prizeInfo['id']}";
         $cacheKey          = "lucky_goods_{$prizeInfo['id']}";
-        $cacheVal          = YCache::get($cacheKey);
+        $cacheVal          = Cache::get($cacheKey);
         if ($cacheVal === false) {
-            YCache::set($luckyGoodsTimeKey, time());
-            YCache::set($cacheKey, 1);
+            Cache::set($luckyGoodsTimeKey, time());
+            Cache::set($cacheKey, 1);
             $gold = Gold::consume($userId, $prizeInfo['reward_val'], GoldConsume::CONSUME_TYPE_ADD, GoldConsume::CONSUME_CODE_LUCKY_ADD);
             self::writeLuckyPrizeRecord($userId, $prizeInfo['goods_name'], $prizeInfo['reward_val'], $randValue);
         } else {
             $lastEndTime    = strtotime(date('Y-m-d 00:00:00', time()));
-            $luckyGoodsTime = YCache::get($luckyGoodsTimeKey);
+            $luckyGoodsTime = Cache::get($luckyGoodsTimeKey);
             if ($luckyGoodsTime > $lastEndTime) { // 当天。
                 if ($cacheVal >= $prizeInfo['day_max']) { // 超过了奖品当天允许抽中的数量。
                     $isOk = false;
                     self::writeLuckyPrizeRecord($userId, '未中奖', GmLuckyGoods::GOODS_TYPE_NO, 0, $randValue);
                 } else {
-                    YCache::set($cacheKey, $cacheVal+1);
-                    YCache::set($luckyGoodsTimeKey, time());
+                    Cache::set($cacheKey, $cacheVal+1);
+                    Cache::set($luckyGoodsTimeKey, time());
                     $gold =  Gold::consume($userId, $prizeInfo['reward_val'], GoldConsume::CONSUME_TYPE_ADD, GoldConsume::CONSUME_CODE_LUCKY_ADD);
                     self::writeLuckyPrizeRecord($userId, $prizeInfo['goods_name'], $prizeInfo['reward_val'], $randValue);
                 }
             } else { // 昨天。
-                YCache::set($cacheKey, 1);
-                YCache::set($luckyGoodsTimeKey, time());
+                Cache::set($cacheKey, 1);
+                Cache::set($luckyGoodsTimeKey, time());
                 $gold =  Gold::consume($userId, self::$betGoldVal, GoldConsume::CONSUME_TYPE_ADD, GoldConsume::CONSUME_CODE_LUCKY_ADD);
                 self::writeLuckyPrizeRecord($userId, $prizeInfo['goods_name'],  $prizeInfo['reward_val'], $randValue);
             }
@@ -131,7 +130,7 @@ class Lucky extends \Services\AbstractBase
         ];
         $ok = $LuckyPrizeModel->insert($data);
         if (!$ok) {
-            YCore::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+            Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
         }
     }
 
@@ -187,7 +186,7 @@ class Lucky extends \Services\AbstractBase
         $sql     = "SELECT {$columns} {$fromTable} {$where} {$orderBy} LIMIT 0,{$count}";
         $list    = Db::all($sql, $params);
         foreach ($list as $k => $v) {
-            $v['mobile'] = YString::asterisk($v['mobile'], 2, 5);
+            $v['mobile'] = Strings::asterisk($v['mobile'], 2, 5);
             $v['c_time'] = substr($v['c_time'], 5, 11);
             $list[$k]    = $v;
         }

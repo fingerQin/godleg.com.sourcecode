@@ -8,10 +8,10 @@
 
 namespace Services\Game;
 
-use Utils\YUrl;
-use Utils\YCore;
-use Utils\YCache;
+use finger\Cache;
+use finger\Core;
 use finger\Database\Db;
+use finger\Url;
 use Models\GmRiddle;
 
 class Riddle extends \Services\AbstractBase
@@ -100,7 +100,7 @@ class Riddle extends \Services\AbstractBase
         $priority    = self::getRandPriority();
         $dicts       = isset($configCache[$priority]) ? $configCache[$priority] : [];
         if (empty($dicts)) {
-            YCore::exception(STATUS_ERROR, '配置数据缺失!');
+            Core::exception(STATUS_ERROR, '配置数据缺失!');
         }
         $count  = count($dicts);
         $randV  = mt_rand(0, $count-1);
@@ -125,7 +125,7 @@ class Riddle extends \Services\AbstractBase
      */
     public static function detail($questipnOpenID)
     {
-        $redis  = YCache::getRedisClient();
+        $redis  = Cache::getRedisClient();
         $key    = self::RIDDLE_PRE_KEY . $questipnOpenID;
         $detail = $redis->get($key);
         if ($detail) {
@@ -135,7 +135,7 @@ class Riddle extends \Services\AbstractBase
             $RiddleModel = new GmRiddle();
             $detail      = $RiddleModel->fetchOne($columns, ['openid' => $questipnOpenID]);
             if (empty($detail)) {
-                YCore::exception(STATUS_SERVER_ERROR, '谜题丢失了~');
+                Core::exception(STATUS_SERVER_ERROR, '谜题丢失了~');
             }
             $redis->set($key, json_encode($detail, JSON_UNESCAPED_UNICODE));
             return $detail;
@@ -153,7 +153,7 @@ class Riddle extends \Services\AbstractBase
      */
     public static function clearDetailCache($questipnOpenID)
     {
-        $redis = YCache::getRedisClient();
+        $redis = Cache::getRedisClient();
         $key   = self::RIDDLE_PRE_KEY . $questipnOpenID;
         $redis->del($key);
     }
@@ -167,7 +167,7 @@ class Riddle extends \Services\AbstractBase
      */
     public static function resetCache()
     {
-        $redis = YCache::getRedisClient();
+        $redis = Cache::getRedisClient();
         $redis->del(self::RIDDLE_KEY);
         self::getPriorityCache();
     }
@@ -181,7 +181,7 @@ class Riddle extends \Services\AbstractBase
      */
     protected static function url($questipnOpenID)
     {
-        return YUrl::h5Url('Game', 'riddle', ['openid' => $questipnOpenID]);
+        // return Url::h5Url('Game', 'riddle', ['openid' => $questipnOpenID]);
     }
 
     /**
@@ -210,7 +210,7 @@ class Riddle extends \Services\AbstractBase
      */
     protected static function getPriorityCache()
     {
-        $redis     = YCache::getRedisClient();
+        $redis     = Cache::getRedisClient();
         $dictCache = $redis->get(self::RIDDLE_KEY);
         if ($dictCache) {
             $dicts = json_decode($dictCache, true);
