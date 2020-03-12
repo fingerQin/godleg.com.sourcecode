@@ -11,7 +11,6 @@ namespace Services\Game;
 use finger\Cache;
 use finger\Core;
 use finger\Database\Db;
-use finger\Url;
 use Models\GmRiddle;
 
 class Riddle extends \Services\AbstractBase
