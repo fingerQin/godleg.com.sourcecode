@@ -9,6 +9,7 @@
 
 namespace Apis\app\v100\News;
 
+use finger\App;
 use Apis\AbstractApi;
 use Services\System\News;
 
