@@ -1,0 +1,1335 @@
+Array
+(
+    [LogTime] => 2020-03-13 10:24:27
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 10:24:26
+            [_ip] => 10.0.2.2
+            [_userid] => 0
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [code] => 198888
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [login_type] => 2
+            [longitude] => 106.75
+            [method] => user.login
+            [mobile] => 14870316666
+            [oriJson] => {"method":"user.login","mobile":"14870316666","login_type":2,"code":"198888","type":1,"device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584066266,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [platform] => 1
+            [sign] => 4D93D1BEC7E9A751CE6F7C8DB195B939
+            [timestamp] => 1584066266
+            [type] => 1
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 10:24:27
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => 登录成功
+            [data] => Array
+                (
+                    [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+                    [open_id] => 4bb45118b0116412bb4967bf9fee5032
+                    [mobile] => 14870316666
+                    [headimg] => 
+                    [nickname] => 148****6666
+                    [intro] => 
+                    [gold] => 1000
+                    [reg_time] => 2019-08-21 15:13:22
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 10:24:36
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 10:24:35
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => task.check.in
+            [oriJson] => {"method":"task.check.in","task_id":1,"step_count":3000,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584066275,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [platform] => 1
+            [sign] => 589AEF943ECCCAE7324761AE6A0317CE
+            [step_count] => 3000
+            [task_id] => 1
+            [timestamp] => 1584066275
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 10:24:36
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => 签到成功
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 10:26:52
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 10:26:52
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => task.check.in
+            [oriJson] => {"method":"task.check.in","task_id":1,"step_count":3000,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584066412,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [platform] => 1
+            [sign] => 89B37E8FF6F8BE46C685D0B02C4CA80F
+            [step_count] => 3000
+            [task_id] => 1
+            [timestamp] => 1584066412
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 10:26:52
+        )
+
+    [response] => Array
+        (
+            [code] => 503
+            [msg] => 您今日已经参与任务打卡了
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 10:27:06
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 10:27:06
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [district_code] => 520112000
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => task.list
+            [oriJson] => {"method":"task.list","page":1,"district_code":"520112000","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584066426,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => C91E1C5E2F05F3A1FB81BD8BA2E98D13
+            [timestamp] => 1584066426
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 10:27:06
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => success
+            [data] => Array
+                (
+                    [list] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [taskid] => 2
+                                    [task_name] => KFC 周年庆打卡点
+                                    [sponsorid] => 2
+                                    [address] => 贵州省贵阳市乌当区
+                                    [gold] => 2000
+                                    [move_step] => 5000
+                                    [everyday_times] => 1000
+                                    [total_times] => 100000
+                                    [albums] => ["http:\/\/files.godleg.com\/images\/voucher\/20190830\/5d6886c64ae95.png"]
+                                    [longitude] => 106.75
+                                    [latitude] => 26.63
+                                    [name] => KFC
+                                    [task_status] => 1
+                                    [task_status_txt] => 进行中
+                                )
+
+                            [1] => Array
+                                (
+                                    [taskid] => 1
+                                    [task_name] => 官方指定新人必打卡点
+                                    [sponsorid] => 1
+                                    [address] => 贵州省贵阳市乌当区
+                                    [gold] => 1000
+                                    [move_step] => 3000
+                                    [everyday_times] => 1000
+                                    [total_times] => 100000
+                                    [albums] => []
+                                    [longitude] => 106.75
+                                    [latitude] => 26.63
+                                    [name] => 腿神官方平台
+                                    [task_status] => 1
+                                    [task_status_txt] => 进行中
+                                )
+
+                        )
+
+                    [total] => 2
+                    [page] => 1
+                    [count] => 20
+                    [isnext] => 
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 10:28:19
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 10:28:18
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => task.records
+            [oriJson] => {"method":"task.records","page":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584066499,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => 9E26D0CCC15CCAC34CCC1119B7771D02
+            [timestamp] => 1584066499
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 10:28:19
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => success
+            [data] => Array
+                (
+                    [list] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id] => 11
+                                    [taskid] => 1
+                                    [gold] => 1000
+                                    [step_count] => 3000
+                                    [image_url] => 
+                                    [longitude] => 106.75
+                                    [latitude] => 26.63
+                                    [c_time] => 2020-03-13 10:24:35
+                                    [task_name] => 官方指定新人必打卡点
+                                )
+
+                        )
+
+                    [total] => 1
+                    [page] => 1
+                    [count] => 20
+                    [isnext] => 
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 10:31:41
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 10:31:41
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [district_code] => 520112000
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => task.list
+            [oriJson] => {"method":"task.list","page":1,"district_code":"520112000","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584066701,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => 5A333D19FE4240521FD705EFCC57BFCC
+            [timestamp] => 1584066701
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 10:31:41
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => success
+            [data] => Array
+                (
+                    [list] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [taskid] => 2
+                                    [task_name] => KFC 周年庆打卡点
+                                    [sponsorid] => 2
+                                    [address] => 贵州省贵阳市乌当区
+                                    [gold] => 2000
+                                    [move_step] => 5000
+                                    [everyday_times] => 1000
+                                    [total_times] => 100000
+                                    [albums] => ["http:\/\/files.godleg.com\/images\/voucher\/20190830\/5d6886c64ae95.png"]
+                                    [longitude] => 106.75
+                                    [latitude] => 26.63
+                                    [name] => KFC
+                                    [task_status] => 1
+                                    [task_status_txt] => 进行中
+                                )
+
+                            [1] => Array
+                                (
+                                    [taskid] => 1
+                                    [task_name] => 官方指定新人必打卡点
+                                    [sponsorid] => 1
+                                    [address] => 贵州省贵阳市乌当区
+                                    [gold] => 1000
+                                    [move_step] => 3000
+                                    [everyday_times] => 1000
+                                    [total_times] => 100000
+                                    [albums] => []
+                                    [longitude] => 106.75
+                                    [latitude] => 26.63
+                                    [name] => 腿神官方平台
+                                    [task_status] => 1
+                                    [task_status_txt] => 进行中
+                                )
+
+                        )
+
+                    [total] => 2
+                    [page] => 1
+                    [count] => 20
+                    [isnext] => 
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 10:41:45
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 10:41:44
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [cat_id] => -1
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [end_price] => -1
+            [keyword] => 
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => goods.list
+            [oriJson] => {"method":"goods.list","page":1,"cat_id":"-1","keyword":"","start_price":-1,"end_price":-1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584067305,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => DF20DD6676BE01D305397FE33D7A3AF3
+            [start_price] => -1
+            [timestamp] => 1584067305
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 10:41:45
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => success
+            [data] => Array
+                (
+                    [list] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [goodsid] => 21
+                                    [goods_name] => ChinaJoy 服装
+                                    [min_price] => 9000
+                                    [max_price] => 9000
+                                    [goods_img] => http://yaf-server-admin.oss-cn-shenzhen.aliyuncs.com/images/voucher/20190807/5d4a23cd0c4a3.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [1] => Array
+                                (
+                                    [goodsid] => 20
+                                    [goods_name] => 明基绝地求生吃鸡鼠标（edit）
+                                    [min_price] => 188
+                                    [max_price] => 199
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180828/5b84a60d5dcd0.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [2] => Array
+                                (
+                                    [goodsid] => 19
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 160
+                                    [max_price] => 160
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180828/5b84a62196ac6.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [3] => Array
+                                (
+                                    [goodsid] => 18
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 160
+                                    [max_price] => 160
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbbe498e6e.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [4] => Array
+                                (
+                                    [goodsid] => 17
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbbe498e6e.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [5] => Array
+                                (
+                                    [goodsid] => 16
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7d1702ad000.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [6] => Array
+                                (
+                                    [goodsid] => 15
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7d17118d303.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [7] => Array
+                                (
+                                    [goodsid] => 14
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7d171b207c5.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [8] => Array
+                                (
+                                    [goodsid] => 13
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbbe1a70c7.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [9] => Array
+                                (
+                                    [goodsid] => 12
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbbe1a70c7.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [10] => Array
+                                (
+                                    [goodsid] => 10
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbbe1a70c7.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [11] => Array
+                                (
+                                    [goodsid] => 9
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbbe1a70c7.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [12] => Array
+                                (
+                                    [goodsid] => 8
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbbe1a70c7.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [13] => Array
+                                (
+                                    [goodsid] => 7
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbbe1a70c7.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [14] => Array
+                                (
+                                    [goodsid] => 6
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbbe1a70c7.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [15] => Array
+                                (
+                                    [goodsid] => 5
+                                    [goods_name] => 明基绝地求生吃鸡鼠标
+                                    [min_price] => 379
+                                    [max_price] => 379
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbbe1a70c7.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                            [16] => Array
+                                (
+                                    [goodsid] => 1
+                                    [goods_name] => ikbc C104 樱桃轴机械键盘
+                                    [min_price] => 399
+                                    [max_price] => 399
+                                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbe51ea911.jpg
+                                    [buy_count] => 0
+                                    [month_buy_count] => 0
+                                )
+
+                        )
+
+                    [total] => 17
+                    [page] => 1
+                    [count] => 20
+                    [isnext] => 
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 10:42:21
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 10:42:21
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [goods_id] => 1
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => goods.detail
+            [oriJson] => {"method":"goods.detail","goods_id":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584067341,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [platform] => 1
+            [sign] => AAAE8D8ABBB48C94E52CB58FB0B137D9
+            [timestamp] => 1584067341
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 10:42:21
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => success
+            [data] => Array
+                (
+                    [goodsid] => 1
+                    [goods_name] => ikbc C104 樱桃轴机械键盘
+                    [min_market_price] => 399
+                    [max_market_price] => 399
+                    [min_price] => 399
+                    [max_price] => 399
+                    [goods_img] => http://files.godleg.com/images/voucher/20180822/5b7cbe51ea911.jpg
+                    [buy_count] => 0
+                    [month_buy_count] => 0
+                    [limit_count] => 0
+                    [description] => <img src="http://files.hunshijian.com/images/goodsimg/20180822/5b7cbe9ce07cb.jpg" alt="" /><img src="http://files.hunshijian.com/images/goodsimg/20180822/5b7cbecb0d731.jpg" alt="" /><img src="http://files.hunshijian.com/images/goodsimg/20180822/5b7cbefa8e098.jpg" alt="" /><img src="http://files.hunshijian.com/images/goodsimg/20180822/5b7cbf038db39.jpg" alt="" /><img src="http://files.hunshijian.com/images/goodsimg/20180822/5b7cbf1869d45.jpg" alt="" /><img src="http://files.hunshijian.com/images/goodsimg/20180822/5b7cbf232fd30.jpg" alt="" /><img src="http://files.hunshijian.com/images/goodsimg/20180822/5b7cbf3503471.jpg" alt="" />
+                    [products] => Array
+                        (
+                            [single_product] => Array
+                                (
+                                    [productid] => 33
+                                    [market_price] => 399
+                                    [sales_price] => 399
+                                    [stock] => 993
+                                    [spec_val] => 
+                                    [skuid] => ikbc00000001
+                                    [arr_spec_val] => Array
+                                        (
+                                        )
+
+                                )
+
+                        )
+
+                    [spec_val] => Array
+                        (
+                        )
+
+                    [goods_image] => Array
+                        (
+                            [0] => http://files.hunshijian.com/images/voucher/20180822/5b7cbe51ea911.jpg
+                            [1] => http://files.hunshijian.com/images/voucher/20180822/5b7cbe53eb153.jpg
+                            [2] => http://files.hunshijian.com/images/voucher/20180822/5b7cbe558dc44.jpg
+                            [3] => http://files.hunshijian.com/images/voucher/20180822/5b7cbe59214c9.jpg
+                            [4] => http://files.hunshijian.com/images/voucher/20180822/5b7cbe5b1d2fc.jpg
+                        )
+
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 10:52:55
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 10:52:55
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => order.list
+            [oriJson] => {"method":"order.list","page":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584067975,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => B7807CC3C10B204A1C29F222402E17B1
+            [timestamp] => 1584067975
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 10:52:55
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => success
+            [data] => Array
+                (
+                    [list] => Array
+                        (
+                        )
+
+                    [total] => 0
+                    [page] => 1
+                    [count] => 20
+                    [isnext] => 
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 11:04:33
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 11:04:33
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => task.check.in
+            [oriJson] => {"method":"task.check.in","task_id":1,"step_count":3000,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584068673,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [platform] => 1
+            [sign] => 8684F1FD6752406E92FBACC2A8A01596
+            [step_count] => 3000
+            [task_id] => 1
+            [timestamp] => 1584068673
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 11:04:33
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => 签到成功
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 11:04:35
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 11:04:35
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => task.check.in
+            [oriJson] => {"method":"task.check.in","task_id":1,"step_count":3000,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584068675,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [platform] => 1
+            [sign] => 0215C23C41A6C3FF80531B30FAFCB45C
+            [step_count] => 3000
+            [task_id] => 1
+            [timestamp] => 1584068675
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 11:04:35
+        )
+
+    [response] => Array
+        (
+            [code] => 503
+            [msg] => 请勿重复签到!
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:30:24
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:30:24
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => task.check.in.detail
+            [oriJson] => {"method":"task.check.in.detail","page":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081024,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => 981A9A216EED4A329A87D04FC364B1B3
+            [timestamp] => 1584081024
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:30:24
+        )
+
+    [response] => Array
+        (
+            [code] => 509
+            [msg] => 您的 APP 太旧请升级!
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:30:50
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:30:49
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => task.check.in.detail
+            [oriJson] => {"method":"task.check.in.detail","page":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081050,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => B3DBC705A12B3C5886B53ED03C4C1186
+            [timestamp] => 1584081050
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:30:50
+        )
+
+    [response] => Array
+        (
+            [code] => 509
+            [msg] => 您的 APP 太旧请升级!
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:31:02
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:31:02
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => task.check.in.detail
+            [oriJson] => {"method":"task.check.in.detail","page":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081062,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => 5FEF6F16563F519C2AFCC7CFC8AA7580
+            [timestamp] => 1584081062
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:31:02
+        )
+
+    [response] => Array
+        (
+            [code] => 509
+            [msg] => 您的 APP 太旧请升级!
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:31:15
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:31:15
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => game.check.in.detail
+            [oriJson] => {"method":"game.check.in.detail","page":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081075,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => C21D3F106C9A5199E753FCC25E8D9F6E
+            [timestamp] => 1584081075
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:31:15
+        )
+
+    [response] => Array
+        (
+            [code] => 500
+            [msg] => 服务器繁忙,请稍候重试
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:31:28
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:31:28
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => game.check.in
+            [oriJson] => {"method":"game.check.in","task_id":1,"step_count":3000,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081088,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [platform] => 1
+            [sign] => 282C4CEFB4409B6C1BFEB70BC44CF04D
+            [step_count] => 3000
+            [task_id] => 1
+            [timestamp] => 1584081088
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:31:28
+        )
+
+    [response] => Array
+        (
+            [code] => 503
+            [msg] => 请勿重复签到!
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:32:33
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:32:33
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => game.check.in.detail
+            [oriJson] => {"method":"game.check.in.detail","page":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081153,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => DBE2101F5299630F113B778A4231BE62
+            [timestamp] => 1584081153
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:32:33
+        )
+
+    [response] => Array
+        (
+            [code] => 500
+            [msg] => 服务器繁忙,请稍候重试
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:32:36
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:32:36
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => game.check.in
+            [oriJson] => {"method":"game.check.in","task_id":1,"step_count":3000,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081156,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [platform] => 1
+            [sign] => 0673CDFF850FA8819EB0BA507B5EEBD6
+            [step_count] => 3000
+            [task_id] => 1
+            [timestamp] => 1584081156
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:32:36
+        )
+
+    [response] => Array
+        (
+            [code] => 503
+            [msg] => 请勿重复签到!
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:33:50
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:33:50
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => game.check.in
+            [oriJson] => {"method":"game.check.in","task_id":1,"step_count":3000,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081230,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [platform] => 1
+            [sign] => 3A555123674AEC98B1FBC2A7BFB8EFC9
+            [step_count] => 3000
+            [task_id] => 1
+            [timestamp] => 1584081230
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:33:50
+        )
+
+    [response] => Array
+        (
+            [code] => 503
+            [msg] => 请勿重复签到!
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:37:03
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:37:02
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => game.check.in.detail
+            [oriJson] => {"method":"game.check.in.detail","page":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081423,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => 3199D0DCB2EDAE1B85A91E6143A0C016
+            [timestamp] => 1584081423
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:37:03
+        )
+
+    [response] => Array
+        (
+            [code] => 500
+            [msg] => 服务器繁忙,请稍候重试
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:39:19
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:39:19
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => game.check.in.detail
+            [oriJson] => {"method":"game.check.in.detail","page":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081559,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => C52F412491FC8F4A1396B468CBC9238C
+            [timestamp] => 1584081559
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:39:19
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => success
+            [data] => Array
+                (
+                    [total] => 1
+                    [records] => Array
+                        (
+                            [3.07] => Array
+                                (
+                                    [date] => 3.07
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.08] => Array
+                                (
+                                    [date] => 3.08
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.09] => Array
+                                (
+                                    [date] => 3.09
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.10] => Array
+                                (
+                                    [date] => 3.10
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.11] => Array
+                                (
+                                    [date] => 3.11
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.12] => Array
+                                (
+                                    [date] => 3.12
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.13] => Array
+                                (
+                                    [date] => 3.13
+                                    [gold] => 10
+                                    [status] => 1
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:41:45
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [request] => Array
+        (
+            [_datetime] => 2020-03-13 14:41:44
+            [_ip] => 10.0.2.2
+            [_userid] => 6
+            [app_v] => 1.0.0
+            [appid] => appid_test
+            [channel] => huawei
+            [device_token] => AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA
+            [latitude] => 26.63
+            [longitude] => 106.75
+            [method] => game.check.in.detail
+            [oriJson] => {"method":"game.check.in.detail","page":1,"token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","device_token":"AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA","v":"1.0.0","appid":"appid_test","timestamp":1584081705,"unique_id":"b91f5a1e50d6a0fff36dda5a1bb08d76","app_v":"1.0.0","token":"cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q","longitude":"106.75","latitude":"26.63","channel":"huawei","platform":"1"}
+            [page] => 1
+            [platform] => 1
+            [sign] => B54B7BB97BB96A892DF727A46EF59BBC
+            [timestamp] => 1584081705
+            [token] => cebeCAEDAgMJVAJTVQVaAAFfUQ5UBlYGVVUFBVMFbFIADlAKUwVQCw0GUFYAAFMBUA4EDwcGAFcDXVZTUwtVPQADCQwBBQQBD1I7UmxRB0Q
+            [unique_id] => b91f5a1e50d6a0fff36dda5a1bb08d76
+            [v] => 1.0.0
+            [_response_date] => 2020-03-13 14:41:45
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [msg] => success
+            [data] => Array
+                (
+                    [total] => 1
+                    [records] => Array
+                        (
+                            [3.07] => Array
+                                (
+                                    [date] => 3.07
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.08] => Array
+                                (
+                                    [date] => 3.08
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.09] => Array
+                                (
+                                    [date] => 3.09
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.10] => Array
+                                (
+                                    [date] => 3.10
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.11] => Array
+                                (
+                                    [date] => 3.11
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.12] => Array
+                                (
+                                    [date] => 3.12
+                                    [gold] => 0
+                                    [status] => 0
+                                )
+
+                            [3.13] => Array
+                                (
+                                    [date] => 3.13
+                                    [gold] => 10
+                                    [status] => 1
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
+
+

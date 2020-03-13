@@ -1,0 +1,57 @@
+Array
+(
+    [LogTime] => 2020-03-13 14:31:15
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [content] => The field c_time must be a array type
+#0 /data/web/myself/godleg.com.sourcecode/Yaf-Server/vendor/finger/yaflib/src/Database/Models.php(175): finger\Database\Models->parseWhereCondition(Array)
+#1 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Services/Game/Checkin.php(145): finger\Database\Models->fetchAll(Array, Array, 7, 'c_time ASC')
+#2 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Services/Game/Checkin.php(106): Services\Game\Checkin::latestSevenDayRecords('6')
+#3 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Apis/app/v100/Game/GameCheckInDetailApi.php(26): Services\Game\Checkin::detail('6')
+#4 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Apis/AbstractApi.php(81): Apis\app\v100\Game\GameCheckinDetailApi->runService()
+#5 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Apis/Factory.php(79): Apis\AbstractApi->__construct(Array, 'app', 'appid_test', '98040e3735acce4...')
+#6 /data/web/myself/godleg.com.sourcecode/Yaf-Server/apps/controllers/Index.php(29): Apis\Factory::factory(Array)
+#7 [internal function]: IndexController->indexAction()
+#8 /data/web/myself/godleg.com.sourcecode/Yaf-Server/public/index.php(22): Yaf_Application->run()
+#9 {main}
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:32:33
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [content] => The field c_time must be a array type
+#0 /data/web/myself/godleg.com.sourcecode/Yaf-Server/vendor/finger/yaflib/src/Database/Models.php(175): finger\Database\Models->parseWhereCondition(Array)
+#1 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Services/Game/Checkin.php(145): finger\Database\Models->fetchAll(Array, Array, 7, 'c_time ASC')
+#2 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Services/Game/Checkin.php(106): Services\Game\Checkin::latestSevenDayRecords('6')
+#3 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Apis/app/v100/Game/GameCheckInDetailApi.php(26): Services\Game\Checkin::detail('6')
+#4 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Apis/AbstractApi.php(81): Apis\app\v100\Game\GameCheckInDetailApi->runService()
+#5 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Apis/Factory.php(79): Apis\AbstractApi->__construct(Array, 'app', 'appid_test', '98040e3735acce4...')
+#6 /data/web/myself/godleg.com.sourcecode/Yaf-Server/apps/controllers/Index.php(29): Apis\Factory::factory(Array)
+#7 [internal function]: IndexController->indexAction()
+#8 /data/web/myself/godleg.com.sourcecode/Yaf-Server/public/index.php(22): Yaf_Application->run()
+#9 {main}
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 14:37:03
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [content] => The field c_time must be a array type
+#0 /data/web/myself/godleg.com.sourcecode/Yaf-Server/vendor/finger/yaflib/src/Database/Models.php(175): finger\Database\Models->parseWhereCondition(Array)
+#1 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Services/Game/Checkin.php(145): finger\Database\Models->fetchAll(Array, Array, 7, 'c_time ASC')
+#2 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Services/Game/Checkin.php(106): Services\Game\Checkin::latestSevenDayRecords('6')
+#3 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Apis/app/v100/Game/GameCheckInDetailApi.php(26): Services\Game\Checkin::detail('6')
+#4 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Apis/AbstractApi.php(81): Apis\app\v100\Game\GameCheckInDetailApi->runService()
+#5 /data/web/myself/godleg.com.sourcecode/Yaf-Server/library/Apis/Factory.php(79): Apis\AbstractApi->__construct(Array, 'app', 'appid_test', '98040e3735acce4...')
+#6 /data/web/myself/godleg.com.sourcecode/Yaf-Server/apps/controllers/Index.php(29): Apis\Factory::factory(Array)
+#7 [internal function]: IndexController->indexAction()
+#8 /data/web/myself/godleg.com.sourcecode/Yaf-Server/public/index.php(22): Yaf_Application->run()
+#9 {main}
+)
+
+

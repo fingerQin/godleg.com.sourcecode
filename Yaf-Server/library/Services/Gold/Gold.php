@@ -40,9 +40,6 @@ class Gold extends \Services\AbstractBase
      */
     public static function consume($userId, $gold, $consumeType, $consumeCode)
     {
-        $GoldModel    = new GoldModel();
-        $userGoldInfo = $GoldModel->fetchOne([], ['userid' => $userId]);
-        $userGold     = 0; // 用户账户当前金币。
         if ($consumeType == GoldConsume::CONSUME_TYPE_ADD) {
             $userGold = self::add($userId, $gold);
         } else if ($consumeType == GoldConsume::CONSUME_TYPE_CUT) {
