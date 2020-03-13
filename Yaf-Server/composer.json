@@ -1,6 +1,5 @@
 {
     "require": {
-        "phpoffice/phpspreadsheet": "^1.7",
         "finger/yaflib": "^2"
     },
     "repositories": {

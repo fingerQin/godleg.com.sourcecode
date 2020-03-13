@@ -9,7 +9,6 @@
 namespace Apis\app\v100\Game;
 
 use Apis\AbstractApi;
-use Services\User\Auth;
 use Services\Game\Lucky;
 
 class GameLuckyNewestApi extends AbstractApi
@@ -21,7 +20,6 @@ class GameLuckyNewestApi extends AbstractApi
      */
     protected function runService()
     {
-        $page   = $this->getInt('page', 1);
         $result = Lucky::getNewestRecords(20);
         $this->render(STATUS_SUCCESS, 'success', ['list' => $result]);
     }
