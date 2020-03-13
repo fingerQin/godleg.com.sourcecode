@@ -38,7 +38,7 @@ class Riddle extends \Services\AbstractBase
     public static function list($score = 0, $page = 1, $count = 20)
     {
         $offset    = self::getPaginationOffset($page, $count);
-        $fromTable = ' FROM finger_riddle ';
+        $fromTable = ' FROM gm_riddle ';
         $columns   = ' openid, score, question, question_img, answer, answer_img';
         $where     = ' WHERE source = :source ';
         $params    = [
