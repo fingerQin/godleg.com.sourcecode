@@ -1,52 +1,61 @@
 Array
 (
-    [LogTime] => 2020-03-13 10:24:26
+    [LogTime] => 2020-03-13 16:50:11
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
-    [0] =>  SELECT `ip`,`deadline` FROM `finger_forbid_ip` WHERE  1 AND 1  AND `deadline` <= :deadline   
+    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
 )
 
 
 Array
 (
-    [LogTime] => 2020-03-13 10:24:26
+    [LogTime] => 2020-03-13 16:50:11
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `mobile` = :mobile    LIMIT 1
+    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
 )
 
 
 Array
 (
-    [LogTime] => 2020-03-13 10:24:27
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_push_device` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-    [1] => UPDATE `finger_push_device` SET `last_device_token` = 'AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA',`last_device_type` = '1',`device_token` = 'AhIWfj5ulQTChf8DsDti5ezNB8_1nEezN7eMIv6OfebA',`device_type` = '1',`app_ver` = '1.0.0',`u_time` = :__c_u_time WHERE `id` = :id 
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:24:27
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] => INSERT INTO `finger_event` (`code`,`userid`,`status`,`c_time`,`u_time`,`data`) VALUES('login','6','0','2020-03-13 10:24:27','2020-03-13 10:24:27','{\"code\":\"login\",\"userid\":6,\"mobile\":\"14870316666\",\"platform\":\"1\",\"app_v\":\"1.0.0\",\"v\":\"1.0.0\",\"login_time\":\"2020-03-13 10:24:26\"}') 
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:24:27
+    [LogTime] => 2020-03-13 16:50:11
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
     [0] =>  SELECT  *  FROM `finger_gold` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
+    [1] => UPDATE `finger_gold` SET `v` = '3',`gold` = '1910',`u_time` = :__c_u_time WHERE `userid` = :userid  AND `v` = :v 
 )
 
 
 Array
 (
-    [LogTime] => 2020-03-13 10:24:35
+    [LogTime] => 2020-03-13 16:50:11
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [0] => INSERT INTO `finger_gold_consume` (`userid`,`consume_type`,`consume_code`,`gold`,`u_time`,`c_time`) VALUES('6','2','question_guess_cut','100','2020-03-13 16:50:11','2020-03-13 16:50:11') 
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 16:50:11
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [0] =>  SELECT  *  FROM `gm_guess` WHERE  1 AND 1  AND `guessid` = :guessid  AND `status` = :status    LIMIT 1
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 16:50:11
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [0] => INSERT INTO `gm_guess_record` (`guessid`,`userid`,`bet_gold`,`answer_index`,`prize_status`,`prize_money`,`status`,`c_time`,`u_time`) VALUES('1','6','100','A','0','200','1','2020-03-13 16:50:11','2020-03-13 16:50:11') 
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 16:50:16
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
     [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
@@ -55,7 +64,7 @@ Array
 
 Array
 (
-    [LogTime] => 2020-03-13 10:24:35
+    [LogTime] => 2020-03-13 16:50:16
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
     [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
@@ -64,80 +73,7 @@ Array
 
 Array
 (
-    [LogTime] => 2020-03-13 10:24:35
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT COUNT(1) AS count FROM `finger_task_record` WHERE `taskid` = :taskid  AND `c_time` BETWEEN :c_time_0 AND :c_time_1 LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:24:35
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT COUNT(1) AS count FROM `finger_task_record` WHERE `taskid` = :taskid LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:24:35
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT `id` FROM `finger_task_record` WHERE  1 AND 1  AND `userid` = :userid  AND `taskid` = :taskid  AND `c_time` BETWEEN :c_time_0 AND :c_time_1    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:24:35
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT COUNT(1) AS count FROM `finger_task_record` WHERE `taskid` = :taskid  AND `userid` = :userid LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:24:36
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_gold` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-    [1] => UPDATE `finger_gold` SET `v` = '1',`gold` = '2000',`u_time` = :__c_u_time WHERE `userid` = :userid  AND `v` = :v 
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:24:36
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] => INSERT INTO `finger_gold_consume` (`userid`,`consume_type`,`consume_code`,`gold`,`u_time`,`c_time`) VALUES('6','1','task','1000','2020-03-13 10:24:36','2020-03-13 10:24:36') 
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:24:36
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT taskid,sponsorid,district_code,gold,move_step,times_limit,longitude,latitude,everyday_times,total_times,start_time,end_time FROM `finger_task` WHERE  1 AND 1  AND `taskid` = :taskid  AND `display` = :display  AND `status` = :status    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:24:36
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] => INSERT INTO `finger_task_record` (`userid`,`sponsorid`,`taskid`,`gold`,`step_count`,`image_url`,`longitude`,`latitude`,`c_time`) VALUES('6','1','1','1000','3000','','106.75','26.63','2020-03-13 10:24:35') 
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:26:52
+    [LogTime] => 2020-03-13 16:50:21
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
     [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
@@ -146,7 +82,7 @@ Array
 
 Array
 (
-    [LogTime] => 2020-03-13 10:26:52
+    [LogTime] => 2020-03-13 16:50:21
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
     [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
@@ -155,16 +91,7 @@ Array
 
 Array
 (
-    [LogTime] => 2020-03-13 10:26:52
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT taskid,sponsorid,district_code,gold,move_step,times_limit,longitude,latitude,everyday_times,total_times,start_time,end_time FROM `finger_task` WHERE  1 AND 1  AND `taskid` = :taskid  AND `display` = :display  AND `status` = :status    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:27:06
+    [LogTime] => 2020-03-13 16:52:55
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
     [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
@@ -173,7 +100,7 @@ Array
 
 Array
 (
-    [LogTime] => 2020-03-13 10:27:06
+    [LogTime] => 2020-03-13 16:52:55
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
     [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
@@ -182,7 +109,16 @@ Array
 
 Array
 (
-    [LogTime] => 2020-03-13 10:28:19
+    [LogTime] => 2020-03-13 16:52:55
+    [ServerIP] => 10.0.2.15
+    [ClientIP] => 10.0.2.2
+    [0] =>  SELECT `goods_name`,`image_url`,`reward_val` FROM `gm_lucky_goods` WHERE  1 AND 1   ORDER BY id ASC
+)
+
+
+Array
+(
+    [LogTime] => 2020-03-13 16:54:08
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
     [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
@@ -191,7 +127,7 @@ Array
 
 Array
 (
-    [LogTime] => 2020-03-13 10:28:19
+    [LogTime] => 2020-03-13 16:55:34
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
     [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
@@ -200,431 +136,10 @@ Array
 
 Array
 (
-    [LogTime] => 2020-03-13 10:31:41
+    [LogTime] => 2020-03-13 16:55:34
     [ServerIP] => 10.0.2.15
     [ClientIP] => 10.0.2.2
     [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:31:41
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:41:45
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:41:45
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:42:21
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:42:21
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:42:21
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT `productid`,`market_price`,`sales_price`,`stock`,`spec_val`,`skuid` FROM `mall_product` WHERE  1 AND 1  AND `goodsid` = :goodsid  AND `status` = :status   ORDER BY productid ASC
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:42:21
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT `image_url` FROM `mall_goods_image` WHERE  1 AND 1  AND `goodsid` = :goodsid  AND `status` = :status   ORDER BY imageid ASC LIMIT 5
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:42:21
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT `goodsid`,`goods_name`,`min_market_price`,`max_market_price`,`min_price`,`max_price`,`goods_img`,`buy_count`,`month_buy_count`,`limit_count`,`spec_val_json`,`description` FROM `mall_goods` WHERE  1 AND 1  AND `goodsid` = :goodsid  AND `status` = :status    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:52:55
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 10:52:55
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 11:04:33
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 11:04:33
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 11:04:33
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_gold` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-    [1] => UPDATE `finger_gold` SET `v` = '2',`gold` = '2010',`u_time` = :__c_u_time WHERE `userid` = :userid  AND `v` = :v 
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 11:04:33
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] => INSERT INTO `finger_gold_consume` (`userid`,`consume_type`,`consume_code`,`gold`,`u_time`,`c_time`) VALUES('6','1','check_in','10','2020-03-13 11:04:33','2020-03-13 11:04:33') 
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 11:04:33
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_gold_consume` WHERE  1 AND 1  AND `userid` = :userid  AND `consume_code` = :consume_code  AND `c_time` BETWEEN :c_time_0 AND :c_time_1    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 11:04:35
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 11:04:35
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:30:24
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:30:50
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:31:02
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:31:15
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:31:15
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:31:15
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] => /*FORCE_MASTER*/  SELECT COUNT(1) AS count FROM `finger_gold_consume` WHERE `userid` = :userid LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:31:15
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:31:28
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:31:28
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:32:33
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:32:33
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:32:33
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] => /*FORCE_MASTER*/  SELECT COUNT(1) AS count FROM `finger_gold_consume` WHERE `userid` = :userid LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:32:33
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:32:36
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:32:36
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:33:50
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:33:50
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:33:50
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_gold_consume` WHERE  1 AND 1  AND `userid` = :userid  AND `consume_code` = :consume_code  AND `c_time` BETWEEN :c_time_0 AND :c_time_1    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:37:03
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:37:03
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:37:03
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] => /*FORCE_MASTER*/  SELECT COUNT(1) AS count FROM `finger_gold_consume` WHERE `userid` = :userid LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:37:03
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:39:19
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:39:19
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:39:19
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] => /*FORCE_MASTER*/  SELECT COUNT(1) AS count FROM `finger_gold_consume` WHERE `userid` = :userid LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:39:19
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT `gold`,`c_time` FROM `finger_gold_consume` WHERE  1 AND 1  AND `userid` = :userid  AND `consume_code` = :consume_code  AND `consume_type` = :consume_type  AND `c_time` BETWEEN :c_time_0 AND :c_time_1   ORDER BY c_time ASC LIMIT 7
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:41:45
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:41:45
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT  *  FROM `finger_user` WHERE  1 AND 1  AND `userid` = :userid    LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:41:45
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] => /*FORCE_MASTER*/  SELECT COUNT(1) AS count FROM `finger_gold_consume` WHERE `userid` = :userid LIMIT 1
-)
-
-
-Array
-(
-    [LogTime] => 2020-03-13 14:41:45
-    [ServerIP] => 10.0.2.15
-    [ClientIP] => 10.0.2.2
-    [0] =>  SELECT `gold`,`c_time` FROM `finger_gold_consume` WHERE  1 AND 1  AND `userid` = :userid  AND `consume_code` = :consume_code  AND `consume_type` = :consume_type  AND `c_time` BETWEEN :c_time_0 AND :c_time_1   ORDER BY c_time ASC LIMIT 7
 )
 
 
