@@ -207,12 +207,21 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 - 404 : 您访问的资源不存在。
 - 500 : 服务器发生了异常。比如：数据库、Redis 以及各种服务调用异常就会报 500 错误。
 - 503 : 业务普通错误的错误码。比如，文章不存在，金额小于 0 等错误提示。
+- 504：客户端向服务端接口请求时的参数中 method 不存在报此错误码。此错误正式环境不记录日志。
+- 505：客户端向服务端接口请求时的参数中 v 版本号参数不存在报此错误码。此错误正式环境不记录日志。
+- 506：客户端向服务端接口请求时的参数中 appid 不存在报此错误码。此错误正式环境不记录日志。
+- 507：客户端向服务端接口请求时的参数中 timestamp 不存在报此错误码。此错误正式环境不记录日志。
+- 508：客户端请求的 IP 不允许请求。访问特殊类型 API 接口时会限制请求的 IP。
+- 509：访问的接口不存在。
+- 510：整个系统访问受限的疑似非法 IP。
 - 601 : 登录超时，请重新登录。
 - 602 : 您还未登录。
 - 603：账号被其他人登录。
 - 604：账号已注册。
 - 605：账号未注册。
 - 606：密码已经修改。
+- 607：登录密码错误被限制 24 小时方可再次登录。
+- 700：短信验证码不正确。
 
 > 当需要其他特殊码进行特殊动作的时候，再约定。 
 
@@ -1098,7 +1107,404 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
+#### 2.22 文章列表接口[news.list]
 
+> 请求参数
 
+| 参数   | 名称         | 必须 | 类型    | 说明                      |
+| ------ | ------------ | ---- | ------- | ------------------------- |
+| method | API 接口名称 | 是   | String  | 接口值 -> news.list       |
+| cat_id | 分类 ID      | 是   | Integer | 如果没有指定分类，请传 -1 |
+| page   | 页码         | 是   | Integer | 默认值 1                  |
 
+> 返回参数
+
+| 参数           | 名称           | 类型    | 说明                         |
+| -------------- | -------------- | ------- | ---------------------------- |
+| total          | 文章总数       | Integer |                              |
+| page           | 当前页码       | Integer |                              |
+| count          | 每页显示条数   | Integer | 该值并不是当前返回的结果条数 |
+| isnext         | 是否存在下一页 | boolean | ture - 是、false - 否。      |
+| list           | 文章列表       | Object  | 文章列表对象。               |
+| list.news_id   | 文章 ID        | Integer |                              |
+| list.title     | 文章标题       | String  |                              |
+| list.intro     | 文章简介       | String  |                              |
+| list.image_url | 文章主图       | String  |                              |
+| list.source    | 文章来源       | String  |                              |
+| list.c_time    | 发布时间       | String  |                              |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list": [
+            {
+                "news_id": 8,
+                "title": "警方通报检察长妻子岳母殴打公交司机：两打人者被拘留",
+                "intro": "经查，30路公交车女司机娄某珍在行驶过程中，与乘客杜某因小孩乘车问题发生言语纠纷。娄某珍先后于车上、车下用随车携带的水杯里的水、水桶里的污水泼洒杜某，杜某在车下用随身携带水杯里的水回泼娄某珍，后该公交车继续行驶。",
+                "image_url": "",
+                "source": "腾讯新闻",
+                "c_time": "2019-08-21 20:04:07"
+            },
+            {
+                "news_id": 7,
+                "title": "全国“秋老虎”出没地图出炉！今年的秋老虎咬人吗？",
+                "intro": "全国“秋老虎”出没地图出炉！今年的秋老虎咬人吗？",
+                "image_url": "",
+                "source": "腾讯新闻",
+                "c_time": "2019-08-21 20:03:31"
+            }
+        ],
+        "total": 8,
+        "page": 1,
+        "count": 20,
+        "isnext": false
+    }
+}
+```
+
+#### 2.23 文章详情接口[news.detail]
+
+> 请求参数
+
+| 参数    | 名称         | 必须 | 类型    | 说明                  |
+| ------- | ------------ | ---- | ------- | --------------------- |
+| method  | API 接口名称 | 是   | String  | 接口值 -> news.detail |
+| news_id | 文章 ID      | 是   | Integer |                       |
+
+> 返回参数
+
+| 参数      | 名称     | 类型    | 说明 |
+| --------- | -------- | ------- | ---- |
+| news_id   | 文章 ID  | Integer |      |
+| title     | 文章标题 | String  |      |
+| intro     | 文章简介 | String  |      |
+| image_url | 文章主图 | String  |      |
+| source    | 文章来源 | String  |      |
+| c_time    | 发布时间 | String  |      |
+| content   | 文章内容 | String  |      |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "news_id": 1,
+        "title": "为什么对老鼠的研究并不总能在人类身上重现",
+        "intro": "十多年前，当人们开始为老鼠和人类绘制基因图谱时，一个国际研究团队就开始研究并比较二者之间的“任务控制中心”功能了。期待已久的报告发布在11月20日出版的《自然》杂志上。",
+        "image_url": "",
+        "source": "中国科学院",
+        "c_time": "2019-08-21 19:56:14",
+        "content": "<p>\r\n\t十多年前，当人们开始为老鼠和人类绘制基因图谱时，一个国际研究团队就开始研究并比较二者之间的“任务控制中心”功能了。期待已久的报告发布在11月20日出版的《自然》杂志上。</p>"
+    }
+}
+```
+
+#### 2.24 积分商城商品列表接口[goods.list]
+
+> 请求参数
+
+| 参数        | 名称               | 必须 | 类型    | 说明                       |
+| ----------- | ------------------ | ---- | ------- | -------------------------- |
+| method      | API 接口名称       | 是   | String  | 接口值 -> goods.list       |
+| cat_id      | 商品分类 ID        | 是   | Integer | 未选择时，默认值传 -1      |
+| keywords    | 商品名称搜索关键词 | 是   | String  | 搜索时使用，默认值空字符串 |
+| start_price | 最小查询价格       | 是   | Float   | 未填写时传 -1              |
+| end_price   | 最大查询价格       | 是   | Float   | 未填写时传 -1              |
+| page        | 当前页码           | 是   | Integer | 默认值 1                   |
+| token       | 会话 token 令牌    | 是   | String  | 未登录时传空字符串         |
+
+> 返回参数
+
+| 参数                 | 名称             | 类型    | 说明                               |
+| -------------------- | ---------------- | ------- | ---------------------------------- |
+| total                | 文章总数         | Integer |                                    |
+| page                 | 当前页码         | Integer |                                    |
+| count                | 每页显示条数     | Integer | 该值并非当前页返回的结果数         |
+| isnext               | 是否有下一页     | Boolean | true - 是、false - 否。            |
+| list                 | 商品列表         | Object  | 商品列表对象。                     |
+| list.goodsid         | 商品 ID          | Integer |                                    |
+| list.goods_name      | 商品名称         | String  |                                    |
+| list.min_price       | 商品最小价格     | Integer | 金币价格。                         |
+| list.max_price       | 商品最大价格     | Integer | 金币价格。多规格价格不相同时出现。 |
+| list.goods_img       | 商品主图         | String  |                                    |
+| list.buy_count       | 购买/兑换次数    | Integer |                                    |
+| list.month_buy_count | 最近一月购买次数 | Integer |                                    |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list": [
+            {
+                "goodsid": 21,
+                "goods_name": "ChinaJoy 服装",
+                "min_price": 9000,
+                "max_price": 9000,
+                "goods_img": "",
+                "buy_count": 0,
+                "month_buy_count": 0
+            },
+            {
+                "goodsid": 19,
+                "goods_name": "明基绝地求生吃鸡鼠标",
+                "min_price": 160,
+                "max_price": 160,
+                "goods_img": "",
+                "buy_count": 0,
+                "month_buy_count": 0
+            }
+        ],
+        "total": 16,
+        "page": 1,
+        "count": 20,
+        "isnext": false
+    }
+}
+```
+
+#### 2.25 积分商城商品详情接口[goods.detail]
+
+> 请求参数
+
+| 参数     | 名称            | 必须 | 类型    | 说明                       |
+| -------- | --------------- | ---- | ------- | -------------------------- |
+| method   | API 接口名称    | 是   | String  | API 接口值 -> goods.detail |
+| goods_id | 商品 ID         | 是   | Integer |                            |
+| token    | 会话 TOKEN 令牌 | 是   | String  |                            |
+
+> 返回参数
+
+| 参数                  | 名称         | 类型    | 说明                                             |
+| --------------------- | ------------ | ------- | ------------------------------------------------ |
+| goodsid               | 商品 ID      | Integer |                                                  |
+| goods_name            | 商品名称     | String  |                                                  |
+| min_market_price      | 市场最小价格 | Integer |                                                  |
+| max_market_price      | 市场最大价格 | Integer |                                                  |
+| min_price             | 最小售价     | Integer | 购买时，最低价格                                 |
+| max_price             | 最大售价     | Integer | 购买时，最高价格。多规格商品时存在。             |
+| goods_img             | 商品主图     | String  | 可根据实际需求使用。通常详情页显示商品相册图片。 |
+| buy_count             | 累计兑换数   | Integer |                                                  |
+| month_buy_count       | 近30天兑换数 | Integer |                                                  |
+| limit_count           | 每人限兑数量 | Integer | 0 代表不限制。                                   |
+| description           | 商品描述     | String  | 积分商城通常由多张图片组成。                     |
+| goods_image           | 商品相册     | List    | 由最多 5 张图片组成的商品相册。列表类型。        |
+| spec_val              | 规格属性     | Object  | 单规格时为空列表。                               |
+| products              | 货品属性     | Object  | 货品属性对象。                                   |
+| products.productid    | 货品 ID      | Integer |                                                  |
+| products.market_price | 市场价       | Integer |                                                  |
+| products.sales_price  | 销售价       | Integer |                                                  |
+| products.stock        | 库存         | Integer |                                                  |
+| spec_val              | 规格         | String  | 单规格是为空字符串。                             |
+| skuid                 | 货品 SKU     | String  | 每一个货品都有一个属于自己的 SKU。               |
+| arr_spec_val          | 货品规格属性 | object  | 可以根据实际需求使用                             |
+
+> 返回示例
+
+```json
+// 单规格属性返回结果。主要不同的地方在于货品 products 与 规格 spec_val 的不同。
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "goodsid": 1,
+        "goods_name": "ikbc C104 樱桃轴机械键盘",
+        "min_market_price": 399,
+        "max_market_price": 399,
+        "min_price": 399,
+        "max_price": 399,
+        "goods_img": "http://files.xxx.com/images/voucher/20180822/5b7cbe51ea911.jpg",
+        "buy_count": 0,
+        "month_buy_count": 0,
+        "limit_count": 0,
+        "description": "",
+        "products": {
+            "single_product": {
+                "productid": 33,
+                "market_price": 399,
+                "sales_price": 399,
+                "stock": 993,
+                "spec_val": "",
+                "skuid": "ikbc00000001",
+                "arr_spec_val": []
+            }
+        },
+        "spec_val": [],
+        "goods_image": [
+            "http://files.xxx.com/images/voucher/20180822/5b7cbe51ea911.jpg",
+            "http://files.xxx.com/images/voucher/20180822/5b7cbe53eb153.jpg",
+            "http://files.xxx.com/images/voucher/20180822/5b7cbe558dc44.jpg",
+            "http://files.xxx.com/images/voucher/20180822/5b7cbe59214c9.jpg",
+            "http://files.xxx.com/images/voucher/20180822/5b7cbe5b1d2fc.jpg"
+        ]
+    }
+}
+
+// 多规格属性返回示例
+
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "goodsid": 19,
+        "goods_name": "明基绝地求生吃鸡鼠标",
+        "min_market_price": 199,
+        "max_market_price": 199,
+        "min_price": 160,
+        "max_price": 160,
+        "goods_img": "http://files.xxx.com/images/voucher/20180828/5b84a62196ac6.jpg",
+        "buy_count": 0,
+        "month_buy_count": 0,
+        "limit_count": 0,
+        "description": "",
+        "products": {
+            "颜色:::红色": {
+                "productid": 38,
+                "market_price": 199,
+                "sales_price": 160,
+                "stock": 999,
+                "spec_val": "颜色:::红色",
+                "skuid": "ben001",
+                "arr_spec_val": {
+                    "颜色": "红色"
+                }
+            },
+            "颜色:::黑色": {
+                "productid": 39,
+                "market_price": 199,
+                "sales_price": 160,
+                "stock": 999,
+                "spec_val": "颜色:::黑色",
+                "skuid": "ben002",
+                "arr_spec_val": {
+                    "颜色": "黑色"
+                }
+            }
+        },
+        "spec_val": {
+            "颜色": [
+                "红色",
+                "黑色"
+            ]
+        },
+        "goods_image": [
+            "http://files.xxx.com/images/voucher/20180822/5b7cbc17cb04f.jpg",
+            "http://files.xxx.com/images/voucher/20180822/5b7cbc19bb25c.jpg",
+            "http://files.xxx.com/images/voucher/20180828/5b84a5c54f47a.jpg",
+            "http://files.xxx.com/images/voucher/20180828/5b84a5c7c2e03.jpg",
+            "http://files.xxx.com/images/voucher/20180828/5b84a62196ac6.jpg"
+        ]
+    }
+}
+```
+
+#### 2.26 订单列表接口[order.list]
+
+> 请求参数
+
+| 参数         | 名称            | 必须 | 类型    | 说明                 |
+| ------------ | --------------- | ---- | ------- | -------------------- |
+| method       | API 接口名称    | 是   | String  | 接口值 -> order.list |
+| token        | 会话 TOKEN 令牌 | 是   | String  | 未登录传空字符串     |
+| order_sn     | 订单号          | 是   | String  | 默认传空字符串       |
+| order_status | 订单状态        | 是   | Integer | 默认传 -1            |
+| start_time   | 起始下单时间    | 是   | String  | 默认传空字符串       |
+| end_time     | 截止下单时间    | 是   | String  | 默认传空字符串       |
+| page         | 页码            | 是   | Integer | 默认传 1             |
+
+> 返回参数
+
+| 参数                          | 名称             | 类型    | 说明                           |
+| ----------------------------- | ---------------- | ------- | ------------------------------ |
+| total                         | 总订单数         | Integer |                                |
+| page                          | 当前页码         | Integer |                                |
+| count                         | 每页显示条数     | Integer | 该值并不是当前页返回的记录数。 |
+| isnext                        | 是否有下一页     | Boolean | true - 是、false - 否。        |
+| list                          | 订单列表对象     | Object  |                                |
+| list.orderid                  | 订单 ID          | Integer |                                |
+| list.order_sn                 | 订单号           | String  |                                |
+| list.total_price              | 订单总额         | Integer |                                |
+| list.pay_time                 | 支付时间         | String  |                                |
+| list.order_status             | 订单状态         | Integer |                                |
+| list.order_status_label       | 订单状态标签     | String  | 状态对应的中文释义。           |
+| list.shipping_time            | 发货时间         | String  |                                |
+| list.done_time                | 交易成功时间     | String  |                                |
+| list.closed_time              | 订单关闭时间     | String  |                                |
+| list.receiver_name            | 收件人姓名       | String  |                                |
+| list.receiver_province        | 收件省份         | String  |                                |
+| list.receiver_city            | 收件城市         | String  |                                |
+| list.receiver_district        | 收件城市区县     | String  |                                |
+| list.receiver_street          | 收件街道         | String  |                                |
+| list.receiver_address         | 门牌号等详细地址 | String  |                                |
+| list.receiver_mobile          | 联系号码         | String  |                                |
+| list.c_time                   | 下单时间         | String  |                                |
+| list.goods_list               | 购买商品列表     | Object  |                                |
+| list.goods_list.goodsid       | 商品 ID          | Integer |                                |
+| list.goods_list.goods_name    | 商品名称         | String  |                                |
+| list.goods_list.goods_image   | 商品主图         | String  |                                |
+| list.goods_list.productid     | 货品 ID          | Integer |                                |
+| list.goods_list.spec_val      | 货品规格属性     | String  |                                |
+| list.goods_list.quantity      | 购买数量         | Integer |                                |
+| list.goods_list.sales_price   | 购买单价         | Integer |                                |
+| list.goods_list.payment_price | 实际支付价格     | Integer | 扣除优惠之类的总价             |
+| list.goods_list.total_price   | 商品总价         | Integer | 未优惠的总价                   |
+| list.goods_list.market_price  | 商品市场价       | Integer |                                |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list": [
+            {
+                "orderid": 49,
+                "order_sn": "SN202003140000000001",
+                "total_price": 399,
+                "pay_time": "2020-03-14 23:45:06",
+                "order_status": 1,
+                "shipping_time": null,
+                "done_time": null,
+                "closed_time": null,
+                "receiver_name": "张木沐",
+                "receiver_province": "广东省",
+                "receiver_city": "深圳市",
+                "receiver_district": "南山区",
+                "receiver_street": "",
+                "receiver_address": "粤海街道东方科技大厦601",
+                "receiver_mobile": "14812345678",
+                "c_time": "2020-03-14 23:45:06",
+                "order_status_label": "待发货",
+                "goods_list": [
+                    {
+                        "goodsid": 1,
+                        "goods_name": "ikbc C104 樱桃轴机械键盘",
+                        "goods_image": "http://xxx/5b7cbe51ea911.jpg",
+                        "productid": 33,
+                        "spec_val": "",
+                        "market_price": 399,
+                        "sales_price": 399,
+                        "quantity": 1,
+                        "payment_price": 399,
+                        "total_price": 399
+                    }
+                ]
+            }
+        ],
+        "total": 1,
+        "page": 1,
+        "count": 20,
+        "isnext": false
+    }
+}
+```
 

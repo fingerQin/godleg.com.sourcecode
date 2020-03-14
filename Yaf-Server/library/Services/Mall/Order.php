@@ -7,6 +7,7 @@
 
 namespace Services\Mall;
 
+use finger\Cache;
 use finger\Core;
 use finger\Validator;
 use finger\Database\Db;
@@ -556,7 +557,7 @@ class Order extends AbstractBase
         }
         $time     = time();
         $cacheKey = "order_sn_" . date('Y-m-d', $time);
-        $incr     = YCache::incr($cacheKey);
+        $incr     = Cache::incr($cacheKey);
         return "{$prefix}" . date('Ymd', $time) . sprintf('%010d', $incr);
     }
 }
