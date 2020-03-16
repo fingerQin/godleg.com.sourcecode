@@ -1429,7 +1429,6 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 | count                         | 每页显示条数     | Integer | 该值并不是当前页返回的记录数。 |
 | isnext                        | 是否有下一页     | Boolean | true - 是、false - 否。        |
 | list                          | 订单列表对象     | Object  |                                |
-| list.orderid                  | 订单 ID          | Integer |                                |
 | list.order_sn                 | 订单号           | String  |                                |
 | list.total_price              | 订单总额         | Integer |                                |
 | list.pay_time                 | 支付时间         | String  |                                |
@@ -1467,7 +1466,6 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
     "data": {
         "list": [
             {
-                "orderid": 49,
                 "order_sn": "SN202003140000000001",
                 "total_price": 399,
                 "pay_time": "2020-03-14 23:45:06",
@@ -1507,4 +1505,192 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
     }
 }
 ```
+
+#### 2.27 订单详情接口[order.detail]
+
+> 请求参数
+
+| 参数     | 名称           | 必须 | 类型   | 说明                   |
+| -------- | -------------- | ---- | ------ | ---------------------- |
+| method   | API 接口名称   | 是   | String | 接口值 -> order.detail |
+| token    | TOKEN 会话令牌 | 是   | String | 未登录传空字符串       |
+| order_sn | 订单号         | 是   | String |                        |
+
+> 返回参数
+
+| 参数                        | 名称             | 类型    | 说明                                         |
+| --------------------------- | ---------------- | ------- | -------------------------------------------- |
+| order_sn                    | 订单号           | String  |                                              |
+| total_price                 | 订单总额         | Integer |                                              |
+| pay_time                    | 支付时间         | String  |                                              |
+| order_status                | 订单状态值       | Integer |                                              |
+| order_status_label          | 订单状态中文释义 | String  | 避免客户端自己对数值转义显示                 |
+| shipping_time               | 发货时间         | String  |                                              |
+| done_time                   | 交易成功时间     | String  | 用户确认收货的时间。虚拟物品系统自动确认。   |
+| closed_time                 | 订单关闭时间     | String  | 订单超时未支付或用户主动取消支付。           |
+| receiver_name               | 收货人姓名       | String  |                                              |
+| receiver_province           | 收货人省份       | String  |                                              |
+| receiver_city               | 收货人城市       | String  |                                              |
+| receiver_district           | 收货人区县       | String  |                                              |
+| receiver_street             | 收货人村/街道    | String  |                                              |
+| receiver_address            | 收货人详细地址   | String  |                                              |
+| receiver_mobile             | 收货人联系手机号 | String  |                                              |
+| goods_list                  | 用户购买的商品   | Object  |                                              |
+| goods_list.goodsid          | 商品 ID          | Integer |                                              |
+| goods_list.goods_name       | 商品名称         | String  |                                              |
+| goods_list.goods_image      | 商品主图         | String  | 此图为购买时商品主图的快照。                 |
+| goods_list.productid        | 货品 ID          | Integer |                                              |
+| goods_list.spec_val         | 商品规格属性     | String  | 如：黑色:::37码:::女                         |
+| goods_list.market_price     | 货品市场价       | Integer |                                              |
+| goods_list.sales_price      | 货品销售价       | Integer | 是指单价。                                   |
+| goods_list.quantity         | 购买数量         | Integer |                                              |
+| goods_list.payment_price    | 该货品实付总额   | Integer | 是指当前货品销售价乘以数量再减去优惠的价格。 |
+| goods_list.total_price      | 该货品的总额     | Integer | 是指当前货品销售价乘以数量的总额。不含优惠。 |
+| goods_list.logistics_code   | 物流公司编码     | String  | 如顺丰：sf。                                 |
+| goods_list.logistics_number | 物流快递单号     | String  |                                              |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "order_sn": "SN202003160000000002",
+        "total_price": 5000,
+        "pay_time": "2020-03-16 15:44:39",
+        "order_status": 1,
+        "shipping_time": null,
+        "done_time": null,
+        "closed_time": null,
+        "receiver_name": "张木沐",
+        "receiver_province": "广东省",
+        "receiver_city": "深圳市",
+        "receiver_district": "南山区",
+        "receiver_street": "",
+        "receiver_address": "粤海街道东方科技大厦601",
+        "receiver_mobile": "14812345678",
+        "c_time": "2020-03-16 15:44:39",
+        "order_status_label": "待发货",
+        "goods_list": [
+            {
+                "goodsid": 1,
+                "goods_name": "5 元话费",
+                "goods_image": "",
+                "productid": 1,
+                "spec_val": "",
+                "market_price": 5000,
+                "sales_price": 5000,
+                "quantity": 1,
+                "payment_price": 5000,
+                "total_price": 5000
+            }
+        ],
+        "logistics_code": "",
+        "logistics_number": ""
+    }
+}
+```
+
+#### 2.28 商品兑换接口/下单接口[order.submit]
+
+> 请求参数
+
+| 参数       | 名称           | 必须 | 类型    | 说明                                                      |
+| ---------- | -------------- | ---- | ------- | --------------------------------------------------------- |
+| method     | API 接口名称   | 是   | String  | 接口值 -> order.submit                                    |
+| token      | TOKEN 会话令牌 | 是   | String  | 未登录传空字符串                                          |
+| goods_list | 购买的商品     | 是   | String  | 格式：商品ID,货品ID,数量\|商品ID,货品ID,数量。示例：1,1,1 |
+| address_id | 收货地址 ID    | 是   | Integer | 用户的收货地址对应的记录 ID                               |
+
+> 返回参数
+
+| 参数     | 名称   | 类型   | 说明                                               |
+| -------- | ------ | ------ | -------------------------------------------------- |
+| order_sn | 订单号 | String | 订单 ID 容易泄露敏感的运营数据，更换为订单号更好。 |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "兑换成功",
+    "data": {
+        "order_id": "3"
+    }
+}
+```
+
+#### 2.29 确认收货接口[order.confirm]
+
+> 请求参数
+
+| 参数     | 名称           | 必须 | 类型   | 说明                    |
+| -------- | -------------- | ---- | ------ | ----------------------- |
+| method   | API 接口名称   | 是   | String | 接口值 -> order.confirm |
+| token    | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串      |
+| order_sn | 订单号         | 是   | String |                         |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "操作成功"
+}
+```
+
+#### 2.30 用户金币消费记录接口[gold.consume.list]
+
+> 该接口只显示最近 30 天的记录。该记录表涉及全部用户的消费记录，记录数量级比较大。所以，只支持拉取最近 30 天的记录。
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型    | 说明                        |
+| ------ | -------------- | ---- | ------- | --------------------------- |
+| method | API 接口名称   | 是   | String  | 接口值 -> gold.consume.list |
+| token  | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串          |
+| page   | 当前页码       | 是   | Integer | 默认值传 1                  |
+
+> 返回示例
+
+| 参数         | 名称     | 类型    | 说明                   |
+| ------------ | -------- | ------- | ---------------------- |
+| consume_type | 消费类型 | Integer | 1 增加、2 扣减         |
+| gold         | 消费数量 | Integer |                        |
+| c_time       | 消费时间 | String  |                        |
+| title        | 消费说明 | String  | 如：参与抽奖、商品兑换 |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list": [
+            {
+                "consume_type": 2,
+                "gold": 5000,
+                "c_time": "3-16 17:16",
+                "title": "商品兑换"
+            },
+            {
+                "consume_type": 2,
+                "gold": 5000,
+                "c_time": "3-16 16:43",
+                "title": "商品兑换"
+            }
+        ],
+        "total": 6,
+        "page": 1,
+        "count": 20,
+        "isnext": false
+    }
+}
+```
+
+
+
+
 

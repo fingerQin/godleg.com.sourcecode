@@ -31,8 +31,8 @@ class OrderSubmitApi extends AbstractApi
             'goods_list' => self::parsetGoodsListParam($goodsList),
             'addressid'  => $addressId
         ];
-        $orderId = Order::submit($data);
-        $this->render(STATUS_SUCCESS, '兑换成功', ['order_id' => $orderId]);
+        $orderSn = Order::submit($data);
+        $this->render(STATUS_SUCCESS, '兑换成功', ['order_sn' => $orderSn]);
     }
 
     /**

@@ -21,10 +21,10 @@ class OrderConfirmApi extends AbstractApi
      */
     protected function runService()
     {
-        $orderId  = $this->getInt('order_id', 0);
+        $orderSn  = $this->getString('order_sn', '');
         $token    = $this->getString('token', '');
         $userinfo = Auth::checkAuth($token);
-        Order::confirm($userinfo['userid'], $orderId);
+        Order::confirm($userinfo['userid'], $orderSn);
         $this->render(STATUS_SUCCESS, '操作成功');
     }
 }

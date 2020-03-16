@@ -45,7 +45,7 @@ class Order extends AbstractBase
                    . 'order_status, shipping_time, done_time, closed_time, '
                    . 'receiver_name, receiver_province, receiver_city, receiver_district,'
                    . 'receiver_street, receiver_address, receiver_mobile, c_time';
-        $where     = ' WHERE userid = :userid AND status = :status ';
+        $where     = 'WHERE userid = :userid AND status = :status ';
         $params    = [
             ':userid' => $userid,
             ':status' => MallOrder::STATUS_YES
@@ -81,6 +81,7 @@ class Order extends AbstractBase
         foreach ($list as $key => $item) {
             $item['order_status_label'] = MallOrder::$orderStatusDict[$item['order_status']];
             $item['goods_list']         = self::getOrderItems($item['orderid']);
+            unset($item['orderid']); // 删除敏感的信息订单 ID。避免运营信息泄漏。
             $list[$key]                 = $item;
         }
         $result = [
@@ -130,16 +131,16 @@ class Order extends AbstractBase
     /**
      * 获取买家订单详情。
      *
-     * @param  int  $userid   用户ID。
-     * @param  int  $orderId  订单ID。
+     * @param  int     $userid   用户ID。
+     * @param  string  $orderSn  订单号。
      * @return array
      */
-    public static function detail($userid, $orderId)
+    public static function detail($userid, $orderSn)
     {
         $where = [
-            'orderid' => $orderId,
-            'userid'  => $userid,
-            'status'  => MallOrder::STATUS_YES
+            'order_sn' => $orderSn,
+            'userid'   => $userid,
+            'status'   => MallOrder::STATUS_YES
         ];
         $columns     = [
             'orderid', 'order_sn', 'total_price', 'pay_time',
@@ -153,8 +154,9 @@ class Order extends AbstractBase
             Core::exception(STATUS_SERVER_ERROR, '订单不存在');
         }
         $orderDetail['order_status_label'] = MallOrder::$orderStatusDict[$orderDetail['order_status']];
-        $orderDetail['goods_list']         = self::getOrderItems($orderId);
-        $logisticsInfo                     = self::getExpressInfo($userid, $orderId);
+        $orderDetail['goods_list']         = self::getOrderItems($orderDetail['orderid']);
+        $logisticsInfo                     = self::getExpressInfo($userid, $orderDetail['orderid']);
+        unset($orderDetail['orderid']);
         return array_merge($orderDetail, $logisticsInfo);
     }
 
@@ -183,7 +185,7 @@ class Order extends AbstractBase
      * -- Example end --
      *
      * @param  array  $data  订单数据。
-     * @return int 订单ID。
+     * @return string 订单号。之所以不返回订单ID是避免泄漏敏感的运营信息。
      */
     public static function submit($data)
     {
@@ -210,13 +212,13 @@ class Order extends AbstractBase
         Db::beginTransaction();
         $orderData['goods_list'] = $data['goods_list'];
         try {
-            $orderId = self::submitShopOrder($orderData);
+            $orderSn = self::submitShopOrder($orderData);
         } catch (\Exception $e) {
             Db::rollBack();
             Core::exception($e->getCode(), $e->getMessage());
         }
         Db::commit();
-        return $orderId;
+        return $orderSn;
     }
 
     /**
@@ -251,7 +253,7 @@ class Order extends AbstractBase
      * -- Example end --
      *
      * @param  array  $data  订单信息。
-     * @return int 订单ID
+     * @return string 订单号
      */
     protected static function submitShopOrder($data)
     {
@@ -289,7 +291,7 @@ class Order extends AbstractBase
         if (!$ok) {
             Core::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试'); // 此处应该给出日志输出。
         }
-        return $orderId;
+        return $insertData['order_sn'];
     }
 
     /**
@@ -459,14 +461,14 @@ class Order extends AbstractBase
     /**
      * 确认收货收货接口。
      *
-     * @param  int  $userid   用户ID。
-     * @param  int  $orderId  订单ID。
+     * @param  int     $userid   用户ID。
+     * @param  string  $orderSn  订单号。
      * @return void
      */
-    public static function confirm($userid, $orderId)
+    public static function confirm($userid, $orderSn)
     {
         $OrderModel = new MallOrder();
-        $orderInfo  = $OrderModel->fetchOne([], ['orderid' => $orderId, 'status' => MallOrder::STATUS_YES]);
+        $orderInfo  = $OrderModel->fetchOne([], ['order_sn' => $orderSn, 'status' => MallOrder::STATUS_YES]);
         if (empty($orderInfo) || $orderInfo['userid'] != $userid) {
             Core::exception(STATUS_SERVER_ERROR, '订单不存在或已经删除');
         }
@@ -487,14 +489,14 @@ class Order extends AbstractBase
             'done_time'    => $datetime
         ];
         $where = [
-            'orderid' => $orderId,
-            'status'  => MallOrder::STATUS_YES
+            'order_sn' => $orderSn,
+            'status'   => MallOrder::STATUS_YES
         ];
         $ok = $OrderModel->update($updateData, $where);
         if (!$ok) {
             Core::exception(STATUS_SERVER_ERROR, '服务器繁忙,请稍候重试');
         }
-        self::writeLog($userid, $orderId, 'canceled');
+        self::writeLog($userid, $orderInfo['orderid'], 'confirm');
     }
 
     /**

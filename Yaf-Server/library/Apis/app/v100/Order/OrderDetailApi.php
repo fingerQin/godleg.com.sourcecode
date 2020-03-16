@@ -21,10 +21,10 @@ class OrderDetailApi extends AbstractApi
      */
     protected function runService()
     {
-        $orderId  = $this->getInt('order_id', 0);
+        $orderSn  = $this->getString('order_sn', '');
         $token    = $this->getString('token', '');
         $userinfo = Auth::checkAuth($token);
-        $detail   = Order::detail($userinfo['userid'], $orderId);
+        $detail   = Order::detail($userinfo['userid'], $orderSn);
         $this->render(STATUS_SUCCESS, 'success', $detail);
     }
 }

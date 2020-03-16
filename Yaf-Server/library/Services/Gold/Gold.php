@@ -151,7 +151,7 @@ class Gold extends \Services\AbstractBase
     {
         $offset    = self::getPaginationOffset($page, $count);
         $fromTable = ' FROM finger_gold_consume ';
-        $columns   = ' id, consume_type, consume_code, gold, c_time ';
+        $columns   = ' consume_type, consume_code, gold, c_time ';
         $where     = ' WHERE 1 ';
         $params    = [];
         if ($userId != -1) {
