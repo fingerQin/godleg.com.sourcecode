@@ -707,15 +707,44 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.13 系统广告接口[system.ads]
+#### 2.13 更改手机号接口[user.mobile.change]
 
 > 请求参数
 
-| 参数   | 名称       | 必须 | 类型   | 说明                       |
-| ------ | ---------- | :--: | ------ | -------------------------- |
-| method | API 接口值 |  是  | String | 接口值 -> system.ads       |
-| token  | 会话 TOKEN |  是  | String | 有值就传，无值传空字符串   |
-| code   | 广告位编码 |  是  | String | 每个位置编码视业务系统而定 |
+| 参数     | 名称           | 必须 | 类型   | 说明                         |
+| -------- | -------------- | ---- | ------ | ---------------------------- |
+| method   | API 接口值     | 是   | String | 接口值 -> user.mobile.change |
+| token    | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串           |
+| password | 登录密码       | 是   | String |                              |
+| mobile   | 新手机号码     | 是   | String |                              |
+| code     | 新手机号验证码 | 是   | String |                              |
+
+> 返回示例
+
+```json
+// 成功。
+{
+    "code": 200,
+    "msg": "更换成功"
+}
+// 失败。
+{
+    "code": 503,
+    "msg": "该手机号已经被占用"
+}
+```
+
+
+
+#### 2.14 系统广告接口[system.ads]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型   | 说明                       |
+| ------ | -------------- | :--: | ------ | -------------------------- |
+| method | API 接口值     |  是  | String | 接口值 -> system.ads       |
+| token  | TOKEN 会话令牌 |  是  | String | 未登录时传空字符串         |
+| code   | 广告位编码     |  是  | String | 每个位置编码视业务系统而定 |
 
 > 返回参数
 
@@ -745,7 +774,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.14 友情链接接口[system.link]
+#### 2.15 友情链接接口[system.link]
 
 > 请求参数
 
@@ -789,7 +818,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.15 系统分类接口[system.category.list]
+#### 2.16 系统分类接口[system.category.list]
 
 > 请求参数
 
@@ -869,7 +898,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.16 系统首页接口[system.home]
+#### 2.17 系统首页接口[system.home]
 
 > 请求参数
 
@@ -907,7 +936,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.17 系统公告列表[notice.list]
+#### 2.18 系统公告列表[notice.list]
 
 > 请求参数
 
@@ -960,7 +989,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.18 公告详情[notice.detail]
+#### 2.19 公告详情[notice.detail]
 
 > 请求参数
 
@@ -996,7 +1025,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.19 用户公告未读数量接口[notice.unread.count]
+#### 2.20 用户公告未读数量接口[notice.unread.count]
 
 > 请求参数
 
@@ -1023,7 +1052,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.20 系统消息列表接口[message.list]
+#### 2.21 系统消息列表接口[message.list]
 
 > 请求参数
 
@@ -1088,7 +1117,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.21 系统消息已读状态设置接口[message.read.status]
+#### 2.22 系统消息已读状态设置接口[message.read.status]
 
 > 请求参数
 
@@ -1107,7 +1136,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.22 文章列表接口[news.list]
+#### 2.23 文章列表接口[news.list]
 
 > 请求参数
 
@@ -1166,7 +1195,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.23 文章详情接口[news.detail]
+#### 2.24 文章详情接口[news.detail]
 
 > 请求参数
 
@@ -1205,7 +1234,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.24 积分商城商品列表接口[goods.list]
+#### 2.25 积分商城商品列表接口[goods.list]
 
 > 请求参数
 
@@ -1271,7 +1300,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.25 积分商城商品详情接口[goods.detail]
+#### 2.26 积分商城商品详情接口[goods.detail]
 
 > 请求参数
 
@@ -1406,7 +1435,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.26 订单列表接口[order.list]
+#### 2.27 订单列表接口[order.list]
 
 > 请求参数
 
@@ -1506,7 +1535,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.27 订单详情接口[order.detail]
+#### 2.28 订单详情接口[order.detail]
 
 > 请求参数
 
@@ -1592,7 +1621,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.28 商品兑换接口/下单接口[order.submit]
+#### 2.29 商品兑换接口/下单接口[order.submit]
 
 > 请求参数
 
@@ -1621,7 +1650,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.29 确认收货接口[order.confirm]
+#### 2.30 确认收货接口[order.confirm]
 
 > 请求参数
 
@@ -1640,7 +1669,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
-#### 2.30 用户金币消费记录接口[gold.consume.list]
+#### 2.31 用户金币消费记录接口[gold.consume.list]
 
 > 该接口只显示最近 30 天的记录。该记录表涉及全部用户的消费记录，记录数量级比较大。所以，只支持拉取最近 30 天的记录。
 
@@ -1689,6 +1718,149 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
     }
 }
 ```
+
+#### 2.32 收货地址列表接口[user.address.list]
+
+> 由于收货地址有最大记录限制，所以没有采取分页相关的设置。
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型   | 说明                        |
+| ------ | -------------- | ---- | ------ | --------------------------- |
+| method | API 接口名称   | 是   | String | 接口值 -> user.address.list |
+| token  | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串          |
+
+> 返回参数
+
+| 参数          | 说明                | 类型    | 说明                             |
+| ------------- | ------------------- | ------- | -------------------------------- |
+| addressid     | 收货地址 ID         | Integer |                                  |
+| realname      | 收货人姓名          | String  |                                  |
+| mobile        | 收货人手机号        | String  |                                  |
+| districtid    | 收货地址所在位置 ID | Integer |                                  |
+| province_name | 收货人所在省份      | String  |                                  |
+| city_name     | 收货人所在城市      | String  |                                  |
+| district_name | 收货人所在区县      | String  |                                  |
+| street_name   | 收货人所在街道/村   | String  | 暂时系统未实现该级别地址，预留。 |
+| address       | 收货人详细地址      | String  |                                  |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list": [
+            {
+                "addressid": 8,
+                "realname": "张木沐",
+                "mobile": "14812345678",
+                "districtid": 2167,
+                "address": "粤海街道东方科技大厦601",
+                "province_name": "广东省",
+                "city_name": "深圳市",
+                "district_name": "南山区",
+                "street_name": ""
+            }
+        ]
+    }
+}
+```
+
+#### 2.33 收货地址添加接口[user.address.add]
+
+> 请求参数
+
+| 参数        | 名称           | 必须 | 类型    | 说明                       |
+| ----------- | -------------- | ---- | ------- | -------------------------- |
+| method      | API 接口值     | 是   | String  | 接口值 -> user.address.add |
+| token       | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串         |
+| realname    | 收货人姓名     | 是   | String  |                            |
+| mobile      | 收货人手机号   | 是   | String  |                            |
+| district_id | 收货人地区 ID  | 是   | Integer | 省市县对应的地区 ID        |
+| address     | 详细地址       | 是   | String  | 除省市区之外的信息         |
+
+> 返回参数
+
+| 参数       | 名称        | 类型    | 说明 |
+| ---------- | ----------- | ------- | ---- |
+| address_id | 收货地址 ID | Integer |      |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "添加成功",
+    "data": {
+        "address_id": "9"
+    }
+}
+```
+
+#### 2.34 收货地址编辑接口[user.address.edit]
+
+> 请求参数
+
+| 参数        | 名称           | 必须 | 类型    | 说明                        |
+| ----------- | -------------- | ---- | ------- | --------------------------- |
+| method      | API 接口值     | 是   | String  | 接口值 -> user.address.edit |
+| token       | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串          |
+| addressid   | 收货地址 ID    | 是   | Integer |                             |
+| realname    | 收货人姓名     | 是   | String  |                             |
+| mobile      | 收货人手机号   | 是   | String  |                             |
+| district_id | 收货人地区 ID  | 是   | Integer | 省市县对应的地区 ID         |
+| address     | 详细地址       | 是   | String  | 除省市区之外的信息          |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success"
+}
+```
+
+#### 2.35 收货地址删除接口[user.address.delete]
+
+> 请求参数
+
+| 参数      | 名称           | 必须 | 类型    | 说明                          |
+| --------- | -------------- | ---- | ------- | ----------------------------- |
+| method    | API 接口值     | 是   | String  | 接口值 -> user.address.delete |
+| token     | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串            |
+| addressid | 收货地址 ID    | 是   | Integer |                               |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "删除成功"
+}
+```
+
+#### 2.36 默认收货地址设置接口[user.address.default.set]
+
+> 请求参数
+
+| 参数      | 名称           | 必须 | 类型    | 说明                               |
+| --------- | -------------- | ---- | ------- | ---------------------------------- |
+| method    | API 接口值     | 是   | String  | 接口值 -> user.address.default.set |
+| token     | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串                 |
+| addressid | 收货地址 ID    | 是   | Integer |                                    |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "操作成功"
+}
+```
+
+
 
 
 
