@@ -35,7 +35,7 @@ class Lucky extends \Services\AbstractBase
     {
         $LuckyGoodsModel = new GmLuckyGoods();
         $columns = [
-            'goods_name', 'image_url', 'reward_val'
+            'id', 'goods_name', 'image_url'
         ];
         return $LuckyGoodsModel->fetchAll($columns, [], 0, 'id ASC');
     }
@@ -136,16 +136,15 @@ class Lucky extends \Services\AbstractBase
 
     /**
      * 获取用户中奖记录。
-     * @param  int     $userId     用户ID。
-     * @param  string  $goodsName  奖品名称。
-     * @param  int     $page       当前页码。
-     * @param  int     $count      每页显示条数。
+     * @param  int  $userId  用户ID。
+     * @param  int  $page    当前页码。
+     * @param  int  $count   每页显示条数。
      * @return array
      */
     public static function records($userId, $page = 1, $count = 20)
     {
         $offset  = self::getPaginationOffset($page, $count);
-        $columns = ' * ';
+        $columns = ' goods_name, reward_val, c_time ';
         $where   = ' WHERE userid = :userid AND status = :status';
         $params  = [
             ':status' => GmLuckyPrize::STATUS_YES,

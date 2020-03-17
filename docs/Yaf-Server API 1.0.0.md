@@ -1847,7 +1847,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 
 | 参数      | 名称           | 必须 | 类型    | 说明                               |
 | --------- | -------------- | ---- | ------- | ---------------------------------- |
-| method    | API 接口值     | 是   | String  | 接口值 -> user.address.default.set |
+| method    | API 接口名称   | 是   | String  | 接口值 -> user.address.default.set |
 | token     | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串                 |
 | addressid | 收货地址 ID    | 是   | Integer |                                    |
 
@@ -1860,9 +1860,692 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 }
 ```
 
+#### 2.37 签到接口[game.check.in]
 
+> 请求参数
 
+| 参数   | 名称           | 必须 | 类型   | 说明                    |
+| ------ | -------------- | ---- | ------ | ----------------------- |
+| method | API 接口名称   | 是   | String | 接口值 -> game.check.in |
+| token  | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串      |
 
+> 返回参数
+
+| 参数 | 名称                 | 类型    | 说明 |
+| ---- | -------------------- | ------- | ---- |
+| gold | 当前用户拥有金币数量 | Integer |      |
+| add  | 当前签到奖励数量     | Integer |      |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "签到成功",
+    "data": {
+        "gold": 985020,
+        "add": 10
+    }
+}
+```
+
+#### 2.38 最近7天打卡详情接口[game.check.in.detail]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型    | 说明                    |
+| ------ | -------------- | ---- | ------- | ----------------------- |
+| method | API 接口名称   | 是   | String  | 接口值 -> game.check.in |
+| token  | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串      |
+| page   | 当前页码       | 是   | Integer | 默认值 1                |
+
+> 返回参数
+
+| 参数         | 名称              | 类型    | 说明                 |
+| ------------ | ----------------- | ------- | -------------------- |
+| total        | 累计签到总数      | Integer |                      |
+| records      | 最近 7 天签到记录 | Object  |                      |
+| records.date | 日期              | String  |                      |
+| gold         | 签到金币          | Integer |                      |
+| status       | 签到状态          | Integer | 1 已签到、0 未签到。 |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "total": 7,
+        "records": {
+            "3.11": {
+                "date": "3.11",
+                "gold": 0,
+                "status": 0
+            },
+            "3.12": {
+                "date": "3.12",
+                "gold": 0,
+                "status": 0
+            },
+            "3.13": {
+                "date": "3.13",
+                "gold": 10,
+                "status": 1
+            },
+            "3.14": {
+                "date": "3.14",
+                "gold": 0,
+                "status": 0
+            },
+            "3.15": {
+                "date": "3.15",
+                "gold": 0,
+                "status": 0
+            },
+            "3.16": {
+                "date": "3.16",
+                "gold": 0,
+                "status": 0
+            },
+            "3.17": {
+                "date": "3.17",
+                "gold": 10,
+                "status": 1
+            }
+        }
+    }
+}
+```
+
+#### 2.39 竞猜题目[game.guess.questions]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型    | 说明                           |
+| ------ | -------------- | ---- | ------- | ------------------------------ |
+| method | API 接口名称   | 是   | String  | 接口值 -> game.guess.questions |
+| token  | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串             |
+| page   | 当前页码       | 是   | Integer | 默认值传 1                     |
+
+> 返回参数
+
+| 参数             | 名称           | 类型    | 说明                                       |
+| ---------------- | -------------- | ------- | ------------------------------------------ |
+| total            | 总竞猜记录条数 | Integer |                                            |
+| count            | 每页显示条数   | Integer | 该值并非当前返回的记录数。而是分页记录数。 |
+| page             | 当前页码       | Integer |                                            |
+| isnext           | 是否存在下一页 | Boolean | true - 是、false - 否。                    |
+| list             | 记录对象       | Object  |                                            |
+| list.guessid     | 竞猜记录 ID    | Integer |                                            |
+| list.title       | 竞猜题目       | String  |                                            |
+| list.image_url   | 竞猜题目图片   | String  | 看图解答需要                               |
+| list.deadline    | 活动截止时间   | String  |                                            |
+| list.option_data | 选项数量       | String  | JSON 表达的数据                            |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "竞猜成功",
+    "data": {
+        "list": [
+            {
+                "guessid": 2,
+                "title": "亚运会奖牌最多的国家是？",
+                "image_url": "http://xxxxx/5d6883509a1cd.jpg",
+                "deadline": "2018-08-31 16:04:00",
+                "option_data": "{\"A\":{\"op_title\":\"中国队\",\"op_odds\":\"5\"},\"B\":{\"op_title\":\"英国队\",\"op_odds\":\"2\"},\"C\":{\"op_title\":\"德国队\",\"op_odds\":\"3\"},\"D\":{\"op_title\":\"\",\"op_odds\":\"\"},\"E\":{\"op_title\":\"\",\"op_odds\":\"\"}}"
+            },
+            {
+                "guessid": 1,
+                "title": "2018 年世界杯得主是谁?",
+                "image_url": "http://xxx/5d68835b07091.jpg",
+                "deadline": "2020-04-21 23:11:00",
+                "option_data": "{\"A\":{\"op_title\":\"德国队\",\"op_odds\":\"2\"},\"B\":{\"op_title\":\"法国队\",\"op_odds\":\"2\"},\"C\":{\"op_title\":\"\",\"op_odds\":\"\"},\"D\":{\"op_title\":\"\",\"op_odds\":\"\"},\"E\":{\"op_title\":\"\",\"op_odds\":\"\"}}"
+            }
+        ],
+        "total": 2,
+        "page": 1,
+        "count": 20,
+        "isnext": false
+    }
+}
+```
+
+#### 2.40 竞猜下注接口[game.guess.do]
+
+> 请求参数
+
+| 参数    | 名称           | 必须 | 类型    | 说明                    |
+| ------- | -------------- | ---- | ------- | ----------------------- |
+| method  | API 接口名称   | 是   | String  | 接口值 -> game.guess.do |
+| token   | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串      |
+| guessid | 竞猜题目 ID    | 是   | Integer |                         |
+| gold    | 下注金币       | 是   | Integer |                         |
+| option  | 下注选项答案   | 是   | String  |                         |
+
+> 返回参数
+
+| 参数 | 名称               | 类型    | 说明                 |
+| ---- | ------------------ | ------- | -------------------- |
+| gold | 当前用户拥有的金币 | Integer | 投注后用户剩余的金币 |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "竞猜成功",
+    "data": {
+        "gold": 984920
+    }
+}
+```
+
+#### 2.41 抽奖游戏首页信息接口[game.lucky.home]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型   | 说明                      |
+| ------ | -------------- | ---- | ------ | ------------------------- |
+| method | API 接口名称   | 是   | String | 接口值 -> game.lucky.home |
+| token  | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串        |
+
+> 返回参数
+
+| 参数              | 名称         | 类型    | 说明                                     |
+| ----------------- | ------------ | ------- | ---------------------------------------- |
+| reward            | 奖品对象     | Object  | 有且仅有 8 个奖品信息                    |
+| reward.id         | 奖品 ID      | Integer | 大转盘的时候，会根据此值来指向奖品位置。 |
+| reward.goods_name | 奖品名称     | String  |                                          |
+| reward.image_url  | 奖品图片     | String  |                                          |
+| newest            | 最近中奖记录 | Object  |                                          |
+| newest.mobile     | 中奖人手机号 | String  | 脱敏处理手机号                           |
+| newest.nickname   | 中奖人昵称   | String  |                                          |
+| newest.goods_name | 中奖奖品     | String  |                                          |
+| newest.c_time     | 中奖时间     | String  |                                          |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "reward": [
+            {
+                "id": 1,
+                "goods_name": "10000金币",
+                "image_url": "http://xxx/5b875b77ea0b7.png"
+            },
+            {
+                "id": 2,
+                "goods_name": "5000金币",
+                "image_url": "http://xxx/5b875b79dee8a.png"
+            },
+            {
+                "id": 3,
+                "goods_name": "500 金币",
+                "image_url": "http://xxx/5b875b7b6e129.png"
+            },
+            {
+                "id": 4,
+                "goods_name": "300 金币",
+                "image_url": "http://xxx/5b875b7d6b10e.png"
+            },
+            {
+                "id": 5,
+                "goods_name": "200 金币",
+                "image_url": "http://xxx/5b875b7f38613.png"
+            },
+            {
+                "id": 6,
+                "goods_name": "100 金币",
+                "image_url": "http://xxx/5b875b8177cc8.png"
+            },
+            {
+                "id": 7,
+                "goods_name": "50 金币",
+                "image_url": "http://xxx/5b875b8331621.png"
+            },
+            {
+                "id": 8,
+                "goods_name": "未中奖",
+                "image_url": "http://xxx/5b875b84c1d6c.png"
+            }
+        ],
+        "newest": [
+            {
+                "mobile": "18*****2691",
+                "nickname": "148****1001",
+                "goods_name": "300 金币",
+                "c_time": "08-02 15:36"
+            },
+            {
+                "mobile": "18*****2691",
+                "nickname": "148****1001",
+                "goods_name": "200 金币",
+                "c_time": "08-02 15:36"
+            }
+        ]
+    }
+}
+```
+
+#### 2.42 最近参与抽奖的获奖记录列表接口[game.lucky.newest]
+
+> 只拉取最近 20 条中奖记录。该接口是所有用户参与抽奖的中奖记录的 20 条。
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型   | 说明                        |
+| ------ | -------------- | ---- | ------ | --------------------------- |
+| method | API 接口名称   | 是   | String | 接口值 -> game.lucky.newest |
+| token  | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串          |
+
+> 返回参数
+
+| 参数       | 名称         | 类型   | 说明       |
+| ---------- | ------------ | ------ | ---------- |
+| mobile     | 中奖人手机号 | String | 已脱敏处理 |
+| nickname   | 中奖人昵称   | String | 已脱敏处理 |
+| goods_name | 中奖奖品     | String |            |
+| c_time     | 中奖时间     | String |            |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list": [
+            {
+                "mobile": "18*****2691",
+                "nickname": "148****1001",
+                "goods_name": "300 金币",
+                "c_time": "08-02 15:36"
+            },
+            {
+                "mobile": "18*****2691",
+                "nickname": "148****1001",
+                "goods_name": "50 金币",
+                "c_time": "08-31 14:37"
+            }
+        ]
+    }
+}
+```
+
+#### 2.43 用户中奖记录接口[game.lucky.records]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型    | 说明                         |
+| ------ | -------------- | ---- | ------- | ---------------------------- |
+| method | API 接口名称   | 是   | String  | 接口值 -> game.lucky.records |
+| token  | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串           |
+| page   | 当前页码       | 是   | Integer | 默认值传 1                   |
+
+> 返回参数
+
+| 参数            | 名称         | 类型    | 说明                   |
+| --------------- | ------------ | ------- | ---------------------- |
+| total           | 记录总数     | Integer |                        |
+| count           | 每页显示条数 | Integer | 该值是每页分页的条件。 |
+| page            | 当前页码     | Integer |                        |
+| isnext          | 是否有下一页 | Boolean |                        |
+| list            | 记录列表对象 | Object  |                        |
+| list.goods_name | 中奖名称     | String  |                        |
+| list.reward_val | 奖品金币数量 | Integer |                        |
+| list.c_time     | 中奖时间     | String  |                        |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list": [
+            {
+                "goods_name": "200 金币",
+                "reward_val": 200,
+                "c_time": "2020-03-17 15:35:29"
+            },
+            {
+                "goods_name": "100 金币",
+                "reward_val": 100,
+                "c_time": "2020-03-17 15:35:28"
+            }
+        ],
+        "total": 2,
+        "page": 1,
+        "count": 20,
+        "isnext": false
+    }
+}
+```
+
+#### 2.44 抽奖接口[game.lucky.do]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型   | 说明                    |
+| ------ | -------------- | ---- | ------ | ----------------------- |
+| method | API 接口名称   | 是   | String | 接口值 -> game.lucky.do |
+| token  | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串      |
+
+> 返回参数
+
+| 参数       | 名称         | 类型    | 说明                           |
+| ---------- | ------------ | ------- | ------------------------------ |
+| is_ok      | 是否中奖     | Boolean |                                |
+| reward_id  | 奖品 ID      | Integer |                                |
+| goods_name | 奖品名称     | String  |                                |
+| gold       | 用户当前金币 | Integer | 当前用户抽奖之后所拥有的金币。 |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "is_ok": true,
+        "reward_id": 6,
+        "goods_name": "100 金币",
+        "gold": 984920
+    }
+}
+```
+
+#### 2.45 灯谜列表接口[game.riddle.list]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型    | 说明                       |
+| ------ | -------------- | ---- | ------- | -------------------------- |
+| method | API 接口名称   | 是   | String  | 接口值 -> game.riddle.list |
+| token  | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串         |
+| page   | 当前页码       | 是   | Integer | 默认值传 1                 |
+
+> 返回参数
+
+| 参数              | 名称         | 类型    | 说明 |
+| ----------------- | ------------ | ------- | ---- |
+| total             | 总记录数     | Integer |      |
+| count             | 每页显示条数 | Integer |      |
+| page              | 当前页码     | Integer |      |
+| isnext            | 是否有下一页 | Boolean |      |
+| list              | 灯谜列表对象 | Object  |      |
+| list.openid       | 灯谜开放 ID  | Integer |      |
+| list.question     | 灯谜内容     | String  |      |
+| list.question_img | 灯谜图片     | String  |      |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list": [
+            {
+                "openid": "cd25514eaaafb081874bbf9999b9ada0",
+                "score": 60,
+                "question": "民间\"一人不进庙，二人不看井，三人不抱树\"是什么意思？",
+                "question_img": ""
+            },
+            {
+                "openid": "3029073fd322d6b5472773647947ae50",
+                "score": 60,
+                "question": "中国最大的淡水湖？",
+                "question_img": ""
+            }
+        ],
+        "total": 55,
+        "page": 1,
+        "count": 20,
+        "isnext": true
+    }
+}
+```
+
+#### 2.46 灯谜详情接口[game.riddle.detail]
+
+> 请求参数
+
+| 参数    | 名称           | 必须 | 类型   | 说明                         |
+| ------- | -------------- | ---- | ------ | ---------------------------- |
+| method  | API 接口名称   | 是   | String | 接口值 -> game.riddle.detail |
+| token   | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串           |
+| ques_id | 灯谜开放 ID    | 是   | String |                              |
+
+> 返回参数
+
+| 参数         | 名称         | 类型    | 说明 |
+| ------------ | ------------ | ------- | ---- |
+| openid       | 灯谜开放 ID  | Integer |      |
+| score        | 灯谜分值     | Integer |      |
+| question     | 灯谜谜题     | String  |      |
+| question_img | 灯谜图片     | String  |      |
+| answer       | 灯谜答案     | String  |      |
+| answer_img   | 灯谜答案图片 | String  |      |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "openid": "4e8a9d89f7088d668c39bdc237926960",
+        "score": 60,
+        "question": "100+99=100 加一笔使它成立？",
+        "question_img": "",
+        "answer": "100+99≠100",
+        "answer_img": ""
+    }
+}
+```
+
+#### 2.47 随机取一道灯谜接口[game.riddle.rand]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型   | 说明                       |
+| ------ | -------------- | ---- | ------ | -------------------------- |
+| method | API 接口值     | 是   | String | 接口值 -> game.riddle.rand |
+| token  | TOKEN 会话令牌 | 是   | String | 未登录时传字符串           |
+
+> 返回参数
+
+| 参数         | 名称         | 类型    | 说明                                 |
+| ------------ | ------------ | ------- | ------------------------------------ |
+| openid       | 灯谜开放 ID  | Integer |                                      |
+| question     | 灯谜内容     | String  |                                      |
+| question_img | 灯谜图片     | String  |                                      |
+| answer       | 灯谜谜底     | String  |                                      |
+| answer_img   | 灯谜谜底图片 | String  |                                      |
+| view_url     | 灯谜 H5 版本 | String  | 用于分享各种社交圈子与朋友一起参与。 |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "openid": "a8809e2e1575e8d8c1bc0e5bc1b68d19",
+        "question": "世界上最高的山峰是？",
+        "question_img": "",
+        "answer": "珠穆朗玛峰 (高度：8844.46米)",
+        "answer_img": "",
+        "view_url": null
+    }
+}
+```
+
+#### 2.48 测前世接口[game.prelife.do]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型   | 说明                      |
+| ------ | -------------- | ---- | ------ | ------------------------- |
+| method | API 接口名称   | 是   | String | 接口值 -> game.prelife.do |
+| token  | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串        |
+| name   | 姓名           | 是   | String |                           |
+
+> 返回参数
+
+| 参数  | 名称         | 类型    | 说明                   |
+| ----- | ------------ | ------- | ---------------------- |
+| name  | 姓名         | String  |                        |
+| type  | 前世身份类型 | Integer | 1-士、2-农、3-工、4-商 |
+| title | 身份名称     | String  | 如：内阁大学士         |
+| intro | 身份说明     | String  |                        |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "name": "张木沐",
+        "type": 1,
+        "title": "人大代表",
+        "intro": "人大代表1"
+    }
+}
+```
+
+#### 2.49 测今生接口[game.thislife.do]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型   | 说明                       |
+| ------ | -------------- | ---- | ------ | -------------------------- |
+| method | API 接口名称   | 是   | String | 接口值 -> game.thislife.do |
+| token  | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串         |
+| name   | 姓名           | 是   | String |                            |
+
+> 返回参数
+
+| 参数  | 名称     | 类型   | 说明         |
+| ----- | -------- | ------ | ------------ |
+| name  | 姓名     | String |              |
+| title | 今生身份 | String | 如：人大代表 |
+| intro | 身份介绍 | String |              |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "name": "张木沐",
+        "title": "房地产老板",
+        "intro": "房地产老板"
+    }
+}
+```
+
+#### 2.50 取名首页数据接口[game.intitle.do]
+
+> 请求参数
+
+| 参数        | 名称           | 必须 | 类型    | 说明                      |
+| ----------- | -------------- | ---- | ------- | ------------------------- |
+| method      | API 接口名称   | 是   | String  | 接口值 -> game.intitle.do |
+| token       | TOKEN 会话令牌 | 是   | String  | 未登录时传空字符串        |
+| family_name | 姓氏           | 是   | String  |                           |
+| sex         | 性别           | 是   | Integer | 1-男、2-女。              |
+
+> 返回参数
+
+| 参数 | 名称     | 类型   | 说明                     |
+| ---- | -------- | ------ | ------------------------ |
+| name | 姓名     | String | 所取之名                 |
+| sex  | 性别     | String | male - 男、female - 女。 |
+| expl | 姓名解析 | String | 对名字进行释义。         |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "name": "张万里",
+        "sex": "male",
+        "expl": ""
+    }
+}
+```
+
+#### 2.51 取名首页数据接口[game.intitle.home]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型   | 说明                        |
+| ------ | -------------- | ---- | ------ | --------------------------- |
+| method | API 接口名称   | 是   | String | 接口值 -> game.intitle.home |
+| token  | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串          |
+
+> 返回参数
+
+| 参数 | 名称 | 类型 | 说明 |
+| ---- | ---- | ---- | ---- |
+|      |      |      |      |
+|      |      |      |      |
+|      |      |      |      |
+
+> 返回示例
+
+```json
+
+```
+
+#### 2.52 手机号测吉凶接口[game.mobile.good.bad.do]
+
+> 请求参数
+
+| 参数   | 名称           | 必须 | 类型   | 说明                              |
+| ------ | -------------- | ---- | ------ | --------------------------------- |
+| method | API 接口名称   | 是   | String | 接口值 -> game.mobile.good.bad.do |
+| token  | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串                |
+| mobile | 手机号         | 是   | String |                                   |
+
+> 返回参数
+
+| 参数         | 名称       | 类型    | 说明                 |
+| ------------ | ---------- | ------- | -------------------- |
+| mobile       | 被测手机号 | String  |                      |
+| tail_number  | 手机尾号   | Integer |                      |
+| lucky_number | 幸运码     | Integer |                      |
+| lucky_type   | 吉凶类型   | Integer | 1-吉、2-凶、3-吉带凶 |
+| result       | 测算结果   | String  |                      |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "mobile": "13888886666",
+        "tail_number": "6666",
+        "lucky_number": 26,
+        "lucky_type": 2,
+        "result": "波涛升沉，变幻莫测，凌驾万难，必可告捷 。(凶)"
+    }
+}
+```
 
 
 

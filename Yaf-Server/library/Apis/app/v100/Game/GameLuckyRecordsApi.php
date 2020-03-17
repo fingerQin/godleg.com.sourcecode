@@ -21,11 +21,10 @@ class GameLuckyRecordsApi extends AbstractApi
      */
     protected function runService()
     {
-        $page      = $this->getInt('page', 1);
-        $goodsType = $this->getInt('type', -1);
-        $token     = $this->getString('token', '');
-        $userinfo  = Auth::checkAuth($token);
-        $result    = Lucky::records($userinfo['userid'], $goodsType, $page, 20);
+        $page     = $this->getInt('page', 1);
+        $token    = $this->getString('token', '');
+        $userinfo = Auth::checkAuth($token);
+        $result   = Lucky::records($userinfo['userid'], $page, 20);
         $this->render(STATUS_SUCCESS, 'success', $result);
     }
 }

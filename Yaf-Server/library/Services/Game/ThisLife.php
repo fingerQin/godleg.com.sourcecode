@@ -38,7 +38,6 @@ class ThisLife extends \Services\AbstractBase
         $dict  = $dicts[$randV];
         return [
             'name'  => $name,
-            'score' => $dict['score'],
             'title' => $dict['title'],
             'intro' => $dict['intro']
         ];

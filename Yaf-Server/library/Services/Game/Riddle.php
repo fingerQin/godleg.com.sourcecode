@@ -29,25 +29,20 @@ class Riddle extends \Services\AbstractBase
     /**
      * 谜题列表。
      *
-     * @param  int  $score  分值。大于等于此分值。
      * @param  int  $page   页码。
      * @param  int  $count  每页显示条数。
      *
      * @return array
      */
-    public static function list($score = 0, $page = 1, $count = 20)
+    public static function list($page = 1, $count = 20)
     {
         $offset    = self::getPaginationOffset($page, $count);
         $fromTable = ' FROM gm_riddle ';
-        $columns   = ' openid, score, question, question_img, answer, answer_img';
+        $columns   = ' openid, question, question_img';
         $where     = ' WHERE source = :source ';
         $params    = [
             ':source' => GmRiddle::SOURCE_SYSTEM
         ];
-        if ($score > 0) {
-            $where .= " AND score = :score ";
-            $params[':score'] = $score;
-        }
         $orderBy   = ' ORDER BY id DESC ';
         $sql       = "SELECT COUNT(1) AS count {$fromTable} {$where}";
         $countData = Db::one($sql, $params);
@@ -106,7 +101,6 @@ class Riddle extends \Services\AbstractBase
         $detail = self::detail($dicts[$randV]);
         return [
             'openid'       => $detail['openid'],
-            'score'        => $detail['score'],
             'question'     => $detail['question'],
             'question_img' => $detail['question_img'],
             'answer'       => $detail['answer'],
@@ -130,15 +124,15 @@ class Riddle extends \Services\AbstractBase
         if ($detail) {
             return json_decode($detail, true);
         } else {
-            $columns     = ['openid', 'score', 'question', 'question_img', 'answer', 'answer_img'];
-            $RiddleModel = new GmRiddle();
-            $detail      = $RiddleModel->fetchOne($columns, ['openid' => $questipnOpenID]);
+            $columns = ['openid', 'score', 'question', 'question_img', 'answer', 'answer_img'];
+            $detail  = (new GmRiddle())->fetchOne($columns, ['openid' => $questipnOpenID]);
             if (empty($detail)) {
                 Core::exception(STATUS_SERVER_ERROR, '谜题丢失了~');
             }
+            $detail['view_url'] = self::url($questipnOpenID);
             $redis->set($key, json_encode($detail, JSON_UNESCAPED_UNICODE));
-            return $detail;
         }
+        return $detail;
     }
 
     /**
@@ -181,6 +175,7 @@ class Riddle extends \Services\AbstractBase
     protected static function url($questipnOpenID)
     {
         // return Url::h5Url('Game', 'riddle', ['openid' => $questipnOpenID]);
+        return '';
     }
 
     /**

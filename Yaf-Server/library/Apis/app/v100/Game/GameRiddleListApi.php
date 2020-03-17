@@ -22,11 +22,10 @@ class GameRiddleListApi extends AbstractApi
     protected function runService()
     {
         $count  = 20;
-        $score  = $this->getInt('score', 0);
         $page   = $this->getInt('page', 1);
         $token  = $this->getString('token', '');
         $userid = Auth::getTokenUserId($token);
-        $result = Riddle::list($score, $page, $count);
+        $result = Riddle::list($page, $count);
         $this->render(STATUS_SUCCESS, 'success', $result);
     }
 }
