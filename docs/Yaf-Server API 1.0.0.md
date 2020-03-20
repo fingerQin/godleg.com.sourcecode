@@ -451,7 +451,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 | method     | 接口名称        |  是  | String  | 接口值 -> user.login                   |
 | mobile     | 手机账号        |  是  | String  | 手机号。                               |
 | login_type | 登录类型        |  是  | Integer | 1- 验证码登录、2 - 密码登录。          |
-| code       | 短信验证码/密码 |  是  | String  | 登录时需要先调用发送短信验证码的接口。 |
+| sms_code   | 短信验证码/密码 |  是  | String  | 登录时需要先调用发送短信验证码的接口。 |
 
 > 返回参数
 
@@ -494,7 +494,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 | method   | 接口名称   |  是  | String | 接口值 -> user.register           |
 | mobile   | 手机号     |  是  | String |                                   |
 | password | 密码       |  是  | String | 6-20 位数字字母下划线破折号组成。 |
-| code     | 短信验证码 |  是  | String |                                   |
+| sms_code | 短信验证码 |  是  | String |                                   |
 
 >返回参数
 
@@ -583,12 +583,12 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 
 > 请求参数
 
-| 参数   | 名称         | 必须 |  类型  | 说明                                          |
-| ------ | ------------ | :--: | :----: | --------------------------------------------- |
-| method | 接口名称     |  是  | String | 接口值 -> sms.verify                          |
-| mobile | 手机号码     |  是  | String |                                               |
-| key    | 短信模板标识 |  是  | String | 注册-USER_REGISTER_CODE、登录-USER_LOGIN_CODE |
-| code   | 验证码       |  是  | String |                                               |
+| 参数     | 名称         | 必须 |  类型  | 说明                                          |
+| -------- | ------------ | :--: | :----: | --------------------------------------------- |
+| method   | 接口名称     |  是  | String | 接口值 -> sms.verify                          |
+| mobile   | 手机号码     |  是  | String |                                               |
+| key      | 短信模板标识 |  是  | String | 注册-USER_REGISTER_CODE、登录-USER_LOGIN_CODE |
+| sms_code | 验证码       |  是  | String |                                               |
 
 > 返回参数
 
@@ -650,7 +650,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 | -------- | ------------ | :--: | :----: | ------------------------------ |
 | method   | API 接口名称 |  是  | String | 接口值 -> user.pwd.find        |
 | mobile   | 手机账号     |  是  | String | 用户注册的手机账号。           |
-| code     | 短信验证码   |  是  | String | 通过 sms.send 接口发送验证码。 |
+| sms_code | 短信验证码   |  是  | String | 通过 sms.send 接口发送验证码。 |
 | password | 新密码       |  是  | String | 用户新设置的登录密码。         |
 
 > 返回示例
@@ -717,7 +717,7 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 | token    | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串           |
 | password | 登录密码       | 是   | String |                              |
 | mobile   | 新手机号码     | 是   | String |                              |
-| code     | 新手机号验证码 | 是   | String |                              |
+| sms_code | 新手机号验证码 | 是   | String |                              |
 
 > 返回示例
 
@@ -740,11 +740,11 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
 
 > 请求参数
 
-| 参数   | 名称           | 必须 | 类型   | 说明                       |
-| ------ | -------------- | :--: | ------ | -------------------------- |
-| method | API 接口值     |  是  | String | 接口值 -> system.ads       |
-| token  | TOKEN 会话令牌 |  是  | String | 未登录时传空字符串         |
-| code   | 广告位编码     |  是  | String | 每个位置编码视业务系统而定 |
+| 参数       | 名称           | 必须 | 类型   | 说明                       |
+| ---------- | -------------- | :--: | ------ | -------------------------- |
+| method     | API 接口值     |  是  | String | 接口值 -> system.ads       |
+| token      | TOKEN 会话令牌 |  是  | String | 未登录时传空字符串         |
+| place_code | 广告位编码     |  是  | String | 每个位置编码视业务系统而定 |
 
 > 返回参数
 
@@ -2574,6 +2574,35 @@ sign:01E62683A5D2B7CD901F5F98C08F10EF
     }
 }
 ```
+
+#### 2.54 系统日志收集接口[system.log]
+
+> 该接口的所有编码位需要的上传信息请参看日志收集文档。
+
+> 请求参数
+
+| 参数    | 名称           | 必须 | 类型   | 说明                 |
+| ------- | -------------- | ---- | ------ | -------------------- |
+| method  | API 接口名称   | 是   | String | 接口值 -> system.log |
+| token   | TOKEN 会话令牌 | 是   | String | 未登录时传空字符串   |
+| logcode | 日志位置编码   | 是   | String |                      |
+
+> 返回示例
+
+```json
+{
+    "code": 200,
+    "msg": "success"
+}
+```
+
+
+
+
+
+
+
+
 
 
 
