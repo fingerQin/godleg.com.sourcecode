@@ -39,7 +39,7 @@ class Producer extends \Services\Log\AbstractBase
         $redis  = Cache::getRedisClient();
         $status = $redis->lPush(self::LOG_QUEUE_KEY, json_encode($data, JSON_UNESCAPED_UNICODE));
         if ($status === false) {
-            App::log($data, 'monitor', 'queue-error');
+            App::log($data, 'log', 'queue-error');
         }
     }
 
