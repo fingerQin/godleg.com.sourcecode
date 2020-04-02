@@ -125,8 +125,8 @@ class Task extends \Services\AbstractBase
             'longitude'      => '经度|require|float',
             'latitude'       => '纬度|require|float',
             'display'        => '是否显示|require|integer|number_between:0:1',
-            'start_time'     => '开始时间|require|datetime',
-            'end_time'       => '结束时间|require|datetime',
+            'start_time'     => '开始时间|require|date',
+            'end_time'       => '结束时间|require|date',
             'everyday_times' => '每日参与上限|require|integer|number_between:0:100000',
             'total_times'    => '总参与上限|require|integer|number_between:0:100000',
             'district_code'  => '区县编码|require|integer'
@@ -211,8 +211,8 @@ class Task extends \Services\AbstractBase
             'longitude'      => '经度|require|float',
             'latitude'       => '纬度|require|float',
             'display'        => '是否显示|require|integer|number_between:0:1',
-            'start_time'     => '开始时间|require|datetime',
-            'end_time'       => '结束时间|require|datetime',
+            'start_time'     => '开始时间|require|date',
+            'end_time'       => '结束时间|require|date',
             'everyday_times' => '每日参与上限|require|integer|number_between:0:100000',
             'total_times'    => '总参与上限|require|integer|number_between:0:100000',
             'district_code'  => '区县编码|require|integer'
