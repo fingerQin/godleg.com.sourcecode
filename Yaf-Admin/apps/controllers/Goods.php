@@ -28,7 +28,7 @@ class GoodsController extends \Common\controllers\Admin
         $list       = Goods::list($updown, $goodsName, $catId, $startPrice, $endPrice, $deleteShow, $page, 10);
         $catList    = Category::list(0, Category::CAT_GOODS);
         $paginator  = new Paginator($list['total'], 10);
-        $pageHtml   = $paginator->backendPageShow();
+        $pageHtml   = $paginator->pageShow();
         $this->assign('cat_list', $catList);
         $this->assign('pageHtml', $pageHtml);
         $this->assign('updown', $updown);

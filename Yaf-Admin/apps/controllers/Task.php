@@ -21,7 +21,7 @@ class TaskController extends \Common\controllers\Admin
         $page      = $this->getInt('page', 1);
         $result    = Sponsor::lists($name, $page, 20);
         $paginator = new Paginator($result['total'], 20);
-        $pageHtml  = $paginator->backendPageShow();
+        $pageHtml  = $paginator->pageShow();
         $this->assign('list', $result['list']);
         $this->assign('name', $name);
         $this->assign('pageHtml', $pageHtml);
@@ -95,7 +95,7 @@ class TaskController extends \Common\controllers\Admin
         $page      = $this->getInt('page', 1);
         $result    = \Services\Task\Task::lists($sponsorId, $taskName, $page, 20);
         $paginator = new Paginator($result['total'], 20);
-        $pageHtml  = $paginator->backendPageShow();
+        $pageHtml  = $paginator->pageShow();
         $this->assign('list', $result['list']);
         $this->assign('pageHtml', $pageHtml);
         $this->assign('task_name', $taskName);
@@ -194,7 +194,7 @@ class TaskController extends \Common\controllers\Admin
         $page      = $this->getInt('page', 1);
         $result    = Record::lists($userid, $taskId, $sponsorId, $startTime, $endTime, $page, 20);
         $paginator = new Paginator($result['total'], 20);
-        $pageHtml  = $paginator->backendPageShow();
+        $pageHtml  = $paginator->pageShow();
         $this->assign('list', $result['list']);
         $this->assign('pageHtml', $pageHtml);
         $this->assign('userid', $userid);

@@ -24,7 +24,7 @@ class News extends \Services\AbstractBase
      */
     public static function getDocCatalogue($catId)
     {
-        $catList    = CategoryService::getByParentToCategory($catId, CategoryService::CAT_DOC);
+        $catList    = CategoryService::getByParentToCategory($catId, CategoryService::CAT_NEWS);
         $arrCatCode = array_column($catList, 'cat_code');
         $NewsModel  = new NewsModel();
         $columns    = ['news_id', 'cat_code', 'title', 'intro', 'keywords', 'image_url', 'source', 'modified_time'];

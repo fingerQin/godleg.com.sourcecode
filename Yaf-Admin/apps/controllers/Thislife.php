@@ -20,7 +20,7 @@ class ThislifeController extends \Common\controllers\Admin
         $page      = $this->getInt('page', 1);
         $list      = ThisLife::list($title, $priority, $page, 20);
         $paginator = new Paginator($list['total'], 20);
-        $pageHtml  = $paginator->backendPageShow();
+        $pageHtml  = $paginator->pageShow();
         $this->assign('pageHtml', $pageHtml);
         $this->assign('title', $title);
         $this->assign('priority', $priority);

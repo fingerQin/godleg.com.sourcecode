@@ -27,9 +27,10 @@ class Category extends AbstractBase
     /**
      * 文章分类。
      */
-    const CAT_NEWS  = 1;  // 文章分类。
-    const CAT_LINK  = 2;  // 友情链接分类。
-    const CAT_GOODS = 3;  // 商品分类。
+    const CAT_NEWS     = 1;  // 文章分类。
+    const CAT_LINK     = 2;  // 友情链接分类。
+    const CAT_GOODS    = 3;  // 商品分类。
+    const CAT_QUESTION = 4;  // 题库分类。
 
     /**
      * 分类类型。
@@ -37,8 +38,9 @@ class Category extends AbstractBase
      * @var array
      */
     public static $categoryTypeList = [
-        self::CAT_NEWS  => '文章分类',
-        self::CAT_LINK  => '友情链接',
-        self::CAT_GOODS => '商品分类'
+        self::CAT_NEWS     => '文章分类',
+        self::CAT_LINK     => '友情链接',
+        self::CAT_GOODS    => '商品分类',
+        self::CAT_QUESTION => '题库分类'
     ];
 }

@@ -8,6 +8,7 @@
 namespace Services\System;
 
 use finger\Core;
+use finger\Registry;
 use Models\Category as CategoryModel;
 
 class Category extends \Services\AbstractBase
@@ -147,8 +148,8 @@ class Category extends \Services\AbstractBase
     protected static function all($catType = '', $isFilter = false)
     {
         $cacheKey = 'categorys';
-        if (\Yaf_Registry::has($cacheKey)) {
-            return \Yaf_Registry::get($cacheKey);
+        if (Registry::has($cacheKey)) {
+            return Registry::get($cacheKey);
         } else {
             $where = [
                 'status'   => CategoryModel::STATUS_YES,
@@ -158,7 +159,7 @@ class Category extends \Services\AbstractBase
                               'display', 'is_out_url', 'out_url', 'listorder', 'tpl_name'];
             $CategoryModel = new CategoryModel();
             $result        = $CategoryModel->fetchAll($columns, $where);
-            \Yaf_Registry::set($cacheKey, $result);
+            Registry::set($cacheKey, $result);
             return $result;
         }
     }

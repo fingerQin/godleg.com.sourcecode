@@ -21,7 +21,7 @@ class NameController extends \Common\controllers\Admin
         $page      = $this->getInt('page', 1);
         $list      = Intitle::list($name, $type, $sex, $page, 20);
         $paginator = new Paginator($list['total'], 20);
-        $pageHtml  = $paginator->backendPageShow();
+        $pageHtml  = $paginator->pageShow();
         $this->assign('pageHtml', $pageHtml);
         $this->assign('name', $name);
         $this->assign('type', $type);

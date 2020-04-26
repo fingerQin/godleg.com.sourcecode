@@ -23,7 +23,7 @@ class RiddleController extends \Common\controllers\Admin
         $page      = $this->getInt('page', 1);
         $list      = Riddle::list($openid, $source, $score, $priority, $page, 20);
         $paginator = new Paginator($list['total'], 20);
-        $pageHtml  = $paginator->backendPageShow();
+        $pageHtml  = $paginator->pageShow();
         $this->assign('pageHtml', $pageHtml);
         $this->assign('openid', $openid);
         $this->assign('source', $source);

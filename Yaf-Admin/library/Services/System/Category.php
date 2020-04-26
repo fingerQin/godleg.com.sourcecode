@@ -9,14 +9,16 @@ namespace Services\System;
 
 use finger\Core;
 use finger\Database\Db;
+use finger\Registry;
 use Models\News;
 use Models\Category as CategoryModel;
 
 class Category extends \Services\AbstractBase
 {
-	const CAT_NEWS  = 1;    // 文章分类。
-    const CAT_LINK  = 2;    // 友情链接分类。
-    const CAT_GOODS = 3;    // 商品分类。
+	const CAT_NEWS     = 1;    // 文章分类。
+    const CAT_LINK     = 2;    // 友情链接分类。
+    const CAT_GOODS    = 3;    // 商品分类。
+    const CAT_QUESTION = 4;    // 题库分类。
 
     /**
      * 分类类型。
@@ -24,9 +26,10 @@ class Category extends \Services\AbstractBase
      * @var array
      */
     public static $categoryTypeList = [
-        self::CAT_NEWS  => '文章分类',
-        self::CAT_LINK  => '友情链接',
-        self::CAT_GOODS => '商品分类'
+        self::CAT_NEWS     => '文章分类',
+        self::CAT_LINK     => '友情链接',
+        self::CAT_GOODS    => '商品分类',
+        self::CAT_QUESTION => '题库分类'
     ];
 
     /**
@@ -282,7 +285,7 @@ class Category extends \Services\AbstractBase
         foreach ($listorders as $catId => $sortVal) {
             $ok = $CategoryModel->sort($catId, $sortVal);
             if (!$ok) {
-                return Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
+                Core::exception(STATUS_ERROR, '服务器繁忙,请稍候重试');
             }
         }
     }
@@ -350,20 +353,19 @@ class Category extends \Services\AbstractBase
      * 
      * @return array
      */
-    protected static function getAllCategorys($catType = self::CAT_NEWS, $isFilter = false)
+    protected static function getAllCategorys($catType = self::CAT_NEWS)
     {
         $cacheKey = 'Yaf-Admin-all-categorys';
-        if (\Yaf_Registry::has($cacheKey)) {
-            return \Yaf_Registry::get($cacheKey);
+        if (Registry::has($cacheKey)) {
+            return Registry::get($cacheKey);
         } else {
             $where = [
                 'status'   => CategoryModel::STATUS_YES,
                 'cat_type' => $catType
             ];
-            $columns       = ['cat_id', 'cat_name', 'parentid', 'lv', 'cat_code', 'cat_type', 'display', 'is_out_url', 'out_url', 'listorder', 'tpl_name'];
-            $CategoryModel = new CategoryModel();
-            $result        = $CategoryModel->fetchAll($columns, $where);
-            \Yaf_Registry::set($cacheKey, $result);
+            $columns = ['cat_id', 'cat_name', 'parentid', 'lv', 'cat_code', 'cat_type', 'display', 'is_out_url', 'out_url', 'listorder', 'tpl_name'];
+            $result  = (new CategoryModel())->fetchAll($columns, $where);
+            Registry::set($cacheKey, $result);
             return $result;
         }
     }

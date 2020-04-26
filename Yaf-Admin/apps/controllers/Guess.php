@@ -23,7 +23,7 @@ class GuessController extends \Common\controllers\Admin
         $page      = $this->getInt('page', 1);
         $list      = Guess::list($title, $startTime, $endTime, $isOpen, $page, 20);
         $paginator = new Paginator($list['total'], 20);
-        $pageHtml  = $paginator->backendPageShow();
+        $pageHtml  = $paginator->pageShow();
         $this->assign('pageHtml', $pageHtml);
         $this->assign('list', $list['list']);
         $this->assign('title', $title);
@@ -100,7 +100,7 @@ class GuessController extends \Common\controllers\Admin
         $guessId     = $this->getInt('guessid');
         $list        = Guess::records($guessId, $mobile, $prizeStatus, $page, 20);
         $paginator   = new Paginator($list['total'], 20);
-        $pageHtml    = $paginator->backendPageShow();
+        $pageHtml    = $paginator->pageShow();
         $this->assign('pageHtml', $pageHtml);
         $this->assign('list', $list['list']);
         $this->assign('guessid', $guessId);
